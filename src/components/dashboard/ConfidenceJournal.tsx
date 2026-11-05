@@ -58,15 +58,15 @@ export function ConfidenceJournal({
 
   return (
     <>
-      <Card className="h-full">
-        <CardHeader className="flex flex-row items-center justify-between pb-4">
+      <Card className="rounded-[28px] border border-[#D5E1E6] bg-white dark:border-[#304653] dark:bg-midnight-surface p-6 sm:p-7 shadow-card h-full text-left transition-colors">
+        <CardHeader className="flex flex-row items-center justify-between pb-4 px-0 pt-0">
           <div>
-            <CardTitle className="text-lg flex items-center gap-2">
-              <BookMarked className="h-5 w-5 text-brand-600 dark:text-brand-400" />
-              Confidence & Experience Journal
+            <CardTitle className="font-heading text-lg font-bold flex items-center gap-2 text-midnight dark:text-white">
+              <BookMarked className="h-5 w-5 text-terracotta" aria-hidden="true" />
+              <span>Confidence & Experience Journal</span>
             </CardTitle>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-              Reflections on everyday communication triumphs and learning moments
+            <p className="text-xs text-stone dark:text-[#BDCBD2] mt-1">
+              Private self-reflections on everyday communication triumphs and comfort
             </p>
           </div>
           <Button
@@ -75,44 +75,44 @@ export function ConfidenceJournal({
             onClick={() => setIsModalOpen(true)}
             className="text-xs gap-1.5"
           >
-            <Plus className="h-3.5 w-3.5" />
-            Log Moment
+            <Plus className="h-3.5 w-3.5" aria-hidden="true" />
+            <span>Log Moment</span>
           </Button>
         </CardHeader>
 
-        <CardContent className="space-y-3.5">
+        <CardContent className="space-y-3.5 px-0 pb-0">
           {entries.map((entry) => (
             <div
               key={entry.id}
-              className="rounded-xl border border-slate-200/90 bg-white p-4 space-y-2 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900/60 dark:hover:border-slate-700 transition-all shadow-subtle"
+              className="rounded-2xl border border-[#D5E1E6] bg-porcelain p-4 space-y-2 hover:border-ocean/40 dark:border-[#304653] dark:bg-midnight-deep transition-all shadow-subtle"
             >
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
-                <span className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+                <span className="font-heading text-xs sm:text-sm font-semibold text-midnight dark:text-white">
                   {entry.situation}
                 </span>
                 <div className="flex items-center gap-2">
                   <Badge
-                    variant={entry.tag === "Triumph" ? "success" : "secondary"}
-                    className="text-[10px]"
+                    variant={entry.tag === "Triumph" ? "mist" : "terracotta"}
+                    className="text-[10px] font-semibold"
                   >
                     {entry.tag}
                   </Badge>
-                  <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                  <span className="text-xs text-stone/80 dark:text-[#BDCBD2]/80 font-medium font-mono">
                     {formatDate(entry.date)}
                   </span>
                 </div>
               </div>
 
               <div className="flex flex-wrap items-center gap-2 text-xs">
-                <span className="bg-brand-50 text-brand-800 dark:bg-brand-950/70 dark:text-brand-300 dark:border-brand-800 px-2 py-0.5 rounded-md font-medium border border-brand-100">
+                <span className="bg-white dark:bg-midnight-surface text-ocean dark:text-softblue border border-[#D5E1E6] dark:border-[#304653] px-2.5 py-0.5 rounded-lg font-medium">
                   Technique: {entry.techniqueUsed}
                 </span>
-                <span className="bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 px-2 py-0.5 rounded-md font-medium">
-                  Confidence: {entry.confidenceScore}/10
+                <span className="bg-white dark:bg-midnight-surface text-stone dark:text-[#BDCBD2] border border-[#D5E1E6] dark:border-[#304653] px-2.5 py-0.5 rounded-lg font-medium">
+                  Ease: {entry.confidenceScore}/10
                 </span>
               </div>
 
-              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed pt-1">
+              <p className="text-xs text-stone dark:text-[#BDCBD2] leading-relaxed pt-1">
                 {entry.reflectionNotes}
               </p>
             </div>
@@ -125,11 +125,11 @@ export function ConfidenceJournal({
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         title="Log a Communication Moment"
-        description="Every speaking experience is data for your growth, not a pass/fail test."
+        description="Every speaking experience is data for your personal ease, not a pass/fail test."
       >
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4 text-left">
           <div>
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider block mb-1">
+            <label className="text-xs font-semibold text-stone dark:text-[#BDCBD2] uppercase tracking-wider block mb-1.5">
               Communication Situation
             </label>
             <input
@@ -137,28 +137,28 @@ export function ConfidenceJournal({
               required
               value={situation}
               onChange={(e) => setSituation(e.target.value)}
-              placeholder="e.g. Ordered iced latte at drive-thru, or spoke up in class"
-              className="w-full rounded-xl border border-slate-200 p-2.5 text-sm focus:border-brand-500 focus:ring-1 focus:ring-brand-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+              placeholder="e.g. Ordered coffee at counter, or contributed to team sync"
+              className="w-full rounded-xl border border-[#D5E1E6] bg-porcelain dark:border-[#304653] dark:bg-midnight-deep dark:text-white px-3.5 py-2.5 text-sm focus:border-ocean focus:ring-2 focus:ring-ocean/20 dark:focus:border-softblue outline-none"
             />
           </div>
 
           <div>
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider block mb-1">
+            <label className="text-xs font-semibold text-stone dark:text-[#BDCBD2] uppercase tracking-wider block mb-1.5">
               Technique or Mindset Applied
             </label>
             <input
               type="text"
               value={techniqueUsed}
               onChange={(e) => setTechniqueUsed(e.target.value)}
-              placeholder="e.g. Voluntary repetition, gentle vowel onset, pausing"
-              className="w-full rounded-xl border border-slate-200 p-2.5 text-sm focus:border-brand-500 focus:ring-1 focus:ring-brand-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+              placeholder="e.g. Voluntary easy bouncing, gentle vocal onset, unhurried breath"
+              className="w-full rounded-xl border border-[#D5E1E6] bg-porcelain dark:border-[#304653] dark:bg-midnight-deep dark:text-white px-3.5 py-2.5 text-sm focus:border-ocean focus:ring-2 focus:ring-ocean/20 dark:focus:border-softblue outline-none"
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider block mb-1">
-                Confidence (1 to 10): {confidenceScore}
+              <label className="text-xs font-semibold text-stone dark:text-[#BDCBD2] uppercase tracking-wider block mb-1.5">
+                Speaking Ease (1 to 10): <span className="text-ocean dark:text-softblue font-bold">{confidenceScore}</span>
               </label>
               <input
                 type="range"
@@ -166,18 +166,18 @@ export function ConfidenceJournal({
                 max="10"
                 value={confidenceScore}
                 onChange={(e) => setConfidenceScore(Number(e.target.value))}
-                className="w-full accent-brand-600 dark:accent-brand-500"
+                className="w-full accent-ocean"
               />
             </div>
 
             <div>
-              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider block mb-1">
+              <label className="text-xs font-semibold text-stone dark:text-[#BDCBD2] uppercase tracking-wider block mb-1.5">
                 Experience Tag
               </label>
               <select
                 value={tag}
                 onChange={(e) => setTag(e.target.value as any)}
-                className="w-full rounded-xl border border-slate-200 p-2 text-xs focus:border-brand-500 focus:ring-1 focus:ring-brand-500 bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+                className="w-full rounded-xl border border-[#D5E1E6] bg-porcelain dark:border-[#304653] dark:bg-midnight-deep dark:text-white px-3 py-2 text-xs focus:border-ocean focus:ring-2 focus:ring-ocean/20 dark:focus:border-softblue outline-none"
               >
                 <option value="Triumph">Triumph</option>
                 <option value="Learning Moment">Learning Moment</option>
@@ -188,24 +188,24 @@ export function ConfidenceJournal({
           </div>
 
           <div>
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider block mb-1">
-              Self-Reflection Note
+            <label className="text-xs font-semibold text-stone dark:text-[#BDCBD2] uppercase tracking-wider block mb-1.5">
+              Personal Self-Reflection Note
             </label>
             <textarea
               rows={3}
               value={reflectionNotes}
               onChange={(e) => setReflectionNotes(e.target.value)}
-              placeholder="What went well? How did you respond if physical tension arose?"
-              className="w-full rounded-xl border border-slate-200 p-2.5 text-sm focus:border-brand-500 focus:ring-1 focus:ring-brand-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+              placeholder="What went well? How did your body feel? Did you manage physical tension with calmness?"
+              className="w-full rounded-xl border border-[#D5E1E6] bg-porcelain dark:border-[#304653] dark:bg-midnight-deep dark:text-white p-3 text-sm focus:border-ocean focus:ring-2 focus:ring-ocean/20 dark:focus:border-softblue outline-none"
             />
           </div>
 
-          <div className="flex justify-end gap-2 pt-4 border-t border-slate-100 dark:border-slate-800">
+          <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#E7EFF2] dark:border-[#304653]">
             <Button type="button" variant="outline" onClick={() => setIsModalOpen(false)}>
               Cancel
             </Button>
             <Button type="submit" variant="primary">
-              Save Entry
+              Save Journal Entry
             </Button>
           </div>
         </form>

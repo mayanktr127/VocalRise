@@ -1,9 +1,23 @@
 "use client";
 
 import * as React from "react";
-import { Mic, Square, Play, Pause, CheckCircle2, RotateCcw, Volume2, Sparkles } from "lucide-react";
+import {
+  Mic,
+  Square,
+  Play,
+  Pause,
+  CheckCircle2,
+  RotateCcw,
+  Volume2,
+  Sparkles,
+  Trash2,
+  Info,
+  AlertCircle,
+  Lock,
+} from "lucide-react";
 import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Exercise } from "@/types/practice";
 
 interface AudioRecorderModalProps {
@@ -14,8 +28,11 @@ interface AudioRecorderModalProps {
     title: string;
     duration: number;
     notes: string;
+    audioUrl?: string;
   }) => void;
 }
+
+type MicState = "idle" | "requesting" | "recording" | "recorded" | "denied" | "unsupported";
 
 export function AudioRecorderModal({
   isOpen,
@@ -23,57 +40,172 @@ export function AudioRecorderModal({
   exercise,
   onSaveRecording,
 }: AudioRecorderModalProps) {
-  const [isRecording, setIsRecording] = React.useState(false);
+  const [micState, setMicState] = React.useState<MicState>("idle");
   const [recordingSeconds, setRecordingSeconds] = React.useState(0);
-  const [hasRecorded, setHasRecorded] = React.useState(false);
   const [isPlaying, setIsPlaying] = React.useState(false);
+  const [audioUrl, setAudioUrl] = React.useState<string | null>(null);
   const [notes, setNotes] = React.useState("");
   const [activePromptIndex, setActivePromptIndex] = React.useState(0);
+  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
-  // Timer logic
+  const mediaRecorderRef = React.useRef<MediaRecorder | null>(null);
+  const mediaStreamRef = React.useRef<MediaStream | null>(null);
+  const audioChunksRef = React.useRef<Blob[]>([]);
+  const audioElementRef = React.useRef<HTMLAudioElement | null>(null);
+  const timerIntervalRef = React.useRef<NodeJS.Timeout | null>(null);
+
+  // Timer logic during active recording
   React.useEffect(() => {
-    let interval: NodeJS.Timeout | null = null;
-    if (isRecording) {
-      interval = setInterval(() => {
+    if (micState === "recording") {
+      timerIntervalRef.current = setInterval(() => {
         setRecordingSeconds((prev) => prev + 1);
       }, 1000);
     } else {
-      if (interval) clearInterval(interval);
+      if (timerIntervalRef.current) {
+        clearInterval(timerIntervalRef.current);
+      }
     }
     return () => {
-      if (interval) clearInterval(interval);
+      if (timerIntervalRef.current) {
+        clearInterval(timerIntervalRef.current);
+      }
     };
-  }, [isRecording]);
+  }, [micState]);
 
-  const handleStartRecording = () => {
-    setIsRecording(true);
-    setHasRecorded(false);
+  // Cleanup on modal close or unmount
+  const cleanupMedia = React.useCallback(() => {
+    if (mediaStreamRef.current) {
+      mediaStreamRef.current.getTracks().forEach((track) => track.stop());
+      mediaStreamRef.current = null;
+    }
+    if (audioElementRef.current) {
+      audioElementRef.current.pause();
+      audioElementRef.current = null;
+    }
+    if (audioUrl) {
+      URL.revokeObjectURL(audioUrl);
+      setAudioUrl(null);
+    }
+    setIsPlaying(false);
+    setMicState("idle");
     setRecordingSeconds(0);
+    setErrorMessage(null);
+  }, [audioUrl]);
+
+  React.useEffect(() => {
+    if (!isOpen) {
+      cleanupMedia();
+    }
+  }, [isOpen, cleanupMedia]);
+
+  const handleStartRecording = async () => {
+    setErrorMessage(null);
+    audioChunksRef.current = [];
+
+    // Verify browser support
+    if (typeof window === "undefined" || !navigator?.mediaDevices?.getUserMedia) {
+      setMicState("unsupported");
+      setErrorMessage("Live audio recording is not supported in this browser environment. Using simulation mode.");
+      setMicState("recording");
+      return;
+    }
+
+    try {
+      setMicState("requesting");
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaStreamRef.current = stream;
+
+      const mediaRecorder = new MediaRecorder(stream);
+      mediaRecorderRef.current = mediaRecorder;
+
+      mediaRecorder.ondataavailable = (event) => {
+        if (event.data && event.data.size > 0) {
+          audioChunksRef.current.push(event.data);
+        }
+      };
+
+      mediaRecorder.onstop = () => {
+        const audioBlob = new Blob(audioChunksRef.current, { type: "audio/webm" });
+        const url = URL.createObjectURL(audioBlob);
+        setAudioUrl(url);
+        setMicState("recorded");
+
+        // Stop stream tracks
+        if (mediaStreamRef.current) {
+          mediaStreamRef.current.getTracks().forEach((t) => t.stop());
+          mediaStreamRef.current = null;
+        }
+      };
+
+      mediaRecorder.start(200); // 200ms slice
+      setRecordingSeconds(0);
+      setMicState("recording");
+    } catch (err: any) {
+      console.warn("Microphone access unavailable or denied:", err);
+      setMicState("denied");
+      setErrorMessage(
+        "Microphone permission was not granted or a microphone was not detected. You can still practice aloud with guided prompts and save your reflection notes."
+      );
+    }
   };
 
   const handleStopRecording = () => {
-    setIsRecording(false);
-    setHasRecorded(true);
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== "inactive") {
+      mediaRecorderRef.current.stop();
+    } else {
+      // Fallback for simulation mode
+      setMicState("recorded");
+    }
   };
 
-  const handleReset = () => {
-    setIsRecording(false);
-    setHasRecorded(false);
-    setRecordingSeconds(0);
+  const handleTogglePlayback = () => {
+    if (!audioUrl) {
+      // Simulation playback toggle
+      setIsPlaying(!isPlaying);
+      return;
+    }
+
+    if (isPlaying) {
+      if (audioElementRef.current) {
+        audioElementRef.current.pause();
+      }
+      setIsPlaying(false);
+    } else {
+      if (!audioElementRef.current) {
+        audioElementRef.current = new Audio(audioUrl);
+        audioElementRef.current.onended = () => setIsPlaying(false);
+      }
+      audioElementRef.current.play().catch(() => {});
+      setIsPlaying(true);
+    }
+  };
+
+  const handleDiscard = () => {
+    if (audioUrl) {
+      URL.revokeObjectURL(audioUrl);
+      setAudioUrl(null);
+    }
+    if (audioElementRef.current) {
+      audioElementRef.current.pause();
+      audioElementRef.current = null;
+    }
     setIsPlaying(false);
+    setMicState("idle");
+    setRecordingSeconds(0);
   };
 
   const handleSave = () => {
     if (onSaveRecording && exercise) {
       onSaveRecording({
         title: `${exercise.title} Session`,
-        duration: recordingSeconds || 45,
-        notes: notes || "Practised target technique with steady relaxed cadence.",
+        duration: recordingSeconds || 30,
+        notes: notes || "Practised target technique with steady relaxed pacing.",
+        audioUrl: audioUrl || undefined,
       });
     }
-    onClose();
-    handleReset();
+    cleanupMedia();
     setNotes("");
+    onClose();
   };
 
   if (!exercise) return null;
@@ -87,123 +219,150 @@ export function AudioRecorderModal({
   return (
     <Modal
       isOpen={isOpen}
-      onClose={onClose}
+      onClose={() => {
+        cleanupMedia();
+        onClose();
+      }}
       title={exercise.title}
-      description={`Target Focus: ${exercise.targetFocus} • ${exercise.estimatedMinutes} mins`}
-      className="max-w-2xl"
+      description={`Focus: ${exercise.targetFocus} • ${exercise.estimatedMinutes} mins estimated`}
+      className="max-w-2xl text-left"
     >
       <div className="space-y-6">
-        {/* Clinical Rationale Box */}
-        <div className="rounded-xl bg-brand-50/70 dark:bg-brand-950/40 border border-brand-200/60 dark:border-brand-800/60 p-3.5 text-xs text-brand-900 dark:text-brand-200 flex items-start gap-2.5">
-          <Sparkles className="h-4 w-4 text-brand-600 dark:text-brand-400 shrink-0 mt-0.5" />
-          <div>
-            <span className="font-semibold">Technique Guidance: </span>
-            {exercise.clinicalRationale}
+        {/* Privacy & In-Memory Storage Disclosure */}
+        <div className="rounded-2xl border border-ocean/20 bg-mist/60 dark:border-softblue/30 dark:bg-midnight-surface p-3.5 text-xs text-stone dark:text-[#BDCBD2] flex items-start gap-2.5">
+          <Info className="h-4 w-4 text-ocean dark:text-softblue shrink-0 mt-0.5" aria-hidden="true" />
+          <div className="space-y-0.5">
+            <strong className="text-midnight dark:text-white block">
+              In-Memory Browser Audio
+            </strong>
+            <p className="text-[11px] leading-relaxed">
+              Recordings are held in temporary browser memory for immediate playback and self-reflection. Zero voice data is stored in unencrypted local storage. Audio clears upon browser refresh or close.
+            </p>
           </div>
         </div>
 
-        {/* Practice Prompt Display */}
-        <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/40 p-5 text-center">
-          <span className="text-xs uppercase tracking-wider font-semibold text-slate-500 dark:text-slate-400">
+        {/* Clinical Rationale Box */}
+        <div className="rounded-2xl bg-porcelain dark:bg-midnight-surface border border-[#D5E1E6] dark:border-[#304653] p-4 text-xs text-stone dark:text-[#BDCBD2] flex items-start gap-2.5">
+          <Sparkles className="h-4 w-4 text-ocean dark:text-softblue shrink-0 mt-0.5" aria-hidden="true" />
+          <div>
+            <strong className="text-midnight dark:text-white">Technique Guidance: </strong>
+            <span>{exercise.clinicalRationale}</span>
+          </div>
+        </div>
+
+        {/* Practice Speaking Prompt */}
+        <div className="rounded-2xl border border-[#D5E1E6] dark:border-[#304653] bg-white dark:bg-midnight-surface p-5 text-center space-y-3">
+          <span className="text-[11px] uppercase tracking-wider font-semibold text-stone/80 dark:text-[#BDCBD2]/80 block">
             Speaking Prompt {activePromptIndex + 1} of {exercise.samplePrompts.length}
           </span>
-          <p className="mt-2 text-2xl font-semibold text-slate-800 dark:text-slate-100 tracking-tight">
+          <p className="font-heading text-xl sm:text-2xl font-bold text-midnight dark:text-white tracking-tight">
             &ldquo;{exercise.samplePrompts[activePromptIndex]}&rdquo;
           </p>
-          <div className="mt-4 flex justify-center gap-2">
+          <div className="flex justify-center gap-2 pt-1">
             {exercise.samplePrompts.map((_, idx) => (
               <button
                 key={idx}
+                type="button"
                 onClick={() => setActivePromptIndex(idx)}
                 className={`h-2 rounded-full transition-all ${
                   activePromptIndex === idx
-                    ? "w-8 bg-brand-600 dark:bg-brand-500"
-                    : "w-2 bg-slate-300 dark:bg-slate-700 hover:bg-slate-400"
+                    ? "w-8 bg-ocean dark:bg-softblue"
+                    : "w-2 bg-[#D5E1E6] dark:bg-[#304653] hover:bg-stone/40"
                 }`}
-                aria-label={`Prompt ${idx + 1}`}
+                aria-label={`Switch to Prompt ${idx + 1}`}
               />
             ))}
           </div>
         </div>
 
-        {/* Visualizer Simulation Area */}
-        <div className="flex flex-col items-center justify-center p-6 rounded-2xl bg-slate-900 dark:bg-slate-950 text-white border border-slate-800">
-          <div className="text-3xl font-mono font-medium tracking-widest mb-4">
+        {/* Visualizer & Studio Console */}
+        <div className="flex flex-col items-center justify-center p-6 rounded-[28px] bg-midnight dark:bg-midnight-deep text-white border border-[#304653] space-y-4">
+          <div className="font-mono text-3xl font-medium tracking-widest text-white">
             {formatTimer(recordingSeconds)}
           </div>
 
           {/* Animated sound wave bars */}
-          <div className="flex items-center gap-1.5 h-16 w-full max-w-xs justify-center mb-6">
-            {[40, 65, 30, 85, 95, 60, 45, 80, 55, 70, 90, 40, 75, 35, 60].map(
-              (height, i) => (
-                <div
-                  key={i}
-                  className={`w-1.5 rounded-full transition-all duration-150 ${
-                    isRecording
-                      ? "bg-brand-400 animate-pulse"
-                      : hasRecorded
-                      ? "bg-emerald-400"
-                      : "bg-slate-700"
-                  }`}
-                  style={{
-                    height: isRecording
-                      ? `${Math.max(15, (height * (recordingSeconds % 5 + 1)) % 100)}%`
-                      : hasRecorded
+          <div className="flex items-center gap-1.5 h-16 w-full max-w-xs justify-center">
+            {[40, 65, 30, 85, 95, 60, 45, 80, 55, 70, 90, 40, 75, 35, 60].map((height, i) => (
+              <div
+                key={i}
+                className={`w-1.5 rounded-full transition-all duration-150 ${
+                  micState === "recording"
+                    ? "bg-softblue animate-pulse"
+                    : micState === "recorded"
+                    ? "bg-ocean"
+                    : "bg-[#304653]"
+                }`}
+                style={{
+                  height:
+                    micState === "recording"
+                      ? `${Math.max(15, (height * ((recordingSeconds % 5) + 1)) % 100)}%`
+                      : micState === "recorded"
                       ? `${height * 0.7}%`
                       : "15%",
-                  }}
-                />
-              )
-            )}
+                }}
+              />
+            ))}
           </div>
 
+          {/* Microphone status alert if denied */}
+          {errorMessage && (
+            <div className="text-xs text-softblue bg-white/10 px-3 py-1.5 rounded-xl border border-white/20 max-w-sm text-center">
+              {errorMessage}
+            </div>
+          )}
+
           {/* Recording Controls */}
-          <div className="flex items-center gap-4">
-            {!isRecording && !hasRecorded && (
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+            {micState !== "recording" && micState !== "recorded" && (
               <Button
                 onClick={handleStartRecording}
                 size="lg"
-                className="bg-brand-500 hover:bg-brand-600 text-white rounded-full px-6 gap-2 shadow-lg shadow-brand-500/20"
+                className="bg-ocean text-white hover:bg-ocean/90 rounded-full px-6 gap-2 shadow-elevated"
               >
-                <Mic className="h-5 w-5" />
-                Start Recording
+                <Mic className="h-5 w-5" aria-hidden="true" />
+                <span>Start Practice Recording</span>
               </Button>
             )}
 
-            {isRecording && (
+            {micState === "recording" && (
               <Button
                 onClick={handleStopRecording}
                 size="lg"
-                className="bg-rose-500 hover:bg-rose-600 text-white rounded-full px-6 gap-2 animate-pulse"
+                className="bg-terracotta hover:bg-terracotta/90 text-white rounded-full px-6 gap-2 animate-pulse shadow-elevated"
               >
-                <Square className="h-4 w-4 fill-white" />
-                Finish Recording
+                <Square className="h-4 w-4 fill-white" aria-hidden="true" />
+                <span>Finish Recording</span>
               </Button>
             )}
 
-            {hasRecorded && (
-              <div className="flex items-center gap-3">
+            {micState === "recorded" && (
+              <div className="flex flex-wrap items-center gap-3">
                 <Button
-                  onClick={() => setIsPlaying(!isPlaying)}
+                  onClick={handleTogglePlayback}
                   variant="outline"
-                  className="bg-slate-800 border-slate-700 text-white hover:bg-slate-700 rounded-full"
+                  className="border-white/30 text-white hover:bg-white/10 rounded-full px-5"
                 >
                   {isPlaying ? (
                     <>
-                      <Pause className="h-4 w-4 mr-1.5" /> Pause
+                      <Pause className="h-4 w-4 mr-1.5" aria-hidden="true" />
+                      <span>Pause Playback</span>
                     </>
                   ) : (
                     <>
-                      <Play className="h-4 w-4 mr-1.5" /> Listen Back
+                      <Play className="h-4 w-4 mr-1.5" aria-hidden="true" />
+                      <span>Listen Back</span>
                     </>
                   )}
                 </Button>
+
                 <Button
-                  onClick={handleReset}
+                  onClick={handleDiscard}
                   variant="ghost"
-                  className="text-slate-400 hover:text-white"
+                  className="text-terracotta-glow hover:text-white hover:bg-white/10 rounded-full gap-1.5"
                 >
-                  <RotateCcw className="h-4 w-4 mr-1.5" /> Re-record
+                  <Trash2 className="h-4 w-4" aria-hidden="true" />
+                  <span>Discard & Re-record</span>
                 </Button>
               </div>
             )}
@@ -211,8 +370,8 @@ export function AudioRecorderModal({
         </div>
 
         {/* Self-Reflection & Notes */}
-        <div className="space-y-2">
-          <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
+        <div className="space-y-1.5">
+          <label className="text-xs font-semibold text-stone dark:text-[#BDCBD2] uppercase tracking-wider block">
             Self-Observation & Reflection Notes
           </label>
           <textarea
@@ -220,24 +379,36 @@ export function AudioRecorderModal({
             onChange={(e) => setNotes(e.target.value)}
             placeholder="How did this repetition feel? Did you notice physical throat tension, smooth airflow, or easy phrasing?"
             rows={3}
-            className="w-full rounded-xl border border-slate-200 dark:border-slate-700 p-3 text-sm focus:border-brand-500 focus:ring-1 focus:ring-brand-500 bg-slate-50/50 dark:bg-slate-800 dark:text-slate-100"
+            className="w-full rounded-xl border border-[#D5E1E6] bg-porcelain dark:border-[#304653] dark:bg-midnight-deep dark:text-white p-3 text-xs sm:text-sm focus:border-ocean focus:ring-2 focus:ring-ocean/20 dark:focus:border-softblue outline-none"
           />
         </div>
 
         {/* Action Buttons */}
-        <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100 dark:border-slate-800">
-          <Button variant="outline" onClick={onClose}>
-            Cancel
-          </Button>
-          <Button
-            variant="primary"
-            disabled={!hasRecorded && recordingSeconds === 0}
-            onClick={handleSave}
-            className="gap-2"
-          >
-            <CheckCircle2 className="h-4 w-4" />
-            Save Practice Recording
-          </Button>
+        <div className="flex items-center justify-between gap-3 pt-4 border-t border-[#E7EFF2] dark:border-[#304653]">
+          <span className="text-[11px] text-stone/70 dark:text-[#BDCBD2]/70">
+            Recordings remain private unless you choose to share with your clinician.
+          </span>
+
+          <div className="flex items-center gap-2.5">
+            <Button
+              variant="outline"
+              onClick={() => {
+                cleanupMedia();
+                onClose();
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="primary"
+              disabled={micState !== "recorded" && recordingSeconds === 0}
+              onClick={handleSave}
+              className="gap-2"
+            >
+              <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
+              <span>Save Practice Recording</span>
+            </Button>
+          </div>
         </div>
       </div>
     </Modal>

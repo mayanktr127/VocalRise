@@ -28,6 +28,7 @@ export interface RecordingItem {
   therapistName?: string;
   confidenceRating: number; // 1-5
   waveformSim: number[]; // simulated amplitude data for visualizer
+  audioUrl?: string; // in-memory object URL for real recorded playback
 }
 
 export interface JournalEntry {

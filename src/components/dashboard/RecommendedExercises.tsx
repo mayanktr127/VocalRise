@@ -22,60 +22,63 @@ export function RecommendedExercises({
   const filtered = exercises.filter((ex) => ex.pathway === pathway);
 
   return (
-    <Card className="h-full">
-      <CardHeader className="flex flex-row items-center justify-between pb-4">
+    <Card className="rounded-[28px] border border-[#D5E1E6] bg-white dark:border-[#304653] dark:bg-midnight-surface p-6 sm:p-7 shadow-card h-full text-left transition-colors">
+      <CardHeader className="flex flex-row items-center justify-between pb-4 px-0 pt-0">
         <div>
-          <CardTitle className="text-lg flex items-center gap-2">
-            <BookOpen className="h-5 w-5 text-brand-600 dark:text-brand-400" />
-            Recommended Practice Modules
+          <CardTitle className="font-heading text-lg font-bold flex items-center gap-2 text-midnight dark:text-white">
+            <BookOpen className="h-5 w-5 text-ocean dark:text-softblue" aria-hidden="true" />
+            <span>Recommended Practice Modules</span>
           </CardTitle>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-xs text-stone dark:text-[#BDCBD2] mt-1">
             Curated exercises for {pathway === "stammering" ? "Fluency Shaping & Modification" : "Articulation & Placement"}
           </p>
         </div>
-        <Badge variant={pathway === "stammering" ? "teal" : "cerulean"} className="capitalize">
+        <Badge
+          variant={pathway === "stammering" ? "ocean" : "softblue"}
+          className="capitalize font-semibold text-xs"
+        >
           {pathway} Library
         </Badge>
       </CardHeader>
 
-      <CardContent className="space-y-3">
+      <CardContent className="space-y-3 px-0 pb-0">
         {filtered.map((exercise) => (
           <div
             key={exercise.id}
-            className="group rounded-2xl border border-slate-200/90 bg-white p-4 transition-all hover:border-brand-300 hover:shadow-subtle dark:border-slate-800 dark:bg-slate-900/60 dark:hover:border-slate-700 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+            className="group rounded-2xl border border-[#D5E1E6] bg-porcelain p-4 transition-all hover:border-ocean/40 hover:shadow-subtle dark:border-[#304653] dark:bg-midnight-deep flex flex-col sm:flex-row sm:items-center justify-between gap-4"
           >
             <div className="space-y-1.5 flex-1">
               <div className="flex flex-wrap items-center gap-2">
                 <Badge
                   variant={
                     exercise.difficulty === "Gentle"
-                      ? "success"
+                      ? "mist"
                       : exercise.difficulty === "Moderate"
-                      ? "teal"
-                      : "warning"
+                      ? "ocean"
+                      : "terracotta"
                   }
                   className="text-[10px]"
                 >
                   {exercise.difficulty}
                 </Badge>
-                <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                <span className="text-xs text-stone dark:text-[#BDCBD2] font-medium">
                   {exercise.category}
                 </span>
-                <span className="text-xs text-slate-400">•</span>
-                <span className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1">
-                  <Clock className="h-3 w-3" /> {exercise.estimatedMinutes} mins
+                <span className="text-xs text-stone/50">•</span>
+                <span className="text-xs text-stone dark:text-[#BDCBD2] flex items-center gap-1 font-mono">
+                  <Clock className="h-3 w-3" aria-hidden="true" /> {exercise.estimatedMinutes} mins
                 </span>
                 {exercise.completedToday && (
-                  <span className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-700 bg-emerald-50 dark:bg-emerald-950/60 dark:text-emerald-300 px-2 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800">
-                    <CheckCircle2 className="h-3 w-3" /> Done Today
+                  <span className="inline-flex items-center gap-1 text-[11px] font-medium text-ocean bg-mist dark:bg-midnight-surface dark:text-softblue px-2 py-0.5 rounded-full border border-ocean/20">
+                    <CheckCircle2 className="h-3 w-3" aria-hidden="true" /> Done Today
                   </span>
                 )}
               </div>
 
-              <h4 className="text-sm font-semibold text-slate-900 dark:text-slate-100 group-hover:text-brand-700 dark:group-hover:text-brand-400 transition-colors">
+              <h4 className="font-heading text-sm font-bold text-midnight dark:text-white group-hover:text-ocean dark:group-hover:text-softblue transition-colors">
                 {exercise.title}
               </h4>
-              <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed">
+              <p className="text-xs text-stone dark:text-[#BDCBD2] line-clamp-2 leading-relaxed">
                 {exercise.description}
               </p>
             </div>
@@ -84,10 +87,10 @@ export function RecommendedExercises({
               size="sm"
               variant="outline"
               onClick={() => onSelectExercise(exercise)}
-              className="group-hover:bg-brand-600 group-hover:text-white group-hover:border-brand-600 text-xs shrink-0 gap-1.5"
+              className="group-hover:bg-ocean group-hover:text-white group-hover:border-ocean text-xs shrink-0 gap-1.5 font-semibold"
             >
-              <Play className="h-3.5 w-3.5 fill-current" />
-              Practice
+              <Play className="h-3.5 w-3.5 fill-current" aria-hidden="true" />
+              <span>Practice</span>
             </Button>
           </div>
         ))}

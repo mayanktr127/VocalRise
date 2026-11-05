@@ -37,6 +37,7 @@ export default function UserDashboardPage() {
     title: string;
     duration: number;
     notes: string;
+    audioUrl?: string;
   }) => {
     const newRecording: RecordingItem = {
       id: `rec_${Date.now()}`,
@@ -46,15 +47,35 @@ export default function UserDashboardPage() {
       pathway: currentPathway,
       exerciseTitle: activeExerciseForStudio?.title || "Technique Practice",
       notes: data.notes,
-      therapistStatus: "Pending Review",
+      therapistStatus: "Private (Self-Practice)",
       confidenceRating: 4,
       waveformSim: [25, 45, 65, 80, 50, 30, 60, 85, 70, 40, 55, 75, 45, 30],
+      audioUrl: data.audioUrl,
     };
     setRecordings([newRecording, ...recordings]);
   };
 
+  const handleDeleteRecording = (id: string) => {
+    setRecordings((prev) => prev.filter((r) => r.id !== id));
+  };
+
+  const handleToggleShare = (id: string) => {
+    setRecordings((prev) =>
+      prev.map((r) => {
+        if (r.id === id) {
+          const nextStatus =
+            r.therapistStatus === "Private (Self-Practice)"
+              ? ("Pending Review" as const)
+              : ("Private (Self-Practice)" as const);
+          return { ...r, therapistStatus: nextStatus };
+        }
+        return r;
+      })
+    );
+  };
+
   return (
-    <div className="flex-1 flex flex-col lg:flex-row min-h-[calc(100vh-4rem)] bg-slate-50/50 dark:bg-slate-950 transition-colors">
+    <div className="flex-1 flex flex-col lg:flex-row min-h-[calc(100vh-4rem)] bg-[#F7F9F8] dark:bg-[#111D25] text-midnight dark:text-[#F2F6F7] transition-colors">
       {/* Navigation Sidebar */}
       <DashboardSidebar
         user={{ ...MOCK_USER, pathway: currentPathway }}
@@ -103,7 +124,11 @@ export default function UserDashboardPage() {
         {/* Bottom Grid: Recent Recordings & Confidence Journal */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           <div className="lg:col-span-6">
-            <RecentRecordings recordings={recordings} />
+            <RecentRecordings
+              recordings={recordings}
+              onDeleteRecording={handleDeleteRecording}
+              onToggleShare={handleToggleShare}
+            />
           </div>
           <div className="lg:col-span-6">
             <ConfidenceJournal
@@ -124,4 +149,3 @@ export default function UserDashboardPage() {
     </div>
   );
 }
-

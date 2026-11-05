@@ -106,7 +106,7 @@ export function ThemeToggle({
       aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
       title={isDark ? "Switch to light theme" : "Switch to dark theme"}
       className={cn(
-        "relative inline-flex items-center justify-center p-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-slate-100 dark:hover:bg-slate-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500",
+        "relative inline-flex items-center justify-center p-2 rounded-xl text-stone hover:text-midnight hover:bg-mist/60 dark:text-[#BDCBD2] dark:hover:text-white dark:hover:bg-midnight-surface transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean dark:focus-visible:ring-softblue",
         className
       )}
     >

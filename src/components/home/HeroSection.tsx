@@ -322,7 +322,7 @@ export function HeroSection() {
             />
 
             {/* -----------------------------------------------------------------------
-                FLOATING CARD 1: CLINICIAN REVIEW (Staggered Entrance + Gentle Float)
+                FLOATING CARD 1: CLINICIAN SHARING (Staggered Entrance + Gentle Float)
                ----------------------------------------------------------------------- */}
             <motion.div
               variants={floatingCard1Variants}
@@ -347,23 +347,28 @@ export function HeroSection() {
                   </div>
                   <div className="min-w-0">
                     <p className="text-xs font-semibold text-midnight dark:text-white truncate">
-                      Sarah Jenkins, SLT
+                      Clinician Collaboration
                     </p>
                     <p className="text-[10px] text-stone dark:text-[#BDCBD2] flex items-center gap-1">
                       <CheckCircle2 className="h-3 w-3 text-[#16766E] dark:text-[#2DD4BF]" aria-hidden="true" />
-                      <span>RCSLT Specialist</span>
+                      <span>Optional SLT Bridge</span>
                     </p>
                   </div>
                 </div>
-                <p className="text-[11px] text-stone dark:text-[#BDCBD2] leading-snug italic bg-mist/50 dark:bg-midnight-deep/60 p-2 rounded-lg border border-[#E7EFF2] dark:border-[#243746]">
-                  &ldquo;Remarkable soft onset ease on initial vowels today. Noticeably reduced jaw tension.&rdquo;
-                </p>
+                <div className="bg-mist/50 dark:bg-midnight-deep/60 p-2.5 rounded-lg border border-[#E7EFF2] dark:border-[#243746] space-y-1">
+                  <p className="text-[10px] font-semibold text-ocean dark:text-[#83B5CC]">
+                    Asynchronous Review Feature
+                  </p>
+                  <p className="text-[11px] text-stone dark:text-[#BDCBD2] leading-snug">
+                    Share select practice drills with your qualified speech-language therapist for guidance between sessions.
+                  </p>
+                </div>
                 <div className="flex items-center justify-between text-[10px] text-stone dark:text-[#BDCBD2] pt-0.5">
-                  <span className="inline-flex items-center gap-1 font-semibold text-ocean dark:text-[#83B5CC]">
+                  <span className="inline-flex items-center gap-1 font-semibold text-[#16766E] dark:text-[#2DD4BF]">
                     <FileCheck2 className="h-3 w-3" aria-hidden="true" />
-                    <span>Shared Clinical Review</span>
+                    <span>Client-Controlled Sharing</span>
                   </span>
-                  <span>10:45 AM</span>
+                  <span className="italic">*Preview</span>
                 </div>
               </motion.div>
             </motion.div>
@@ -499,7 +504,7 @@ export function HeroSection() {
             </motion.div>
 
             {/* -----------------------------------------------------------------------
-                FLOATING CARD 2: TECHNIQUE METRIC (Staggered Entrance + Gentle Float)
+                FLOATING CARD 2: TODAY'S PRACTICE SESSION (Illustrative Routine Preview)
                ----------------------------------------------------------------------- */}
             <motion.div
               variants={floatingCard2Variants}
@@ -519,37 +524,39 @@ export function HeroSection() {
               >
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex items-center gap-1.5">
-                    <Sparkles className="h-4 w-4 text-[#A8533E]" aria-hidden="true" />
+                    <CheckCircle2 className="h-4 w-4 text-[#16766E] dark:text-[#2DD4BF]" aria-hidden="true" />
                     <span className="text-xs font-bold text-midnight dark:text-white">
-                      Technique Ease Metric
+                      Today&apos;s Practice Routine
                     </span>
                   </div>
-                  <span className="px-2 py-0.5 rounded-full bg-terracotta/15 text-[#9C5A48] dark:text-[#D69A84] text-[10px] font-semibold border border-terracotta/30">
-                    Low Strain
+                  <span className="px-2 py-0.5 rounded-full bg-mist dark:bg-midnight text-stone dark:text-[#BDCBD2] text-[10px] font-semibold border border-[#D5E1E6] dark:border-[#304653]">
+                    Self-Paced
                   </span>
                 </div>
 
-                <div className="flex items-baseline gap-2">
-                  <span className="font-heading text-2xl font-bold text-midnight dark:text-white">
-                    88%
-                  </span>
-                  <span className="text-[11px] text-[#16766E] dark:text-[#2DD4BF] font-semibold">
-                    Smooth Phonation
-                  </span>
-                </div>
-
-                {/* Progress Mini Graph (Animated width) */}
                 <div className="space-y-1">
-                  <div className="h-2 w-full rounded-full bg-[#E7EFF2] dark:bg-midnight overflow-hidden flex">
-                    <motion.div
-                      initial={shouldReduceMotion ? { width: "88%" } : { width: 0 }}
-                      animate={{ width: "88%" }}
-                      transition={{ duration: shouldReduceMotion ? 0 : 0.85, delay: shouldReduceMotion ? 0 : 0.95, ease: "easeOut" }}
-                      className="h-full bg-gradient-to-r from-[#A8533E] via-ocean to-[#14B8A6] rounded-full"
-                    />
+                  <div className="flex items-baseline justify-between">
+                    <span className="font-heading text-lg font-bold text-midnight dark:text-white">
+                      2 of 3 Drills Done
+                    </span>
+                    <span className="text-[11px] font-semibold text-[#16766E] dark:text-[#2DD4BF]">
+                      Calm Pace
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-stone dark:text-[#BDCBD2]">
+                    Next: Prolonged Vowels &amp; Light Contact
+                  </p>
+                </div>
+
+                {/* Session Step Indicators */}
+                <div className="space-y-1 pt-0.5">
+                  <div className="flex items-center gap-1.5" aria-hidden="true">
+                    <div className="h-1.5 flex-1 rounded-full bg-[#16766E] dark:bg-[#2DD4BF]" />
+                    <div className="h-1.5 flex-1 rounded-full bg-[#16766E] dark:bg-[#2DD4BF]" />
+                    <div className="h-1.5 flex-1 rounded-full bg-[#E7EFF2] dark:bg-midnight" />
                   </div>
                   <p className="text-[10px] text-stone dark:text-[#BDCBD2]">
-                    *Illustrative practice feedback metric
+                    *Illustrative personal practice goal
                   </p>
                 </div>
               </motion.div>

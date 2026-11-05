@@ -446,7 +446,7 @@ export default function HomePage() {
                 </p>
               </div>
 
-              {/* Honest illustrative review mockup */}
+              {/* Honest illustrative feature preview */}
               <div className="rounded-2xl border border-[#D5E1E6] bg-white dark:border-[#304653] dark:bg-midnight-surface p-4 sm:p-5 space-y-3 shadow-subtle">
                 <div className="flex items-center justify-between text-xs">
                   <div className="flex items-center gap-2">
@@ -454,14 +454,22 @@ export default function HomePage() {
                       SLT
                     </div>
                     <div>
-                      <span className="font-semibold text-midnight dark:text-white block">Dr. Sarah Chen, SLT</span>
-                      <span className="text-[10px] text-stone dark:text-[#BDCBD2]">Prototype Demonstration Note</span>
+                      <span className="font-semibold text-midnight dark:text-white block">Speech-Language Therapist Deck</span>
+                      <span className="text-[10px] text-stone dark:text-[#BDCBD2]">Illustrative Feature Demonstration</span>
                     </div>
                   </div>
-                  <Badge variant="mist" className="text-[10px]">Timestamp 00:12</Badge>
+                  <Badge variant="mist" className="text-[10px]">Feature Preview</Badge>
                 </div>
-                <p className="text-xs text-stone dark:text-[#BDCBD2] italic leading-relaxed bg-porcelain dark:bg-midnight-deep p-3 rounded-xl border border-[#E7EFF2] dark:border-[#304653]">
-                  &ldquo;Notice how releasing airflow before the vowel dissipated tension on &apos;open&apos;. Maintain this exact pacing in your morning micro-drill.&rdquo;
+                <div className="text-xs text-stone dark:text-[#BDCBD2] leading-relaxed bg-porcelain dark:bg-midnight-deep p-3 rounded-xl border border-[#E7EFF2] dark:border-[#304653] space-y-1.5">
+                  <p className="font-semibold text-midnight dark:text-white">
+                    Sample Asynchronous Clinician Note:
+                  </p>
+                  <p>
+                    Clinicians can pin feedback to specific timestamps on client-shared audio clips—for example, encouraging airflow release before vowel onset or suggesting gentle vocal contact adjustments.
+                  </p>
+                </div>
+                <p className="text-[11px] text-stone/80 dark:text-[#BDCBD2]/80 italic">
+                  *Illustrative interface demonstration. VocalRise does not fabricate patient endorsements or clinical results.
                 </p>
               </div>
 

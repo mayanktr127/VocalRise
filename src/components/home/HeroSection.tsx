@@ -17,12 +17,89 @@ import {
   FileCheck2,
   Smile,
   Volume2,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
-import { motion, useReducedMotion, type Variants } from "motion/react";
+import { motion, AnimatePresence, useReducedMotion, type Variants } from "motion/react";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+
+// ---------------------------------------------------------------------------
+// 4 Photographic Carousel Slides Representing Authentic Human Connection
+// Sourced with commercial-use licensing; attributions recorded in:
+// docs/superpowers/specs/hero-photography-attributions.md
+// ---------------------------------------------------------------------------
+const heroSlides = [
+  {
+    id: "conversation",
+    src: "/images/hero/carousel-1-conversation.webp",
+    alt: "Two adults engaged in natural, relaxed everyday conversation in a warmly lit setting",
+    badge: "Everyday Connection",
+    theme: "Natural Communication",
+    icon: Smile,
+  },
+  {
+    id: "practice",
+    src: "/images/hero/carousel-2-practice.webp",
+    alt: "Individual practicing speech techniques independently in a calm personal space",
+    badge: "Independent Practice",
+    theme: "Self-Paced Techniques",
+    icon: Mic,
+  },
+  {
+    id: "social",
+    src: "/images/hero/carousel-3-social.webp",
+    alt: "Diverse adults communicating comfortably and connecting in a positive social gathering",
+    badge: "Social Confidence",
+    theme: "Ease Without Avoidance",
+    icon: Sparkles,
+  },
+  {
+    id: "therapist",
+    src: "/images/hero/carousel-4-therapist.webp",
+    alt: "Speech-Language Therapist consulting supportively with a client in a modern clinic setting",
+    badge: "Clinical Collaboration",
+    theme: "Optional SLT Guidance",
+    icon: Stethoscope,
+  },
+];
 
 export function HeroSection() {
   const shouldReduceMotion = useReducedMotion();
+
+  // Carousel State & Interactivity Controls
+  const [currentSlide, setCurrentSlide] = React.useState(0);
+  const [isHoveredOrFocused, setIsHoveredOrFocused] = React.useState(false);
+  const [isTabVisible, setIsTabVisible] = React.useState(true);
+
+  // Monitor tab visibility to prevent background timer execution
+  React.useEffect(() => {
+    const handleVisibilityChange = () => {
+      setIsTabVisible(document.visibilityState === "visible");
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
+
+  // Autoplay timer: advances every 5.5s; pauses on hover, keyboard focus, background tab, or reduced motion
+  React.useEffect(() => {
+    if (shouldReduceMotion || isHoveredOrFocused || !isTabVisible) {
+      return;
+    }
+
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 5500);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, [shouldReduceMotion, isHoveredOrFocused, isTabVisible]);
+
+  const activeSlide = heroSlides[currentSlide];
+  const CurrentSlideIcon = activeSlide.icon;
 
   // Waveform bars data for the realistic audio visualizer
   const waveformBars = [
@@ -404,26 +481,138 @@ export function HeroSection() {
               {/* Window Body: Visual Speaker & Real-time Practice Surface */}
               <div className="p-4 sm:p-5 space-y-4">
                 
-                {/* Speaker Visual Frame with Ambient Ripple Overlay */}
-                <div className="relative w-full h-[240px] sm:h-[280px] rounded-2xl overflow-hidden bg-gradient-to-br from-mist/70 via-porcelain to-white dark:from-midnight dark:via-midnight-surface dark:to-midnight-deep flex items-center justify-center border border-[#D5E1E6]/70 dark:border-[#304653]/70">
-                  <Image
-                    src="/images/hero/candid-speaker.svg"
-                    alt="Speaker practicing gentle vocal onset techniques in a calm, supportive setting"
-                    width={480}
-                    height={380}
-                    priority
-                    className="w-full h-full object-contain p-2"
+                {/* Photographic Hero Carousel Representing Human Connection & Practice */}
+                <div
+                  className="relative w-full h-[250px] sm:h-[285px] rounded-2xl overflow-hidden bg-midnight dark:bg-midnight-deep border border-[#D5E1E6]/80 dark:border-[#304653]/80 group select-none shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean"
+                  role="region"
+                  aria-roledescription="carousel"
+                  aria-label="VocalRise human connection and practice photography carousel"
+                  onMouseEnter={() => setIsHoveredOrFocused(true)}
+                  onMouseLeave={() => setIsHoveredOrFocused(false)}
+                  onFocusCapture={() => setIsHoveredOrFocused(true)}
+                  onBlurCapture={() => setIsHoveredOrFocused(false)}
+                  onKeyDown={(e) => {
+                    if (e.key === "ArrowLeft") {
+                      e.preventDefault();
+                      setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
+                    } else if (e.key === "ArrowRight") {
+                      e.preventDefault();
+                      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+                    }
+                  }}
+                  tabIndex={0}
+                >
+                  {/* Crossfading Slide Photos via AnimatePresence */}
+                  <AnimatePresence mode="popLayout" initial={false}>
+                    <motion.div
+                      key={currentSlide}
+                      id={`hero-slide-panel-${currentSlide}`}
+                      role="group"
+                      aria-roledescription="slide"
+                      aria-label={`Slide ${currentSlide + 1} of ${heroSlides.length}: ${activeSlide.badge}`}
+                      className="absolute inset-0 w-full h-full"
+                      initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
+                      transition={{ duration: shouldReduceMotion ? 0 : 0.6, ease: "easeInOut" }}
+                    >
+                      <Image
+                        src={activeSlide.src}
+                        alt={activeSlide.alt}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 540px"
+                        priority={currentSlide === 0}
+                        className="object-cover object-center"
+                      />
+                    </motion.div>
+                  </AnimatePresence>
+
+                  {/* Gradient Scrim for Top/Bottom Badge Contrast */}
+                  <div
+                    className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-black/35 pointer-events-none"
+                    aria-hidden="true"
                   />
 
-                  {/* Micro-Pill Overlay on Visual */}
-                  <div className="absolute top-3 left-3 px-2.5 py-1 rounded-lg bg-white/90 dark:bg-midnight/90 border border-[#D5E1E6] dark:border-[#304653] backdrop-blur-md shadow-subtle flex items-center gap-1.5">
-                    <Smile className="h-3.5 w-3.5 text-[#16766E] dark:text-[#2DD4BF]" aria-hidden="true" />
-                    <span className="text-[10px] font-semibold text-midnight dark:text-white">Natural Pace</span>
+                  {/* Top Overlay Badges */}
+                  <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2 pointer-events-none z-10">
+                    <div className="px-2.5 py-1 rounded-lg bg-midnight/85 dark:bg-midnight-deep/90 text-white border border-white/20 backdrop-blur-md shadow-subtle flex items-center gap-1.5 pointer-events-auto">
+                      <CurrentSlideIcon className="h-3.5 w-3.5 text-sea-glass" aria-hidden="true" />
+                      <span className="text-[10px] font-semibold tracking-wide">
+                        {activeSlide.badge}
+                      </span>
+                    </div>
+
+                    <div className="px-2.5 py-1 rounded-lg bg-white/90 dark:bg-midnight/90 text-midnight dark:text-white border border-[#D5E1E6] dark:border-[#304653] backdrop-blur-md shadow-subtle flex items-center gap-1.5 pointer-events-auto">
+                      <span
+                        className="h-1.5 w-1.5 rounded-full bg-ocean dark:bg-sea-glass animate-pulse motion-reduce:animate-none"
+                        aria-hidden="true"
+                      />
+                      <span className="text-[10px] font-medium">
+                        {activeSlide.theme}
+                      </span>
+                    </div>
                   </div>
 
-                  <div className="absolute bottom-3 right-3 px-2.5 py-1 rounded-lg bg-midnight/80 dark:bg-midnight-deep/90 text-white backdrop-blur-md shadow-subtle flex items-center gap-1.5">
-                    <Volume2 className="h-3.5 w-3.5 text-[#83B5CC]" aria-hidden="true" />
-                    <span className="text-[10px] font-medium">Acoustic Feedback Ready</span>
+                  {/* Bottom Navigation & Accessible Indicator Controls */}
+                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-2 z-10">
+                    <p className="text-[11px] font-medium text-white/95 drop-shadow-sm truncate max-w-[50%] sm:max-w-[62%]">
+                      {activeSlide.alt}
+                    </p>
+
+                    <div
+                      className="flex items-center gap-1.5 bg-midnight/85 dark:bg-midnight-deep/90 backdrop-blur-md border border-white/20 rounded-full px-2 py-1 shadow-subtle shrink-0"
+                      role="tablist"
+                      aria-label="Photography carousel slides"
+                    >
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
+                        }}
+                        aria-label="Previous photograph"
+                        className="h-5 w-5 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sea-glass transition-colors"
+                      >
+                        <ChevronLeft className="h-3.5 w-3.5" aria-hidden="true" />
+                      </button>
+
+                      {heroSlides.map((slide, idx) => {
+                        const isCurrent = currentSlide === idx;
+                        return (
+                          <button
+                            key={slide.id}
+                            type="button"
+                            role="tab"
+                            id={`hero-slide-tab-${idx}`}
+                            aria-selected={isCurrent}
+                            aria-controls={`hero-slide-panel-${idx}`}
+                            aria-label={`Slide ${idx + 1} of ${heroSlides.length}: ${slide.badge}`}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setCurrentSlide(idx);
+                            }}
+                            className={cn(
+                              "h-2 rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sea-glass focus-visible:ring-offset-1 focus-visible:ring-offset-midnight",
+                              isCurrent
+                                ? "w-5 bg-white shadow-sm"
+                                : "w-2 bg-white/40 hover:bg-white/70"
+                            )}
+                          />
+                        );
+                      })}
+
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+                        }}
+                        aria-label="Next photograph"
+                        className="h-5 w-5 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sea-glass transition-colors"
+                      >
+                        <ChevronRight className="h-3.5 w-3.5" aria-hidden="true" />
+                      </button>
+                    </div>
                   </div>
                 </div>
 

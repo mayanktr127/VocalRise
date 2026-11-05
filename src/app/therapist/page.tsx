@@ -13,6 +13,8 @@ import {
   Activity,
   Sliders,
   Sparkles,
+  Info,
+  LogOut,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -33,65 +35,78 @@ export default function TherapistDashboardPage() {
   const patientRecording = MOCK_RECORDINGS[0];
 
   return (
-    <div className="flex-1 min-h-[calc(100vh-4rem)] bg-slate-50/60 dark:bg-slate-950 p-4 sm:p-6 lg:p-8 transition-colors">
+    <div className="flex-1 min-h-[calc(100vh-4rem)] bg-[#F7F9F8] dark:bg-[#111D25] text-midnight dark:text-[#F2F6F7] p-4 sm:p-6 lg:p-8 transition-colors text-left">
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Clinician Welcome Header */}
-        <div className="rounded-3xl border border-slate-200/90 bg-gradient-to-br from-white via-slate-50 to-cerulean-50/40 dark:border-slate-800 dark:from-slate-900 dark:via-slate-900 dark:to-cerulean-950/20 p-6 sm:p-8 shadow-sm">
+        <div className="rounded-[28px] border border-[#D5E1E6] bg-white dark:border-[#304653] dark:bg-midnight-surface p-6 sm:p-8 shadow-card space-y-6">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-            <div className="space-y-2.5">
-              <div className="flex flex-wrap items-center gap-2">
-                <Badge variant="cerulean" className="px-3 py-1 text-xs uppercase tracking-wide font-semibold">
-                  Clinician Practice Portal
+            <div className="space-y-3">
+              <div className="flex flex-wrap items-center gap-2.5">
+                <Badge variant="ocean" className="px-3 py-1 text-xs uppercase tracking-wide font-semibold">
+                  Prototype Mode — Demo Account
                 </Badge>
-                <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-                  Harbor Communication & Fluency Center
+                <span className="text-xs text-stone dark:text-[#BDCBD2] font-medium bg-porcelain dark:bg-midnight-deep px-3 py-1 rounded-full border border-[#D5E1E6] dark:border-[#304653]">
+                  Harbor Fluency Center (Demonstration Clinic)
                 </span>
               </div>
 
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
-                Welcome, <span className="text-cerulean-700 dark:text-cerulean-400">Dr. Sarah Chen</span>, SLT, CCC-SLP
+              <h1 className="font-heading text-2xl sm:text-3xl font-bold tracking-tight text-midnight dark:text-white">
+                Welcome, <span className="text-ocean dark:text-softblue">Dr. Sarah Chen</span>, SLT, CCC-SLP
               </h1>
 
-              <p className="text-sm text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed">
-                Review asynchronous patient recordings, assign tailored fluency and articulation protocols, and track between-session home practice adherence.
+              <p className="text-xs sm:text-sm text-stone dark:text-[#BDCBD2] max-w-2xl leading-relaxed">
+                Asynchronous clinician workspace. Review shared patient recordings, leave timestamped feedback, assign tailored exercises, and monitor between-session practice consistency.
               </p>
             </div>
 
-            {/* Quick Action / Switch view button */}
+            {/* Quick Action Navigation */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
               <Link href="/dashboard">
-                <Button variant="outline" size="md" className="gap-2 bg-white dark:bg-slate-900">
-                  <UserCircle2 className="h-4 w-4 text-brand-600 dark:text-brand-400" />
-                  Preview Patient Experience
+                <Button variant="outline" size="md" className="gap-2 font-semibold">
+                  <UserCircle2 className="h-4 w-4 text-ocean dark:text-softblue" aria-hidden="true" />
+                  <span>Preview Patient Hub</span>
                 </Button>
               </Link>
             </div>
           </div>
 
+          {/* Prototype Honest Disclaimer Banner */}
+          <div className="rounded-2xl border border-ocean/20 bg-mist/60 dark:border-softblue/20 dark:bg-midnight-deep p-3.5 text-xs text-stone dark:text-[#BDCBD2] flex items-start gap-2.5 shadow-subtle">
+            <Info className="h-4 w-4 text-ocean dark:text-softblue shrink-0 mt-0.5" aria-hidden="true" />
+            <div className="space-y-0.5">
+              <strong className="text-midnight dark:text-white block">
+                Demonstration Caseload Data Notice
+              </strong>
+              <p className="text-[11px] leading-relaxed">
+                All patient profiles, audio clips, and clinician notes below are simulated demonstration datasets. In this prototype, recordings and assignments are processed locally in your browser without external server transmission.
+              </p>
+            </div>
+          </div>
+
           {/* Quick Metrics KPI Bar */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 pt-6 border-t border-slate-200/80 dark:border-slate-800">
-            <div className="bg-white dark:bg-slate-900 p-3.5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-subtle">
-              <div className="text-xs font-medium text-slate-500 dark:text-slate-400">Active Caseload</div>
-              <div className="text-2xl font-bold text-slate-900 dark:text-slate-100 mt-1">5 Clients</div>
-              <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">3 Stammering • 2 Articulation</div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-2">
+            <div className="bg-porcelain dark:bg-midnight-deep p-4 rounded-2xl border border-[#D5E1E6] dark:border-[#304653] shadow-subtle space-y-1">
+              <div className="text-xs font-medium text-stone dark:text-[#BDCBD2]">Active Caseload</div>
+              <div className="font-heading text-2xl font-bold text-midnight dark:text-white">5 Clients</div>
+              <div className="text-[11px] text-stone/80 dark:text-[#BDCBD2]/80">3 Stammering • 2 Articulation</div>
             </div>
 
-            <div className="bg-white dark:bg-slate-900 p-3.5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-subtle">
-              <div className="text-xs font-medium text-slate-500 dark:text-slate-400">Pending Audio Reviews</div>
-              <div className="text-2xl font-bold text-amber-600 dark:text-amber-400 mt-1">3 Submissions</div>
-              <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Avg turnaround 8 hrs</div>
+            <div className="bg-porcelain dark:bg-midnight-deep p-4 rounded-2xl border border-[#D5E1E6] dark:border-[#304653] shadow-subtle space-y-1">
+              <div className="text-xs font-medium text-stone dark:text-[#BDCBD2]">Pending Audio Reviews</div>
+              <div className="font-heading text-2xl font-bold text-terracotta">3 Submissions</div>
+              <div className="text-[11px] text-stone/80 dark:text-[#BDCBD2]/80">Avg turnaround ~8 hrs</div>
             </div>
 
-            <div className="bg-white dark:bg-slate-900 p-3.5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-subtle">
-              <div className="text-xs font-medium text-slate-500 dark:text-slate-400">Caseload Adherence</div>
-              <div className="text-2xl font-bold text-emerald-600 dark:text-emerald-400 mt-1">83.2%</div>
-              <div className="text-[11px] text-emerald-700 dark:text-emerald-400 mt-0.5">+4% from last week</div>
+            <div className="bg-porcelain dark:bg-midnight-deep p-4 rounded-2xl border border-[#D5E1E6] dark:border-[#304653] shadow-subtle space-y-1">
+              <div className="text-xs font-medium text-stone dark:text-[#BDCBD2]">Caseload Practice Consistency</div>
+              <div className="font-heading text-2xl font-bold text-ocean dark:text-softblue">83.2%</div>
+              <div className="text-[11px] text-stone/80 dark:text-[#BDCBD2]/80">+4% home consistency</div>
             </div>
 
-            <div className="bg-white dark:bg-slate-900 p-3.5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-subtle">
-              <div className="text-xs font-medium text-slate-500 dark:text-slate-400">Upcoming Live Session</div>
-              <div className="text-lg font-bold text-slate-900 dark:text-slate-100 mt-1 truncate">Julian Mercer</div>
-              <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Nov 08 at 10:00 AM</div>
+            <div className="bg-porcelain dark:bg-midnight-deep p-4 rounded-2xl border border-[#D5E1E6] dark:border-[#304653] shadow-subtle space-y-1">
+              <div className="text-xs font-medium text-stone dark:text-[#BDCBD2]">Upcoming Consultation</div>
+              <div className="font-heading text-lg font-bold text-midnight dark:text-white truncate">Julian Mercer</div>
+              <div className="text-[11px] text-stone/80 dark:text-[#BDCBD2]/80">Nov 08 at 10:00 AM</div>
             </div>
           </div>
         </div>
@@ -113,7 +128,7 @@ export default function TherapistDashboardPage() {
               patientName={selectedPatient.name}
               recording={patientRecording}
               onSendFeedback={(msg) => {
-                // illustrative mock feedback
+                // Illustrative mock feedback handler
               }}
             />
           </div>

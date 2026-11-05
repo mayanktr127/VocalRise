@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #F7F9F8;
+    --foreground: #243746;
+    --card: #FFFFFF;
+    --card-foreground: #243746;
+    --border: #D5E1E6;
+    --muted: #E7EFF2;
+    --muted-foreground: #4B555A;
+    --accent: #315F78;
+    --accent-foreground: #FFFFFF;
+    --terracotta: #C9826D;
+  }
+
+  .dark {
+    --background: #111D25;
+    --foreground: #F2F6F7;
+    --card: #192A35;
+    --card-foreground: #F2F6F7;
+    --border: #304653;
+    --muted: #15232C;
+    --muted-foreground: #BDCBD2;
+    --accent: #83B5CC;
+    --accent-foreground: #111D25;
+    --terracotta: #D69A84;
+  }
+
+  body {
+    @apply bg-[#F7F9F8] text-[#243746] dark:bg-[#111D25] dark:text-[#F2F6F7] antialiased font-sans selection:bg-mist selection:text-ocean dark:selection:bg-midnight dark:selection:text-softblue transition-colors duration-200;
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading tracking-tight;
+  }
+
+  /* Smooth focus states for accessibility (WCAG 2.2 AA) */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-ocean ring-offset-2 ring-offset-[#F7F9F8] dark:ring-[#83B5CC] dark:ring-offset-[#111D25];
+  }
+}
+
+/* Subtle Atlantic custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F0F5F7;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #111D25;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #A9C4D1;
+  border-radius: 9999px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #304653;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #315F78;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #456170;
+}

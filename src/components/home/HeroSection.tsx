@@ -29,77 +29,136 @@ export function HeroSection() {
     14, 26, 38, 48, 62, 54, 40, 28, 44, 58, 64, 50, 36, 48, 60, 42, 30, 22, 16, 10
   ];
 
-  // Motion variants that gracefully respect prefers-reduced-motion
-  const containerVariants: Variants = {
-    hidden: { opacity: shouldReduceMotion ? 1 : 0 },
+  // Coordinated Hero Entrance Variants
+  const labelVariants: Variants = {
+    hidden: { opacity: shouldReduceMotion ? 1 : 0, y: shouldReduceMotion ? 0 : 8 },
     visible: {
       opacity: 1,
+      y: 0,
+      transition: { duration: shouldReduceMotion ? 0 : 0.4, delay: shouldReduceMotion ? 0 : 0.05, ease: "easeOut" },
+    },
+  };
+
+  const headingVariants: Variants = {
+    hidden: { opacity: shouldReduceMotion ? 1 : 0, y: shouldReduceMotion ? 0 : 22 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: shouldReduceMotion ? 0 : 0.55, delay: shouldReduceMotion ? 0 : 0.18, ease: [0.21, 0.47, 0.32, 0.98] },
+    },
+  };
+
+  const descriptionVariants: Variants = {
+    hidden: { opacity: shouldReduceMotion ? 1 : 0, y: shouldReduceMotion ? 0 : 16 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: shouldReduceMotion ? 0 : 0.5, delay: shouldReduceMotion ? 0 : 0.32, ease: "easeOut" },
+    },
+  };
+
+  const ctaVariants: Variants = {
+    hidden: { opacity: shouldReduceMotion ? 1 : 0, y: shouldReduceMotion ? 0 : 16 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: shouldReduceMotion ? 0 : 0.45, delay: shouldReduceMotion ? 0 : 0.44, ease: "easeOut" },
+    },
+  };
+
+  const clinicianLinkVariants: Variants = {
+    hidden: { opacity: shouldReduceMotion ? 1 : 0, y: shouldReduceMotion ? 0 : 12 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: shouldReduceMotion ? 0 : 0.45, delay: shouldReduceMotion ? 0 : 0.54, ease: "easeOut" },
+    },
+  };
+
+  const trustMarkersVariants: Variants = {
+    hidden: { opacity: shouldReduceMotion ? 1 : 0, y: shouldReduceMotion ? 0 : 12 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: shouldReduceMotion ? 0 : 0.45, delay: shouldReduceMotion ? 0 : 0.64, ease: "easeOut" },
+    },
+  };
+
+  // Right column visual container entrance (slides smoothly from right)
+  const heroVisualVariants: Variants = {
+    hidden: {
+      opacity: shouldReduceMotion ? 1 : 0,
+      x: shouldReduceMotion ? 0 : 32,
+      scale: shouldReduceMotion ? 1 : 0.97,
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      scale: 1,
       transition: {
-        staggerChildren: shouldReduceMotion ? 0 : 0.08,
-        delayChildren: shouldReduceMotion ? 0 : 0.05,
+        duration: shouldReduceMotion ? 0 : 0.65,
+        delay: shouldReduceMotion ? 0 : 0.28,
+        ease: [0.21, 0.47, 0.32, 0.98],
       },
     },
   };
 
-  const itemVariants: Variants = {
+  // Staggered floating cards entrance + continuous gentle float loop
+  const floatingCard1Variants: Variants = {
     hidden: {
       opacity: shouldReduceMotion ? 1 : 0,
-      y: shouldReduceMotion ? 0 : 16,
+      y: shouldReduceMotion ? 0 : -20,
+      scale: shouldReduceMotion ? 1 : 0.92,
     },
     visible: {
       opacity: 1,
       y: 0,
+      scale: 1,
       transition: {
-        duration: shouldReduceMotion ? 0 : 0.45,
-        ease: "easeOut",
+        duration: shouldReduceMotion ? 0 : 0.5,
+        delay: shouldReduceMotion ? 0 : 0.65,
+        ease: [0.21, 0.47, 0.32, 0.98],
       },
     },
   };
 
-  const floatingVariants1: Variants = {
-    animate: shouldReduceMotion
-      ? { y: 0 }
-      : {
-          y: [0, -6, 0],
-          transition: {
-            duration: 5.5,
-            repeat: Infinity,
-            ease: "easeInOut",
-          },
-        },
+  const floatingCard2Variants: Variants = {
+    hidden: {
+      opacity: shouldReduceMotion ? 1 : 0,
+      y: shouldReduceMotion ? 0 : 20,
+      scale: shouldReduceMotion ? 1 : 0.92,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: shouldReduceMotion ? 0 : 0.5,
+        delay: shouldReduceMotion ? 0 : 0.82,
+        ease: [0.21, 0.47, 0.32, 0.98],
+      },
+    },
   };
 
-  const floatingVariants2: Variants = {
-    animate: shouldReduceMotion
-      ? { y: 0 }
-      : {
-          y: [0, 6, 0],
-          transition: {
-            duration: 6.5,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 0.6,
-          },
-        },
+  const privacyPillVariants: Variants = {
+    hidden: { opacity: shouldReduceMotion ? 1 : 0, y: shouldReduceMotion ? 0 : 10 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: shouldReduceMotion ? 0 : 0.4, delay: shouldReduceMotion ? 0 : 0.95 },
+    },
   };
 
   return (
     <section className="relative overflow-hidden pt-12 pb-20 sm:pt-16 sm:pb-28 lg:pt-20 lg:pb-32 bg-gradient-to-b from-[#EEF4F7] via-[#F7F9F8] to-[#F7F9F8] dark:from-[#0E171E] dark:via-[#111D25] dark:to-[#111D25] transition-colors">
       {/* =========================================================================
           BACKGROUND AMBIENT ATMOSPHERE & GRADIENT MESH
-          Sophisticated oceanic glows with soft teal & coral warmth accents.
          ========================================================================= */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-        {/* Primary Ocean Radial Glow */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[550px] bg-gradient-to-b from-ocean/15 via-softblue/10 to-transparent dark:from-ocean/20 dark:via-[#1E3B4B]/20 dark:to-transparent rounded-full blur-3xl opacity-80 -translate-y-1/3" />
-        
-        {/* Subtle Warm Coral Accent Glow (top-right) */}
         <div className="absolute top-10 right-0 sm:right-10 w-[420px] h-[380px] bg-gradient-to-bl from-terracotta/10 via-[#E89E88]/5 to-transparent dark:from-terracotta/15 dark:via-transparent blur-3xl rounded-full opacity-70" />
-        
-        {/* Subtle Clinical Teal Clarity Glow (bottom-left) */}
         <div className="absolute bottom-10 left-0 w-[400px] h-[340px] bg-gradient-to-tr from-[#14B8A6]/10 via-[#2DD4BF]/5 to-transparent dark:from-[#0D9488]/15 dark:via-transparent blur-2xl rounded-full opacity-60" />
 
-        {/* Ambient Acoustic Soundwave Concentric Rings */}
         <svg
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] opacity-[0.035] dark:opacity-[0.06] pointer-events-none"
           viewBox="0 0 1200 1200"
@@ -118,14 +177,15 @@ export function HeroSection() {
           {/* =========================================================================
               LEFT COLUMN: HERO NARRATIVE & IMPACTFUL ACTIONS
              ========================================================================= */}
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="lg:col-span-6 xl:col-span-7 space-y-6 sm:space-y-7 text-left"
-          >
-            {/* Kicker Pill: Human-Centred Platform */}
-            <motion.div variants={itemVariants} className="flex">
+          <div className="lg:col-span-6 xl:col-span-7 space-y-6 sm:space-y-7 text-left">
+            
+            {/* 1. Small Hero Label: Fades in */}
+            <motion.div
+              variants={labelVariants}
+              initial="hidden"
+              animate="visible"
+              className="flex"
+            >
               <div className="inline-flex items-center gap-2.5 rounded-full border border-ocean/20 bg-white/90 dark:border-[#304653] dark:bg-midnight-surface/90 px-4 py-1.5 text-xs font-medium text-midnight dark:text-[#E2E8F0] shadow-subtle backdrop-blur-md">
                 <span className="relative flex h-2 w-2" aria-hidden="true">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-terracotta opacity-75 motion-reduce:hidden" />
@@ -137,9 +197,11 @@ export function HeroSection() {
               </div>
             </motion.div>
 
-            {/* Main Headline (Exact Required Text) */}
+            {/* 2. Main Heading: Slides up and fades in */}
             <motion.h1
-              variants={itemVariants}
+              variants={headingVariants}
+              initial="hidden"
+              animate="visible"
               className="font-heading text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-bold tracking-tight text-midnight dark:text-white leading-[1.1] sm:leading-[1.08]"
             >
               Your voice. Your pace.{" "}
@@ -147,7 +209,6 @@ export function HeroSection() {
                 <span className="bg-gradient-to-r from-ocean via-[#296887] to-[#147B74] dark:from-[#83B5CC] dark:via-[#A7CEE0] dark:to-[#5EEAD4] bg-clip-text text-transparent">
                   Your journey.
                 </span>
-                {/* Subtle organic curve underline */}
                 <svg
                   className="absolute -bottom-1 sm:-bottom-1.5 left-0 w-full h-2 text-ocean/30 dark:text-[#83B5CC]/40"
                   viewBox="0 0 100 8"
@@ -159,42 +220,63 @@ export function HeroSection() {
               </span>
             </motion.h1>
 
-            {/* Supportive, Dignified Narrative */}
+            {/* 3. Description: Appears after heading */}
             <motion.p
-              variants={itemVariants}
+              variants={descriptionVariants}
+              initial="hidden"
+              animate="visible"
               className="text-base sm:text-lg lg:text-lg text-stone dark:text-[#BDCBD2] max-w-2xl leading-relaxed"
             >
               A supportive, technique-driven practice companion for people who stammer or navigate articulation differences. Designed around your personal communication goals, physical ease, and optional collaboration with qualified Speech-Language Therapists.
             </motion.p>
 
-            {/* Impactful Primary Action Row */}
+            {/* 4. Primary & Secondary CTA Buttons: Appear with slight delay */}
             <motion.div
-              variants={itemVariants}
+              variants={ctaVariants}
+              initial="hidden"
+              animate="visible"
               className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-1 sm:pt-2"
             >
               <Link href="/signup" className="group">
-                <Button
-                  size="lg"
-                  className="w-full sm:w-auto gap-2.5 px-8 shadow-elevated bg-gradient-to-r from-ocean to-[#264A5E] hover:from-[#264A5E] hover:to-[#1E3B4B] dark:from-[#83B5CC] dark:to-[#6C9DB3] dark:text-[#111D25] text-white font-semibold text-base transition-all duration-200"
+                <motion.div
+                  whileHover={shouldReduceMotion ? {} : { y: -2, scale: 1.01 }}
+                  whileTap={shouldReduceMotion ? {} : { scale: 0.98 }}
+                  transition={{ duration: 0.15 }}
                 >
-                  <span>Explore VocalRise</span>
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-                </Button>
+                  <Button
+                    size="lg"
+                    className="w-full sm:w-auto gap-2.5 px-8 shadow-elevated bg-gradient-to-r from-ocean to-[#264A5E] hover:from-[#264A5E] hover:to-[#1E3B4B] dark:from-[#83B5CC] dark:to-[#6C9DB3] dark:text-[#111D25] text-white font-semibold text-base transition-all duration-200"
+                  >
+                    <span>Explore VocalRise</span>
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                  </Button>
+                </motion.div>
               </Link>
               <Link href="/how-it-works">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="w-full sm:w-auto px-6 gap-2 text-midnight dark:text-white border-[#A9C4D1] dark:border-[#304653] hover:bg-mist/60 dark:hover:bg-midnight-surface font-medium"
+                <motion.div
+                  whileHover={shouldReduceMotion ? {} : { y: -2 }}
+                  whileTap={shouldReduceMotion ? {} : { scale: 0.98 }}
+                  transition={{ duration: 0.15 }}
                 >
-                  <Play className="h-3.5 w-3.5 text-ocean dark:text-[#83B5CC]" aria-hidden="true" />
-                  <span>See How It Works</span>
-                </Button>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="w-full sm:w-auto px-6 gap-2 text-midnight dark:text-white border-[#A9C4D1] dark:border-[#304653] hover:bg-mist/60 dark:hover:bg-midnight-surface font-medium"
+                  >
+                    <Play className="h-3.5 w-3.5 text-ocean dark:text-[#83B5CC]" aria-hidden="true" />
+                    <span>See How It Works</span>
+                  </Button>
+                </motion.div>
               </Link>
             </motion.div>
 
             {/* Clinician Portal Anchor Link */}
-            <motion.div variants={itemVariants} className="pt-0.5">
+            <motion.div
+              variants={clinicianLinkVariants}
+              initial="hidden"
+              animate="visible"
+              className="pt-0.5"
+            >
               <Link
                 href="/therapist"
                 className="inline-flex items-center gap-2 text-xs font-semibold text-ocean hover:text-ocean-hover dark:text-[#83B5CC] dark:hover:text-[#A7CEE0] transition-colors py-1 group"
@@ -209,7 +291,9 @@ export function HeroSection() {
 
             {/* Reassurance Micro-Trust Markers */}
             <motion.div
-              variants={itemVariants}
+              variants={trustMarkersVariants}
+              initial="hidden"
+              animate="visible"
               className="flex flex-wrap items-center gap-y-2.5 gap-x-5 sm:gap-x-6 pt-3 text-xs text-stone dark:text-[#BDCBD2] border-t border-[#D5E1E6]/80 dark:border-[#304653]/80"
             >
               <span className="flex items-center gap-2">
@@ -225,10 +309,10 @@ export function HeroSection() {
                 <span className="font-medium">Self-advocacy centred</span>
               </span>
             </motion.div>
-          </motion.div>
+          </div>
 
           {/* =========================================================================
-              RIGHT COLUMN: REALISTIC PRODUCT-INTERFACE COMPOSITION WITH FLOATING CARDS
+              RIGHT COLUMN: HERO VISUAL (ENTERS FROM RIGHT) WITH FLOATING CARDS
              ========================================================================= */}
           <div className="lg:col-span-6 xl:col-span-5 relative mt-6 lg:mt-0">
             {/* Luminous Glow Backdrop */}
@@ -238,14 +322,24 @@ export function HeroSection() {
             />
 
             {/* -----------------------------------------------------------------------
-                FLOATING CARD 1: CLINICIAN COLLABORATION & FEEDBACK NOTE (Top Right)
+                FLOATING CARD 1: CLINICIAN REVIEW (Staggered Entrance + Gentle Float)
                ----------------------------------------------------------------------- */}
             <motion.div
-              variants={floatingVariants1}
-              animate="animate"
+              variants={floatingCard1Variants}
+              initial="hidden"
+              animate="visible"
               className="absolute -top-6 -right-2 sm:-right-4 lg:-right-6 z-20 max-w-[230px] sm:max-w-[260px] hidden sm:block"
             >
-              <div className="rounded-2xl border border-white/80 dark:border-[#304653]/90 bg-white/95 dark:bg-[#1A2833]/95 p-3.5 shadow-elevated backdrop-blur-xl space-y-2">
+              <motion.div
+                animate={shouldReduceMotion ? { y: 0 } : { y: [0, -5, 0] }}
+                transition={
+                  shouldReduceMotion
+                    ? {}
+                    : { duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1.15 }
+                }
+                whileHover={shouldReduceMotion ? {} : { y: -8, scale: 1.02 }}
+                className="rounded-2xl border border-white/80 dark:border-[#304653]/90 bg-white/95 dark:bg-[#1A2833]/95 p-3.5 shadow-elevated backdrop-blur-xl space-y-2 cursor-default transition-shadow"
+              >
                 <div className="flex items-center gap-2.5">
                   <div className="relative h-9 w-9 rounded-full bg-mist dark:bg-midnight flex items-center justify-center text-ocean dark:text-[#83B5CC] border border-[#D5E1E6] dark:border-[#304653] shrink-0">
                     <Stethoscope className="h-4 w-4" aria-hidden="true" />
@@ -271,30 +365,31 @@ export function HeroSection() {
                   </span>
                   <span>10:45 AM</span>
                 </div>
-              </div>
+              </motion.div>
             </motion.div>
 
             {/* -----------------------------------------------------------------------
-                MAIN PRODUCT VIEWPORT WINDOW (SaaS Interface Preview)
+                5. MAIN PRODUCT VIEWPORT (Enters smoothly from right)
                ----------------------------------------------------------------------- */}
-            <div className="relative rounded-3xl border border-[#D5E1E6] dark:border-[#304653] bg-white/95 dark:bg-[#15232C]/95 backdrop-blur-xl shadow-elevated overflow-hidden">
-              
+            <motion.div
+              variants={heroVisualVariants}
+              initial="hidden"
+              animate="visible"
+              className="relative rounded-3xl border border-[#D5E1E6] dark:border-[#304653] bg-white/95 dark:bg-[#15232C]/95 backdrop-blur-xl shadow-elevated overflow-hidden"
+            >
               {/* Window Chrome / Browser Tab Bar */}
               <div className="px-4 py-3 bg-[#F0F5F7] dark:bg-[#1A2833] border-b border-[#D5E1E6] dark:border-[#304653] flex items-center justify-between gap-3">
-                {/* Window Dots */}
                 <div className="flex items-center gap-1.5 shrink-0" aria-hidden="true">
                   <div className="h-2.5 w-2.5 rounded-full bg-[#E2E8F0] dark:bg-[#304653]" />
                   <div className="h-2.5 w-2.5 rounded-full bg-[#E2E8F0] dark:bg-[#304653]" />
                   <div className="h-2.5 w-2.5 rounded-full bg-[#E2E8F0] dark:bg-[#304653]" />
                 </div>
 
-                {/* Session Title Pill */}
                 <div className="flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-white dark:bg-midnight border border-[#D5E1E6] dark:border-[#304653] text-[11px] font-medium text-stone dark:text-[#BDCBD2] truncate">
                   <Waves className="h-3 w-3 text-ocean dark:text-[#83B5CC] shrink-0" aria-hidden="true" />
                   <span className="truncate">Practice Hub • Gentle Onset Drill</span>
                 </div>
 
-                {/* Live Drill Pulse */}
                 <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#ECFDF5] dark:bg-[#064E3B]/50 border border-[#A7F3D0] dark:border-[#059669]/50 text-[10px] font-semibold text-[#16766E] dark:text-[#2DD4BF] shrink-0">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#10B981] animate-pulse motion-reduce:animate-none" aria-hidden="true" />
                   <span>Active</span>
@@ -350,17 +445,23 @@ export function HeroSection() {
                     </span>
                   </div>
 
-                  {/* Waveform Bar Visualizer */}
+                  {/* Waveform Bar Visualizer (Animated height on entrance) */}
                   <div
                     className="h-10 px-2 py-1.5 rounded-xl bg-white dark:bg-midnight border border-[#E7EFF2] dark:border-[#243746] flex items-center justify-between gap-1"
                     aria-label="Acoustic resonance waveform display"
                     role="img"
                   >
                     {waveformBars.map((height, i) => (
-                      <div
+                      <motion.div
                         key={i}
-                        style={{ height: `${height}%` }}
-                        className={`w-1 rounded-full transition-all duration-300 ${
+                        initial={shouldReduceMotion ? { height: `${height}%` } : { height: "15%" }}
+                        animate={{ height: `${height}%` }}
+                        transition={{
+                          duration: shouldReduceMotion ? 0 : 0.5,
+                          delay: shouldReduceMotion ? 0 : 0.45 + i * 0.02,
+                          ease: "easeOut",
+                        }}
+                        className={`w-1 rounded-full ${
                           i < 12
                             ? "bg-gradient-to-t from-ocean to-[#147B74] dark:from-[#83B5CC] dark:to-[#2DD4BF]"
                             : "bg-[#D5E1E6] dark:bg-[#304653]"
@@ -372,13 +473,15 @@ export function HeroSection() {
                   {/* Interactive Control & Privacy Reassurance */}
                   <div className="flex items-center justify-between pt-0.5">
                     <div className="flex items-center gap-2">
-                      <button
+                      <motion.button
                         type="button"
+                        whileHover={shouldReduceMotion ? {} : { scale: 1.08 }}
+                        whileTap={shouldReduceMotion ? {} : { scale: 0.92 }}
                         aria-label="Practice microphone record trigger"
                         className="h-8 w-8 rounded-lg bg-[#A8533E] text-white flex items-center justify-center shadow-subtle hover:bg-[#8F4431] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A8533E]"
                       >
                         <Mic className="h-4 w-4" aria-hidden="true" />
-                      </button>
+                      </motion.button>
                       <span className="text-[11px] font-medium text-midnight dark:text-white">
                         Recording in memory
                       </span>
@@ -393,17 +496,27 @@ export function HeroSection() {
                 </div>
 
               </div>
-            </div>
+            </motion.div>
 
             {/* -----------------------------------------------------------------------
-                FLOATING CARD 2: TECHNIQUE CONSISTENCY METRIC (Bottom Left)
+                FLOATING CARD 2: TECHNIQUE METRIC (Staggered Entrance + Gentle Float)
                ----------------------------------------------------------------------- */}
             <motion.div
-              variants={floatingVariants2}
-              animate="animate"
+              variants={floatingCard2Variants}
+              initial="hidden"
+              animate="visible"
               className="absolute -bottom-6 -left-2 sm:-left-4 lg:-left-6 z-20 max-w-[240px] sm:max-w-[270px] hidden sm:block"
             >
-              <div className="rounded-2xl border border-white/80 dark:border-[#304653]/90 bg-white/95 dark:bg-[#1A2833]/95 p-3.5 shadow-elevated backdrop-blur-xl space-y-2">
+              <motion.div
+                animate={shouldReduceMotion ? { y: 0 } : { y: [0, 5, 0] }}
+                transition={
+                  shouldReduceMotion
+                    ? {}
+                    : { duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1.35 }
+                }
+                whileHover={shouldReduceMotion ? {} : { y: -8, scale: 1.02 }}
+                className="rounded-2xl border border-white/80 dark:border-[#304653]/90 bg-white/95 dark:bg-[#1A2833]/95 p-3.5 shadow-elevated backdrop-blur-xl space-y-2 cursor-default transition-shadow"
+              >
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex items-center gap-1.5">
                     <Sparkles className="h-4 w-4 text-[#A8533E]" aria-hidden="true" />
@@ -425,16 +538,32 @@ export function HeroSection() {
                   </span>
                 </div>
 
-                {/* Progress Mini Graph */}
+                {/* Progress Mini Graph (Animated width) */}
                 <div className="space-y-1">
                   <div className="h-2 w-full rounded-full bg-[#E7EFF2] dark:bg-midnight overflow-hidden flex">
-                    <div className="h-full bg-gradient-to-r from-[#A8533E] via-ocean to-[#14B8A6] rounded-full" style={{ width: "88%" }} />
+                    <motion.div
+                      initial={shouldReduceMotion ? { width: "88%" } : { width: 0 }}
+                      animate={{ width: "88%" }}
+                      transition={{ duration: shouldReduceMotion ? 0 : 0.85, delay: shouldReduceMotion ? 0 : 0.95, ease: "easeOut" }}
+                      className="h-full bg-gradient-to-r from-[#A8533E] via-ocean to-[#14B8A6] rounded-full"
+                    />
                   </div>
                   <p className="text-[10px] text-stone dark:text-[#BDCBD2]">
                     *Illustrative practice feedback metric
                   </p>
                 </div>
-              </div>
+              </motion.div>
+            </motion.div>
+
+            {/* Privacy Pill Overlay at Bottom Right */}
+            <motion.div
+              variants={privacyPillVariants}
+              initial="hidden"
+              animate="visible"
+              className="absolute -bottom-3 right-6 z-20 hidden md:flex items-center gap-1.5 rounded-full border border-[#D5E1E6] dark:border-[#304653] bg-white/95 dark:bg-[#1A2833]/95 px-3 py-1 shadow-subtle backdrop-blur-md text-[10px] font-semibold text-stone dark:text-[#BDCBD2]"
+            >
+              <Lock className="w-3 h-3 text-[#16766E] dark:text-[#2DD4BF]" aria-hidden="true" />
+              <span>Zero Audio Storage • Private by Design</span>
             </motion.div>
 
           </div>

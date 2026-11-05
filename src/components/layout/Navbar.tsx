@@ -97,7 +97,7 @@ export function Navbar() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "px-3.5 py-2 rounded-xl text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean dark:focus-visible:ring-softblue",
+                  "px-3.5 py-2 rounded-xl text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean dark:focus-visible:ring-softblue hover:-translate-y-0.5 motion-reduce:hover:transform-none",
                   isActive
                     ? "bg-mist/75 text-ocean font-semibold dark:bg-midnight-surface dark:text-softblue shadow-subtle"
                     : "text-stone hover:bg-mist/40 hover:text-midnight dark:text-[#BDCBD2] dark:hover:bg-midnight-surface/60 dark:hover:text-[#F2F6F7]"

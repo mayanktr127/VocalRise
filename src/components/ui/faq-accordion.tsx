@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { ChevronDown } from "lucide-react";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/utils";
 
 export interface FAQItem {
@@ -70,6 +71,7 @@ export function FAQAccordion({
   items = DEFAULT_FAQS,
   className,
 }: FAQAccordionProps) {
+  const shouldReduceMotion = useReducedMotion();
   const [openItems, setOpenItems] = React.useState<Record<string, boolean>>({
     "faq-1": true, // First open by default for clear affordance
   });
@@ -87,12 +89,20 @@ export function FAQAccordion({
       aria-label="Frequently Asked Questions"
       className={cn("w-full max-w-3xl mx-auto space-y-3.5", className)}
     >
-      {items.map((item) => {
+      {items.map((item, index) => {
         const isOpen = Boolean(openItems[item.id]);
         return (
-          <div
+          <motion.div
             key={item.id}
-            className="rounded-2xl border border-[#D5E1E6] bg-white dark:border-[#304653] dark:bg-midnight-surface overflow-hidden shadow-subtle transition-colors"
+            initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{
+              duration: shouldReduceMotion ? 0 : 0.4,
+              delay: shouldReduceMotion ? 0 : index * 0.05,
+              ease: "easeOut",
+            }}
+            className="rounded-2xl border border-[#D5E1E6] bg-white dark:border-[#304653] dark:bg-midnight-surface overflow-hidden shadow-subtle hover:border-[#A9C4D1] dark:hover:border-[#456170] transition-colors"
           >
             <button
               type="button"
@@ -115,21 +125,28 @@ export function FAQAccordion({
                 <ChevronDown className="h-4 w-4" />
               </span>
             </button>
-            {isOpen && (
-              <div
-                id={`faq-panel-${item.id}`}
-                role="region"
-                aria-labelledby={`faq-btn-${item.id}`}
-                className="px-5 pb-5 sm:px-6 sm:pb-6 pt-0 animate-in fade-in duration-200"
-              >
-                <div className="pt-3 border-t border-[#E7EFF2] dark:border-[#304653]/60">
-                  <p className="text-sm text-stone dark:text-[#BDCBD2] leading-relaxed">
-                    {item.answer}
-                  </p>
-                </div>
-              </div>
-            )}
-          </div>
+
+            <AnimatePresence initial={false}>
+              {isOpen && (
+                <motion.div
+                  id={`faq-panel-${item.id}`}
+                  role="region"
+                  aria-labelledby={`faq-btn-${item.id}`}
+                  initial={shouldReduceMotion ? { opacity: 1, height: "auto" } : { opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, height: 0 }}
+                  transition={{ duration: shouldReduceMotion ? 0 : 0.25, ease: "easeInOut" }}
+                  className="overflow-hidden px-5 pb-5 sm:px-6 sm:pb-6 pt-0"
+                >
+                  <div className="pt-3 border-t border-[#E7EFF2] dark:border-[#304653]/60">
+                    <p className="text-sm text-stone dark:text-[#BDCBD2] leading-relaxed">
+                      {item.answer}
+                    </p>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
         );
       })}
     </div>

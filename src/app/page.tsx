@@ -25,6 +25,12 @@ import {
   UserCheck,
 } from "lucide-react";
 import { HeroSection } from "@/components/home/HeroSection";
+import {
+  MotionFadeIn,
+  MotionStaggerContainer,
+  MotionStaggerItem,
+  MotionCard,
+} from "@/components/home/MotionComponents";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
@@ -60,11 +66,13 @@ export default function HomePage() {
          ========================================================================= */}
       <section className="py-20 sm:py-28 bg-[#F7F9F8] dark:bg-[#111D25] transition-colors">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-12">
-          <SectionHeading
-            badge="Dedicated Practice Tracks"
-            title="Two Distinct Speech Pathways"
-            subtitle="Stammering is a neuro-motor fluency difference involving laryngeal timing, never poor pronunciation or laziness. VocalRise maintains dedicated, distinct methodologies for each."
-          />
+          <MotionFadeIn>
+            <SectionHeading
+              badge="Dedicated Practice Tracks"
+              title="Two Distinct Speech Pathways"
+              subtitle="Stammering is a neuro-motor fluency difference involving laryngeal timing, never poor pronunciation or laziness. VocalRise maintains dedicated, distinct methodologies for each."
+            />
+          </MotionFadeIn>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {/* Pathway 1: Stammering Support */}
@@ -105,19 +113,21 @@ export default function HomePage() {
           </div>
 
           {/* Neurodiversity Clinical Callout */}
-          <div className="max-w-4xl mx-auto rounded-2xl border border-ocean/30 bg-mist/50 dark:border-softblue/30 dark:bg-midnight-surface/80 p-5 sm:p-6 shadow-subtle flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
-            <div className="h-11 w-11 rounded-xl bg-ocean text-white flex items-center justify-center shrink-0">
-              <ShieldCheck className="h-6 w-6" aria-hidden="true" />
+          <MotionFadeIn delay={0.2}>
+            <div className="max-w-4xl mx-auto rounded-2xl border border-ocean/30 bg-mist/50 dark:border-softblue/30 dark:bg-midnight-surface/80 p-5 sm:p-6 shadow-subtle flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
+              <div className="h-11 w-11 rounded-xl bg-ocean text-white flex items-center justify-center shrink-0">
+                <ShieldCheck className="h-6 w-6" aria-hidden="true" />
+              </div>
+              <div className="space-y-1">
+                <h3 className="font-heading text-sm font-bold text-midnight dark:text-white">
+                  Our Non-Diagnostic Clinical Distinction Pledge
+                </h3>
+                <p className="text-xs sm:text-sm text-stone dark:text-[#BDCBD2] leading-relaxed">
+                  We strictly reject conflating developmental stammering with phonetic articulation errors. Each pathway is built on distinct therapeutic literature, protecting speakers from inappropriate or unhelpful drills.
+                </p>
+              </div>
             </div>
-            <div className="space-y-1">
-              <h3 className="font-heading text-sm font-bold text-midnight dark:text-white">
-                Our Non-Diagnostic Clinical Distinction Pledge
-              </h3>
-              <p className="text-xs sm:text-sm text-stone dark:text-[#BDCBD2] leading-relaxed">
-                We strictly reject conflating developmental stammering with phonetic articulation errors. Each pathway is built on distinct therapeutic literature, protecting speakers from inappropriate or unhelpful drills.
-              </p>
-            </div>
-          </div>
+          </MotionFadeIn>
         </div>
       </section>
 
@@ -126,13 +136,15 @@ export default function HomePage() {
          ========================================================================= */}
       <section className="py-20 sm:py-28 bg-white border-t border-[#D5E1E6] dark:bg-midnight-surface dark:border-[#304653] transition-colors">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-14">
-          <SectionHeading
-            badge="The VocalRise Experience"
-            title="A mindful, 6-step path built around your life"
-            subtitle="From identifying personal goals to optional clinician feedback, every stage is structured for calm, pressure-free consistency."
-          />
+          <MotionFadeIn>
+            <SectionHeading
+              badge="The VocalRise Experience"
+              title="A mindful, 6-step path built around your life"
+              subtitle="From identifying personal goals to optional clinician feedback, every stage is structured for calm, pressure-free consistency."
+            />
+          </MotionFadeIn>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          <MotionStaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {[
               {
                 step: "01",
@@ -179,32 +191,34 @@ export default function HomePage() {
             ].map((item, index) => {
               const Icon = item.icon;
               return (
-                <div
-                  key={index}
-                  className="rounded-2xl border border-[#D5E1E6] bg-porcelain dark:border-[#304653] dark:bg-midnight-deep p-6 sm:p-7 shadow-subtle hover:border-ocean/40 dark:hover:border-softblue/40 transition-all flex flex-col justify-between space-y-4"
-                >
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div className="h-10 w-10 rounded-xl bg-mist dark:bg-midnight-surface text-ocean dark:text-softblue flex items-center justify-center">
-                        <Icon className="h-5 w-5" aria-hidden="true" />
+                <MotionStaggerItem key={index}>
+                  <MotionCard
+                    hoverLift={-4}
+                    className="h-full rounded-2xl border border-[#D5E1E6] bg-porcelain dark:border-[#304653] dark:bg-midnight-deep p-6 sm:p-7 shadow-subtle hover:border-ocean/40 dark:hover:border-softblue/40 hover:shadow-card transition-all flex flex-col justify-between space-y-4"
+                  >
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <div className="h-10 w-10 rounded-xl bg-mist dark:bg-midnight-surface text-ocean dark:text-softblue flex items-center justify-center">
+                          <Icon className="h-5 w-5" aria-hidden="true" />
+                        </div>
+                        <span className="font-heading text-xl font-bold text-stone/40 dark:text-[#BDCBD2]/40">
+                          {item.step}
+                        </span>
                       </div>
-                      <span className="font-heading text-xl font-bold text-stone/40 dark:text-[#BDCBD2]/40">
-                        {item.step}
-                      </span>
+                      <div className="space-y-2">
+                        <h3 className="font-heading text-lg font-bold text-midnight dark:text-white">
+                          {item.title}
+                        </h3>
+                        <p className="text-xs sm:text-sm text-stone dark:text-[#BDCBD2] leading-relaxed">
+                          {item.description}
+                        </p>
+                      </div>
                     </div>
-                    <div className="space-y-2">
-                      <h3 className="font-heading text-lg font-bold text-midnight dark:text-white">
-                        {item.title}
-                      </h3>
-                      <p className="text-xs sm:text-sm text-stone dark:text-[#BDCBD2] leading-relaxed">
-                        {item.description}
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                  </MotionCard>
+                </MotionStaggerItem>
               );
             })}
-          </div>
+          </MotionStaggerContainer>
         </div>
       </section>
 
@@ -214,11 +228,13 @@ export default function HomePage() {
          ========================================================================= */}
       <section className="py-20 sm:py-28 bg-[#F7F9F8] border-t border-[#D5E1E6] dark:bg-[#111D25] dark:border-[#304653] transition-colors">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-12">
-          <SectionHeading
-            badge="Interactive Prototype Showcase"
-            title="Real tools designed for daily speaking ease"
-            subtitle="Explore our interactive prototype preview below to see how the Practice Studio, Confidence Journal, and Clinician Deck interact."
-          />
+          <MotionFadeIn>
+            <SectionHeading
+              badge="Interactive Prototype Showcase"
+              title="Real tools designed for daily speaking ease"
+              subtitle="Explore our interactive prototype preview below to see how the Practice Studio, Confidence Journal, and Clinician Deck interact."
+            />
+          </MotionFadeIn>
 
           <ProductPreview />
         </div>
@@ -230,7 +246,7 @@ export default function HomePage() {
       <section className="py-20 sm:py-28 bg-white border-t border-[#D5E1E6] dark:bg-midnight-surface dark:border-[#304653] transition-colors">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-24">
           {/* Feature 1: Guided Practice (Left text, Right preview) */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <MotionFadeIn className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             <div className="lg:col-span-6 space-y-5 text-left">
               <Badge variant="ocean" className="px-3 py-1 text-xs">
                 Consistent Micro-Drills
@@ -257,7 +273,7 @@ export default function HomePage() {
               </ul>
             </div>
 
-            <div className="lg:col-span-6 rounded-3xl border border-[#D5E1E6] bg-porcelain dark:border-[#304653] dark:bg-midnight-deep p-6 sm:p-8 shadow-card space-y-5">
+            <MotionCard hoverLift={-4} className="lg:col-span-6 rounded-3xl border border-[#D5E1E6] bg-porcelain dark:border-[#304653] dark:bg-midnight-deep p-6 sm:p-8 shadow-card hover:shadow-elevated transition-all space-y-5">
               <div className="flex items-center justify-between pb-4 border-b border-[#D5E1E6] dark:border-[#304653]">
                 <div className="flex items-center gap-2.5">
                   <div className="h-8 w-8 rounded-lg bg-ocean text-white flex items-center justify-center">
@@ -294,12 +310,12 @@ export default function HomePage() {
                 <span>Self-reported physical ease: High</span>
                 <span className="font-semibold text-ocean dark:text-softblue">Comfortable Pacing</span>
               </div>
-            </div>
-          </div>
+            </MotionCard>
+          </MotionFadeIn>
 
           {/* Feature 2: Confidence Journal (Left preview, Right text) */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            <div className="lg:col-span-6 order-2 lg:order-1 rounded-3xl border border-[#D5E1E6] bg-porcelain dark:border-[#304653] dark:bg-midnight-deep p-6 sm:p-8 shadow-card space-y-4">
+          <MotionFadeIn delay={0.1} className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            <MotionCard hoverLift={-4} className="lg:col-span-6 order-2 lg:order-1 rounded-3xl border border-[#D5E1E6] bg-porcelain dark:border-[#304653] dark:bg-midnight-deep p-6 sm:p-8 shadow-card hover:shadow-elevated transition-all space-y-4">
               <div className="flex items-center justify-between pb-3 border-b border-[#D5E1E6] dark:border-[#304653]">
                 <div className="flex items-center gap-2">
                   <BookMarked className="h-4 w-4 text-terracotta" aria-hidden="true" />
@@ -329,7 +345,7 @@ export default function HomePage() {
                   <span className="text-terracotta font-semibold">Avoidance: Zero</span>
                 </div>
               </div>
-            </div>
+            </MotionCard>
 
             <div className="lg:col-span-6 order-1 lg:order-2 space-y-5 text-left">
               <Badge variant="terracotta" className="px-3 py-1 text-xs">
@@ -356,10 +372,10 @@ export default function HomePage() {
                 </li>
               </ul>
             </div>
-          </div>
+          </MotionFadeIn>
 
           {/* Feature 3: Progress Beyond Numbers (Full-width editorial banner) */}
-          <div className="rounded-[28px] border border-[#D5E1E6] bg-porcelain dark:border-[#304653] dark:bg-midnight-deep p-8 sm:p-12 shadow-card text-center space-y-6 max-w-5xl mx-auto">
+          <MotionFadeIn delay={0.15} className="rounded-[28px] border border-[#D5E1E6] bg-porcelain dark:border-[#304653] dark:bg-midnight-deep p-8 sm:p-12 shadow-card text-center space-y-6 max-w-5xl mx-auto">
             <Badge variant="softblue" className="px-3.5 py-1 text-xs">
               Neurodiversity & Dignity
             </Badge>
@@ -383,7 +399,7 @@ export default function HomePage() {
                 <p className="text-xs text-stone dark:text-[#BDCBD2]">Releasing tension and breathing naturally through blocks.</p>
               </div>
             </div>
-          </div>
+          </MotionFadeIn>
         </div>
       </section>
 
@@ -392,13 +408,15 @@ export default function HomePage() {
          ========================================================================= */}
       <section className="py-20 sm:py-28 bg-[#F7F9F8] border-t border-[#D5E1E6] dark:bg-[#111D25] dark:border-[#304653] transition-colors">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-14">
-          <SectionHeading
-            badge="Optional Clinician Collaboration"
-            title="Closing the gap between weekly clinical visits"
-            subtitle="The hardest part of speech practice is carrying techniques into everyday life. VocalRise acts as a supportive bridge between sessions."
-          />
+          <MotionFadeIn>
+            <SectionHeading
+              badge="Optional Clinician Collaboration"
+              title="Closing the gap between weekly clinical visits"
+              subtitle="The hardest part of speech practice is carrying techniques into everyday life. VocalRise acts as a supportive bridge between sessions."
+            />
+          </MotionFadeIn>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center max-w-6xl mx-auto">
+          <MotionFadeIn className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center max-w-6xl mx-auto">
             {/* Visual consultation graphic */}
             <div className="lg:col-span-5 rounded-[28px] overflow-hidden border border-[#D5E1E6] bg-white dark:border-[#304653] dark:bg-midnight-surface p-4 shadow-card">
               <div className="w-full h-[280px] sm:h-[320px] rounded-2xl bg-mist/40 dark:bg-midnight-deep flex items-center justify-center p-4">
@@ -461,7 +479,7 @@ export default function HomePage() {
                 </Link>
               </div>
             </div>
-          </div>
+          </MotionFadeIn>
         </div>
       </section>
 
@@ -470,7 +488,7 @@ export default function HomePage() {
          ========================================================================= */}
       <section className="py-20 sm:py-28 bg-white border-t border-[#D5E1E6] dark:bg-midnight-surface dark:border-[#304653] transition-colors">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-14">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center max-w-6xl mx-auto">
+          <MotionFadeIn className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center max-w-6xl mx-auto">
             {/* Left Narrative */}
             <div className="lg:col-span-7 space-y-6 text-left">
               <Badge variant="terracotta" className="px-3 py-1 text-xs">
@@ -519,7 +537,7 @@ export default function HomePage() {
                 </span>
               </div>
             </div>
-          </div>
+          </MotionFadeIn>
         </div>
       </section>
 
@@ -528,13 +546,15 @@ export default function HomePage() {
          ========================================================================= */}
       <section className="py-20 sm:py-28 bg-[#F7F9F8] border-t border-[#D5E1E6] dark:bg-[#111D25] dark:border-[#304653] transition-colors">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-12">
-          <SectionHeading
-            badge="Ethical Health-Tech Standards"
-            title="Your voice data belongs exclusively to you"
-            subtitle="We build with clinical responsibility, high emotional safety, and uncompromising data ethics."
-          />
+          <MotionFadeIn>
+            <SectionHeading
+              badge="Ethical Health-Tech Standards"
+              title="Your voice data belongs exclusively to you"
+              subtitle="We build with clinical responsibility, high emotional safety, and uncompromising data ethics."
+            />
+          </MotionFadeIn>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+          <MotionStaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
             {[
               {
                 icon: Lock,
@@ -563,23 +583,25 @@ export default function HomePage() {
             ].map((item, index) => {
               const Icon = item.icon;
               return (
-                <div
-                  key={index}
-                  className="rounded-2xl border border-[#D5E1E6] bg-white dark:border-[#304653] dark:bg-midnight-surface p-6 shadow-subtle space-y-3 text-left"
-                >
-                  <div className="h-10 w-10 rounded-xl bg-mist dark:bg-midnight-deep text-ocean dark:text-softblue flex items-center justify-center">
-                    <Icon className="h-5 w-5" aria-hidden="true" />
-                  </div>
-                  <h3 className="font-heading text-base font-bold text-midnight dark:text-white">
-                    {item.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-stone dark:text-[#BDCBD2] leading-relaxed">
-                    {item.description}
-                  </p>
-                </div>
+                <MotionStaggerItem key={index}>
+                  <MotionCard
+                    hoverLift={-3}
+                    className="h-full rounded-2xl border border-[#D5E1E6] bg-white dark:border-[#304653] dark:bg-midnight-surface p-6 shadow-subtle hover:shadow-card hover:border-[#A9C4D1] dark:hover:border-[#456170] transition-colors space-y-3 text-left"
+                  >
+                    <div className="h-10 w-10 rounded-xl bg-mist dark:bg-midnight-deep text-ocean dark:text-softblue flex items-center justify-center">
+                      <Icon className="h-5 w-5" aria-hidden="true" />
+                    </div>
+                    <h3 className="font-heading text-base font-bold text-midnight dark:text-white">
+                      {item.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-stone dark:text-[#BDCBD2] leading-relaxed">
+                      {item.description}
+                    </p>
+                  </MotionCard>
+                </MotionStaggerItem>
               );
             })}
-          </div>
+          </MotionStaggerContainer>
         </div>
       </section>
 
@@ -588,11 +610,13 @@ export default function HomePage() {
          ========================================================================= */}
       <section className="py-20 sm:py-28 bg-white border-t border-[#D5E1E6] dark:bg-midnight-surface dark:border-[#304653] transition-colors">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-12">
-          <SectionHeading
-            badge="Frequently Asked Questions"
-            title="Clear answers about our practice platform"
-            subtitle="Transparent information regarding our methodology, clinical boundaries, and data ethics."
-          />
+          <MotionFadeIn>
+            <SectionHeading
+              badge="Frequently Asked Questions"
+              title="Clear answers about our practice platform"
+              subtitle="Transparent information regarding our methodology, clinical boundaries, and data ethics."
+            />
+          </MotionFadeIn>
 
           <FAQAccordion />
         </div>
@@ -602,7 +626,7 @@ export default function HomePage() {
           SECTION 11: MIDNIGHT SLATE CLOSING CALL-TO-ACTION
          ========================================================================= */}
       <section className="py-20 sm:py-28 bg-[#F7F9F8] border-t border-[#D5E1E6] dark:bg-[#111D25] dark:border-[#304653] transition-colors">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <MotionFadeIn className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <div className="relative rounded-[32px] overflow-hidden border border-[#304653] bg-midnight dark:bg-midnight-deep text-white p-8 sm:p-14 shadow-elevated text-center space-y-6">
             {/* Ambient subtle glow background */}
             <div className="absolute inset-0 bg-gradient-to-tr from-ocean/20 via-transparent to-softblue/10 pointer-events-none" />
@@ -646,7 +670,7 @@ export default function HomePage() {
               </p>
             </div>
           </div>
-        </div>
+        </MotionFadeIn>
       </section>
     </div>
   );

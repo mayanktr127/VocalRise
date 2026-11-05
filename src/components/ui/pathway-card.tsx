@@ -1,7 +1,10 @@
+"use client";
+
 import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { motion, useReducedMotion } from "motion/react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -32,11 +35,21 @@ export function PathwayCard({
   className,
 }: PathwayCardProps) {
   const isStammering = pathway === "stammering";
+  const shouldReduceMotion = useReducedMotion();
 
   return (
-    <div
+    <motion.div
+      initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: shouldReduceMotion ? 0 : 0.5, ease: [0.21, 0.47, 0.32, 0.98] }}
+      whileHover={
+        shouldReduceMotion
+          ? {}
+          : { y: -5, transition: { duration: 0.2, ease: "easeOut" } }
+      }
       className={cn(
-        "rounded-[28px] border border-[#D5E1E6] bg-white dark:border-[#304653] dark:bg-midnight-surface p-6 sm:p-8 shadow-card hover:shadow-elevated transition-all flex flex-col justify-between space-y-6 relative overflow-hidden group",
+        "rounded-[28px] border border-[#D5E1E6] bg-white dark:border-[#304653] dark:bg-midnight-surface p-6 sm:p-8 shadow-card hover:shadow-elevated transition-colors flex flex-col justify-between space-y-6 relative overflow-hidden group",
         isStammering ? "hover:border-ocean/40" : "hover:border-softblue/40",
         className
       )}
@@ -62,7 +75,7 @@ export function PathwayCard({
             alt={imageAlt}
             width={480}
             height={320}
-            className="w-full h-full object-contain p-2 group-hover:scale-[1.02] transition-transform duration-300"
+            className="w-full h-full object-contain p-2 group-hover:scale-[1.03] transition-transform duration-300 ease-out"
           />
         </div>
 
@@ -107,14 +120,13 @@ export function PathwayCard({
           <Button
             variant={isStammering ? "primary" : "outline"}
             size="lg"
-            className="w-full gap-2 justify-between"
+            className="w-full gap-2 justify-between group-hover:shadow-subtle"
           >
             <span>{ctaText}</span>
-            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
           </Button>
         </Link>
       </div>
-    </div>
+    </motion.div>
   );
 }
-

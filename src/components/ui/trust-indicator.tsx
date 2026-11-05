@@ -1,5 +1,8 @@
+"use client";
+
 import * as React from "react";
 import { Target, Layers, Stethoscope, Lock } from "lucide-react";
+import { motion, useReducedMotion, type Variants } from "motion/react";
 import { cn } from "@/lib/utils";
 
 interface TrustIndicatorProps {
@@ -7,6 +10,8 @@ interface TrustIndicatorProps {
 }
 
 export function TrustIndicator({ className }: TrustIndicatorProps) {
+  const shouldReduceMotion = useReducedMotion();
+
   const principles = [
     {
       icon: Target,
@@ -30,6 +35,25 @@ export function TrustIndicator({ className }: TrustIndicatorProps) {
     },
   ];
 
+  const containerVariants: Variants = {
+    hidden: { opacity: shouldReduceMotion ? 1 : 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: shouldReduceMotion ? 0 : 0.08,
+      },
+    },
+  };
+
+  const itemVariants: Variants = {
+    hidden: { opacity: shouldReduceMotion ? 1 : 0, y: shouldReduceMotion ? 0 : 16 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: shouldReduceMotion ? 0 : 0.45, ease: "easeOut" },
+    },
+  };
+
   return (
     <div
       role="region"
@@ -37,13 +61,25 @@ export function TrustIndicator({ className }: TrustIndicatorProps) {
       className={cn("w-full max-w-7xl mx-auto", className)}
     >
       <h2 className="sr-only">Core Practice Principles</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"
+      >
         {principles.map((item, index) => {
           const Icon = item.icon;
           return (
-            <div
+            <motion.div
               key={index}
-              className="rounded-2xl border border-[#D5E1E6] bg-white dark:border-[#304653] dark:bg-midnight-surface p-5 sm:p-6 shadow-subtle hover:border-[#A9C4D1] dark:hover:border-[#456170] transition-colors flex flex-col justify-between space-y-3"
+              variants={itemVariants}
+              whileHover={
+                shouldReduceMotion
+                  ? {}
+                  : { y: -3, transition: { duration: 0.2, ease: "easeOut" } }
+              }
+              className="rounded-2xl border border-[#D5E1E6] bg-white dark:border-[#304653] dark:bg-midnight-surface p-5 sm:p-6 shadow-subtle hover:shadow-card hover:border-[#A9C4D1] dark:hover:border-[#456170] transition-colors flex flex-col justify-between space-y-3"
             >
               <div className="h-10 w-10 rounded-xl bg-mist dark:bg-[#15232C] text-ocean dark:text-softblue flex items-center justify-center shrink-0">
                 <Icon className="h-5 w-5" aria-hidden="true" />
@@ -56,10 +92,10 @@ export function TrustIndicator({ className }: TrustIndicatorProps) {
                   {item.description}
                 </p>
               </div>
-            </div>
+            </motion.div>
           );
         })}
-      </div>
+      </motion.div>
     </div>
   );
 }

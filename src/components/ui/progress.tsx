@@ -23,14 +23,14 @@ export function Progress({
       aria-valuemax={max}
       aria-valuenow={value}
       className={cn(
-        "relative h-2 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800",
+        "relative h-2 w-full overflow-hidden rounded-full bg-[#E7EFF2] dark:bg-[#15232C]",
         className
       )}
       {...props}
     >
       <div
         className={cn(
-          "h-full w-full flex-1 bg-brand-600 transition-all duration-300 ease-in-out",
+          "h-full w-full flex-1 bg-ocean dark:bg-[#83B5CC] transition-all duration-300 ease-in-out",
           indicatorClassName
         )}
         style={{ transform: `translateX(-${100 - percentage}%)` }}

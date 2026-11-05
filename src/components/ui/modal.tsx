@@ -21,17 +21,71 @@ export function Modal({
   children,
   className,
 }: ModalProps) {
+  const dialogRef = React.useRef<HTMLDivElement>(null);
+  const previousActiveElementRef = React.useRef<HTMLElement | null>(null);
+
+  // Focus trap, keydown handling & restoring focus
   React.useEffect(() => {
+    if (!isOpen) return;
+
+    // Store element that had focus before opening modal
+    previousActiveElementRef.current = document.activeElement as HTMLElement | null;
+    document.body.style.overflow = "hidden";
+
+    // Focus the modal or first focusable element
+    const timer = setTimeout(() => {
+      if (!dialogRef.current) return;
+      const focusable = dialogRef.current.querySelectorAll<HTMLElement>(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusable.length > 0) {
+        focusable[0].focus();
+      } else {
+        dialogRef.current.focus();
+      }
+    }, 50);
+
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") {
+        e.preventDefault();
+        onClose();
+        return;
+      }
+
+      // Trap Tab focus inside modal
+      if (e.key === "Tab" && dialogRef.current) {
+        const focusable = dialogRef.current.querySelectorAll<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusable.length === 0) return;
+
+        const firstElement = focusable[0];
+        const lastElement = focusable[focusable.length - 1];
+
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement) {
+            e.preventDefault();
+            lastElement.focus();
+          }
+        } else {
+          if (document.activeElement === lastElement) {
+            e.preventDefault();
+            firstElement.focus();
+          }
+        }
+      }
     };
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-      window.addEventListener("keydown", handleKeyDown);
-    }
+
+    window.addEventListener("keydown", handleKeyDown);
+
     return () => {
+      clearTimeout(timer);
       document.body.style.overflow = "unset";
       window.removeEventListener("keydown", handleKeyDown);
+      // Return focus to original trigger element upon close
+      if (previousActiveElementRef.current && typeof previousActiveElementRef.current.focus === "function") {
+        previousActiveElementRef.current.focus();
+      }
     };
   }, [isOpen, onClose]);
 
@@ -39,42 +93,53 @@ export function Modal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
-      {/* Backdrop */}
+      {/* Backdrop with soft blur */}
       <div
-        className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-midnight/70 backdrop-blur-sm transition-opacity"
         onClick={onClose}
         aria-hidden="true"
       />
 
       {/* Modal Dialog Box */}
       <div
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
+        aria-describedby={description ? "modal-description" : undefined}
+        tabIndex={-1}
         className={cn(
-          "relative w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl border border-slate-200 z-10 animate-in fade-in zoom-in-95 duration-200 dark:bg-slate-900 dark:border-slate-800 dark:text-slate-100",
+          "relative w-full max-w-lg rounded-[28px] bg-white p-6 sm:p-8 shadow-elevated border border-[#D5E1E6] z-10 animate-in fade-in zoom-in-95 duration-200 outline-none dark:bg-midnight-surface dark:border-[#304653] dark:text-[#F2F6F7]",
           className
         )}
       >
-        <div className="flex items-start justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
+        <div className="flex items-start justify-between pb-4 border-b border-[#E7EFF2] dark:border-[#304653]">
           <div>
-            <h3 id="modal-title" className="text-lg font-semibold text-slate-900 dark:text-slate-100">
+            <h3
+              id="modal-title"
+              className="font-heading text-xl font-semibold leading-tight text-midnight dark:text-[#F2F6F7]"
+            >
               {title}
             </h3>
             {description && (
-              <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{description}</p>
+              <p
+                id="modal-description"
+                className="mt-1.5 text-sm text-stone dark:text-[#BDCBD2] leading-relaxed"
+              >
+                {description}
+              </p>
             )}
           </div>
           <button
             onClick={onClose}
             aria-label="Close dialog"
-            className="rounded-lg p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-600 dark:hover:bg-slate-800 dark:hover:text-slate-200 transition-colors"
+            className="rounded-xl p-1.5 text-stone hover:bg-mist hover:text-midnight dark:text-[#BDCBD2] dark:hover:bg-[#203542] dark:hover:text-[#F2F6F7] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean dark:focus-visible:ring-[#83B5CC]"
           >
             <X className="h-5 w-5" />
           </button>
         </div>
 
-        <div className="mt-4">{children}</div>
+        <div className="mt-5">{children}</div>
       </div>
     </div>
   );

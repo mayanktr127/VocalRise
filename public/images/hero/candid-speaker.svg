@@ -1,0 +1,88 @@
+<svg width="640" height="640" viewBox="0 0 640 640" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="hero-speaker-title hero-speaker-desc">
+  <title id="hero-speaker-title">Person engaged in everyday communication</title>
+  <desc id="hero-speaker-desc">Illustration of a person practicing communication techniques with acoustic resonance ripples, emphasizing personal goals and ease.</desc>
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="heroCardBg" x1="0" y1="0" x2="640" y2="640" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#E7EFF2" stop-opacity="0.9" />
+      <stop offset="50%" stop-color="#F0F5F7" stop-opacity="0.6" />
+      <stop offset="100%" stop-color="#F7F9F8" />
+    </linearGradient>
+
+    <!-- Warm Skin & Apparel Tones -->
+    <linearGradient id="coatGrad" x1="220" y1="360" x2="420" y2="580" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#315F78" />
+      <stop offset="100%" stop-color="#243746" />
+    </linearGradient>
+    <linearGradient id="scarfGrad" x1="260" y1="330" x2="380" y2="420" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#C9826D" />
+      <stop offset="100%" stop-color="#A8614E" />
+    </linearGradient>
+    <linearGradient id="faceGrad" x1="280" y1="180" x2="360" y2="340" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#EED8CB" />
+      <stop offset="100%" stop-color="#DEBEAB" />
+    </linearGradient>
+    <linearGradient id="hairGrad" x1="260" y1="140" x2="380" y2="280" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#243746" />
+      <stop offset="100%" stop-color="#1A2833" />
+    </linearGradient>
+
+    <!-- Soft Ambient Shadow -->
+    <filter id="softGlow" x="120" y="80" width="400" height="480" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="12" stdDeviation="24" flood-color="#243746" flood-opacity="0.08" />
+    </filter>
+  </defs>
+
+  <!-- Ambient Rounded Background Frame -->
+  <rect width="640" height="640" rx="36" fill="url(#heroCardBg)" />
+  <rect x="1.5" y="1.5" width="637" height="637" rx="34.5" stroke="#D5E1E6" stroke-width="2" />
+
+  <!-- Background Acoustic Resonance Ripples (Gentle breath & sound ease) -->
+  <circle cx="320" cy="270" r="190" stroke="#A9C4D1" stroke-width="1.5" stroke-dasharray="4 6" opacity="0.45" />
+  <circle cx="320" cy="270" r="230" stroke="#A9C4D1" stroke-width="1" stroke-dasharray="3 8" opacity="0.30" />
+  <circle cx="320" cy="270" r="270" stroke="#315F78" stroke-width="0.75" stroke-dasharray="2 10" opacity="0.15" />
+
+  <!-- Person Figure (Composed with Dignity & Warmth) -->
+  <g filter="url(#softGlow)">
+    <!-- Shoulders & Coat -->
+    <path d="M150 580 C 150 470, 210 395, 270 380 L 370 380 C 430 395, 490 470, 490 580 Z" fill="url(#coatGrad)" />
+    
+    <!-- Warm Accent Scarf -->
+    <path d="M260 365 C 290 385, 350 385, 380 365 L 390 440 C 370 470, 330 475, 310 475 C 270 475, 250 440, 250 410 Z" fill="url(#scarfGrad)" />
+
+    <!-- Neck -->
+    <path d="M295 305 L 345 305 L 348 370 L 292 370 Z" fill="#DEBEAB" />
+
+    <!-- Head / Jaw Silhouette -->
+    <path d="M268 230 C 268 170, 372 170, 372 230 C 372 295, 345 330, 320 330 C 295 330, 268 295, 268 230 Z" fill="url(#faceGrad)" />
+
+    <!-- Hair Silhouette -->
+    <path d="M262 230 C 255 170, 290 130, 340 130 C 390 130, 400 175, 385 220 C 375 205, 360 190, 330 190 C 295 190, 275 210, 262 230 Z" fill="url(#hairGrad)" />
+
+    <!-- Facial Features -->
+    <path d="M285 220 C 295 216, 305 218, 310 221" stroke="#243746" stroke-width="2.5" stroke-linecap="round" />
+    <path d="M330 221 C 335 218, 345 216, 355 220" stroke="#243746" stroke-width="2.5" stroke-linecap="round" />
+    <path d="M288 232 C 295 236, 305 236, 308 232" stroke="#243746" stroke-width="2.5" stroke-linecap="round" />
+    <path d="M332 232 C 335 236, 345 236, 352 232" stroke="#243746" stroke-width="2.5" stroke-linecap="round" />
+    <path d="M320 236 L 317 260 L 325 264" stroke="#C29A83" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M302 282 C 312 292, 328 292, 338 282" stroke="#A8614E" stroke-width="2.5" stroke-linecap="round" fill="none" />
+  </g>
+
+  <!-- Interactive Floating Pill Badge -->
+  <g transform="translate(60, 480)">
+    <rect width="250" height="64" rx="20" fill="#FFFFFF" filter="url(#softGlow)" />
+    <rect x="0.5" y="0.5" width="249" height="63" rx="19.5" stroke="#D5E1E6" />
+    <rect x="16" y="16" width="32" height="32" rx="10" fill="#E7EFF2" />
+    <path d="M24 32 L24 32 M28 26 L28 38 M32 22 L32 42 M36 28 L36 36 M40 32 L40 32" stroke="#315F78" stroke-width="2" stroke-linecap="round" />
+    <text x="60" y="32" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#243746">Today's Practice</text>
+    <text x="60" y="47" font-family="system-ui, sans-serif" font-size="11" font-weight="500" fill="#6B7C85">Gentle Phonation • 8 mins</text>
+  </g>
+
+  <!-- Micro Badge: Participation Milestone -->
+  <g transform="translate(420, 100)">
+    <rect width="160" height="44" rx="22" fill="#FFFFFF" filter="url(#softGlow)" />
+    <rect x="0.5" y="0.5" width="159" height="43" rx="21.5" stroke="#D5E1E6" />
+    <circle cx="24" cy="22" r="6" fill="#C9826D" />
+    <text x="38" y="26" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#243746">Personal Goals 1st</text>
+  </g>
+</svg>

@@ -1,0 +1,21 @@
+<svg width="800" height="800" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="presentation">
+  <defs>
+    <radialGradient id="oceanAtmosphere" cx="45%" cy="40%" r="55%" fx="40%" fy="35%">
+      <stop offset="0%" stop-color="#E7EFF2" stop-opacity="0.85" />
+      <stop offset="45%" stop-color="#F0F5F7" stop-opacity="0.55" />
+      <stop offset="75%" stop-color="#F7F9F8" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#F7F9F8" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="softWaveWash" x1="100" y1="200" x2="700" y2="600" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#A9C4D1" stop-opacity="0.20" />
+      <stop offset="60%" stop-color="#315F78" stop-opacity="0.06" />
+      <stop offset="100%" stop-color="#C9826D" stop-opacity="0.04" />
+    </linearGradient>
+    <filter id="gentleBlur" x="-50" y="-50" width="900" height="900" filterUnits="userSpaceOnUse">
+      <feGaussianBlur stdDeviation="40" result="blur" />
+    </filter>
+  </defs>
+  <rect width="800" height="800" rx="40" fill="url(#oceanAtmosphere)" />
+  <ellipse cx="480" cy="380" rx="260" ry="200" fill="url(#softWaveWash)" filter="url(#gentleBlur)" />
+  <circle cx="280" cy="460" r="160" fill="#E7EFF2" fill-opacity="0.5" filter="url(#gentleBlur)" />
+</svg>

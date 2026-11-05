@@ -132,9 +132,9 @@ export function PatientOverviewTable({
               {/* Left Patient Summary */}
               <div className="space-y-1 flex-1">
                 <div className="flex flex-wrap items-center gap-2">
-                  <h4 className="font-heading text-sm font-bold text-midnight dark:text-white">
+                  <h3 className="font-heading text-sm font-bold text-midnight dark:text-white">
                     {patient.name}
-                  </h4>
+                  </h3>
                   <span className="text-xs text-stone/70 dark:text-[#BDCBD2]/70 font-mono">
                     ({patient.age}y)
                   </span>

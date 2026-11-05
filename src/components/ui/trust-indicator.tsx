@@ -36,6 +36,7 @@ export function TrustIndicator({ className }: TrustIndicatorProps) {
       aria-label="Core Practice Principles"
       className={cn("w-full max-w-7xl mx-auto", className)}
     >
+      <h2 className="sr-only">Core Practice Principles</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         {principles.map((item, index) => {
           const Icon = item.icon;

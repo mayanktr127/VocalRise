@@ -106,9 +106,9 @@ export default function ArticulationAndLispingPage() {
               <Target className="h-6 w-6" aria-hidden="true" />
             </div>
             <div className="space-y-3 text-left">
-              <h3 className="font-heading text-xl font-bold text-midnight dark:text-white">
+              <h2 className="font-heading text-xl font-bold text-midnight dark:text-white">
                 Understanding Articulatory Placement Mechanics
-              </h3>
+              </h2>
               <p className="text-sm text-stone dark:text-[#BDCBD2] leading-relaxed">
                 Articulation challenges happen when articulators (tongue tip, tongue blade, dental margins, or alveolar ridge) take slightly misdirected physical positions during continuous speech. Our modules provide clear anatomical landmarks, tactile reference cues, and structured syllable hierarchies to retrain motor pathways.
               </p>
@@ -139,9 +139,9 @@ export default function ArticulationAndLispingPage() {
                       0{idx + 1}
                     </span>
                   </div>
-                  <h4 className="font-heading text-lg font-bold text-midnight dark:text-white leading-snug">
+                  <h3 className="font-heading text-lg font-bold text-midnight dark:text-white leading-snug">
                     {item.title}
-                  </h4>
+                  </h3>
                   <p className="text-xs sm:text-sm text-stone dark:text-[#BDCBD2] leading-relaxed">
                     {item.description}
                   </p>
@@ -207,9 +207,9 @@ export default function ArticulationAndLispingPage() {
             <Sparkles className="h-3.5 w-3.5 text-softblue" aria-hidden="true" />
             <span>Interactive Placement Studio</span>
           </div>
-          <h3 className="font-heading text-2xl sm:text-3xl font-bold text-white">
+          <h2 className="font-heading text-2xl sm:text-3xl font-bold text-white">
             Ready to practise alveolar placement?
-          </h3>
+          </h2>
           <p className="text-xs sm:text-sm text-mist/80 max-w-lg mx-auto leading-relaxed">
             Open the practice studio to test minimal pairs and butterfly drills with simulated audio feedback.
           </p>

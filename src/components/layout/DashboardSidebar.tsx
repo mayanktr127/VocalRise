@@ -51,9 +51,9 @@ export function DashboardSidebar({
             {user.name.charAt(0)}
           </div>
           <div className="overflow-hidden text-left">
-            <h3 className="font-heading text-sm font-bold text-midnight dark:text-white truncate">
+            <div className="font-heading text-sm font-bold text-midnight dark:text-white truncate">
               {user.name}
-            </h3>
+            </div>
             <p className="text-xs text-ocean dark:text-softblue font-medium truncate capitalize">
               {user.pathway} Track
             </p>

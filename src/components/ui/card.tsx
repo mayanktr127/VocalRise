@@ -28,12 +28,17 @@ export function CardHeader({
   );
 }
 
+export interface CardTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
+  as?: "h2" | "h3" | "h4" | "h5" | "div";
+}
+
 export function CardTitle({
   className,
+  as: Component = "h2",
   ...props
-}: React.HTMLAttributes<HTMLHeadingElement>) {
+}: CardTitleProps) {
   return (
-    <h3
+    <Component
       className={cn(
         "font-heading text-lg font-semibold leading-tight tracking-tight text-midnight dark:text-[#F2F6F7]",
         className

@@ -149,7 +149,7 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={() => setShowForgotModal(true)}
-                  className="text-xs text-ocean dark:text-softblue hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ocean rounded-sm"
+                  className="text-xs text-ocean dark:text-softblue hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean dark:focus-visible:ring-softblue rounded-sm"
                 >
                   Forgot password?
                 </button>

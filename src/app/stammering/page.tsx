@@ -102,9 +102,9 @@ export default function StammeringSupportPage() {
               <ShieldCheck className="h-6 w-6" aria-hidden="true" />
             </div>
             <div className="space-y-3 text-left">
-              <h3 className="font-heading text-xl font-bold text-midnight dark:text-white">
+              <h2 className="font-heading text-xl font-bold text-midnight dark:text-white">
                 Our Ethical Commitment to People Who Stammer
-              </h3>
+              </h2>
               <p className="text-sm text-stone dark:text-[#BDCBD2] leading-relaxed">
                 We strictly reject unethical &ldquo;100% cure&rdquo; promises that treat stammering as a defect to be eliminated. Modern speech-language therapy recognizes that fluency is variable and that true progress is defined by <strong>communicative ease, freedom from physical struggle, self-advocacy, and speaking freely without apology</strong>.
               </p>
@@ -135,9 +135,9 @@ export default function StammeringSupportPage() {
                       0{idx + 1}
                     </span>
                   </div>
-                  <h4 className="font-heading text-lg font-bold text-midnight dark:text-white leading-snug">
+                  <h3 className="font-heading text-lg font-bold text-midnight dark:text-white leading-snug">
                     {tech.title}
-                  </h4>
+                  </h3>
                   <p className="text-xs sm:text-sm text-stone dark:text-[#BDCBD2] leading-relaxed">
                     {tech.description}
                   </p>
@@ -202,9 +202,9 @@ export default function StammeringSupportPage() {
             <Sparkles className="h-3.5 w-3.5 text-softblue" aria-hidden="true" />
             <span>Interactive Practice Studio</span>
           </div>
-          <h3 className="font-heading text-2xl sm:text-3xl font-bold text-white">
+          <h2 className="font-heading text-2xl sm:text-3xl font-bold text-white">
             Ready to practise gentle onset and desensitization?
-          </h3>
+          </h2>
           <p className="text-xs sm:text-sm text-mist/80 max-w-lg mx-auto leading-relaxed">
             Access pre-configured stammering exercises in the interactive prototype practice dashboard.
           </p>

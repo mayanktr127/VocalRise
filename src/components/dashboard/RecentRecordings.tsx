@@ -139,9 +139,9 @@ export function RecentRecordings({
                 {/* Header row */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                   <div className="space-y-0.5">
-                    <h4 className="font-heading text-sm font-bold text-midnight dark:text-white leading-snug">
+                    <h3 className="font-heading text-sm font-bold text-midnight dark:text-white leading-snug">
                       {rec.title}
-                    </h4>
+                    </h3>
                     <p className="text-xs text-stone dark:text-[#BDCBD2]">
                       {rec.exerciseTitle} • {formatDate(rec.date)}
                     </p>

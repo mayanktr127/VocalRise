@@ -146,9 +146,9 @@ export function ProductPreview({ className }: ProductPreviewProps) {
                     [Illustrative Prototype View]
                   </span>
                 </div>
-                <h4 className="font-heading text-xl font-bold text-midnight dark:text-[#F2F6F7]">
+                <h3 className="font-heading text-xl font-bold text-midnight dark:text-[#F2F6F7]">
                   Micro-Drill: Easy Onset with Continuous Phonation
-                </h4>
+                </h3>
                 <p className="text-xs sm:text-sm text-stone dark:text-[#BDCBD2]">
                   Focus on soft vocal initiation. Allow an easy &ldquo;h&rdquo; sound to precede your vowel voicing.
                 </p>

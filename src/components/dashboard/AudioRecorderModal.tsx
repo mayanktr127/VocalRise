@@ -329,7 +329,7 @@ export function AudioRecorderModal({
               <Button
                 onClick={handleStopRecording}
                 size="lg"
-                className="bg-terracotta hover:bg-terracotta/90 text-white rounded-full px-6 gap-2 animate-pulse shadow-elevated"
+                className="bg-[#A8533E] hover:bg-[#8F4431] text-white rounded-full px-6 gap-2 animate-pulse shadow-elevated"
               >
                 <Square className="h-4 w-4 fill-white" aria-hidden="true" />
                 <span>Finish Recording</span>

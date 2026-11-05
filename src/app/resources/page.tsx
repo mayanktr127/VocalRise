@@ -222,8 +222,12 @@ export default function ResourcesPage() {
         </div>
 
         {/* Articles Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {filteredArticles.map((art) => (
+        <section aria-labelledby="articles-heading">
+          <h2 id="articles-heading" className="sr-only">
+            Clinical and Practice Articles
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {filteredArticles.map((art) => (
             <div
               key={art.id}
               className="rounded-3xl border border-[#D5E1E6] bg-white dark:border-[#304653] dark:bg-midnight-surface p-7 shadow-subtle flex flex-col justify-between space-y-5 hover:border-ocean/40 dark:hover:border-softblue/40 transition-all text-left"
@@ -264,7 +268,8 @@ export default function ResourcesPage() {
               </div>
             </div>
           ))}
-        </div>
+          </div>
+        </section>
 
         {/* Practice Studio Callout */}
         <div className="rounded-[32px] bg-midnight dark:bg-midnight-deep text-white p-8 sm:p-12 border border-[#304653] shadow-elevated text-center space-y-4 max-w-4xl mx-auto">
@@ -272,9 +277,9 @@ export default function ResourcesPage() {
             <Sparkles className="h-3.5 w-3.5 text-softblue" aria-hidden="true" />
             <span>Interactive Application</span>
           </div>
-          <h3 className="font-heading text-2xl sm:text-3xl font-bold text-white">
+          <h2 className="font-heading text-2xl sm:text-3xl font-bold text-white">
             Put speech science into daily practice
-          </h3>
+          </h2>
           <p className="text-xs sm:text-sm text-mist/80 max-w-lg mx-auto leading-relaxed">
             All technique principles outlined in our clinical library are implemented directly in our interactive web practice studio.
           </p>

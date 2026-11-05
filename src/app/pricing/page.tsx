@@ -151,8 +151,12 @@ export default function PricingPage() {
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {plans.map((plan, idx) => {
+        <section aria-labelledby="pricing-tiers-heading">
+          <h2 id="pricing-tiers-heading" className="sr-only">
+            Available Practice Plans
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {plans.map((plan, idx) => {
             const price = billingCycle === "annual" ? plan.priceAnnual : plan.priceMonthly;
 
             return (
@@ -221,14 +225,15 @@ export default function PricingPage() {
               </div>
             );
           })}
-        </div>
+          </div>
+        </section>
 
         {/* Comparison Feature Matrix */}
         <div className="max-w-5xl mx-auto rounded-[32px] border border-[#D5E1E6] dark:border-[#304653] bg-white dark:bg-midnight-surface p-8 sm:p-10 shadow-card space-y-6 text-left overflow-x-auto">
           <div className="space-y-1">
-            <h3 className="font-heading text-xl font-bold text-midnight dark:text-white">
+            <h2 className="font-heading text-xl font-bold text-midnight dark:text-white">
               Plan Comparison Breakdown
-            </h3>
+            </h2>
             <p className="text-xs sm:text-sm text-stone dark:text-[#BDCBD2]">
               Review planned capabilities across our individual and clinician tiers.
             </p>
@@ -287,9 +292,9 @@ export default function PricingPage() {
         {/* FAQs */}
         <div className="max-w-4xl mx-auto rounded-[32px] border border-[#D5E1E6] dark:border-[#304653] bg-white dark:bg-midnight-surface p-8 sm:p-12 space-y-8 text-left shadow-card">
           <div className="space-y-2 text-center sm:text-left">
-            <h3 className="font-heading text-2xl font-bold text-midnight dark:text-white">
+            <h2 className="font-heading text-2xl font-bold text-midnight dark:text-white">
               Frequently Asked Questions
-            </h3>
+            </h2>
             <p className="text-xs sm:text-sm text-stone dark:text-[#BDCBD2]">
               Clinical, technical, and planned subscription details
             </p>
@@ -298,9 +303,9 @@ export default function PricingPage() {
           <div className="space-y-6">
             {faqs.map((faq, idx) => (
               <div key={idx} className="space-y-1.5 pb-5 border-b border-[#E7EFF2] dark:border-[#304653] last:border-none">
-                <h4 className="font-heading text-base font-semibold text-midnight dark:text-white">
+                <h3 className="font-heading text-base font-semibold text-midnight dark:text-white">
                   {faq.q}
-                </h4>
+                </h3>
                 <p className="text-xs sm:text-sm text-stone dark:text-[#BDCBD2] leading-relaxed">
                   {faq.a}
                 </p>

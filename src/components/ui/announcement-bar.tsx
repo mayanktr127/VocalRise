@@ -30,7 +30,7 @@ export function AnnouncementBar({ className }: AnnouncementBarProps) {
         {/* Clinician demo link */}
         <Link
           href="/therapist"
-          className="inline-flex items-center gap-1 font-medium text-softblue hover:text-white shrink-0 transition-colors underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-softblue rounded-sm"
+          className="inline-flex items-center gap-1 font-medium text-softblue hover:text-white shrink-0 transition-colors underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-softblue rounded-sm"
         >
           <span>Explore Clinician Portal Demo</span>
           <ArrowRight className="h-3 w-3" aria-hidden="true" />

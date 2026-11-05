@@ -75,9 +75,9 @@ export function RecommendedExercises({
                 )}
               </div>
 
-              <h4 className="font-heading text-sm font-bold text-midnight dark:text-white group-hover:text-ocean dark:group-hover:text-softblue transition-colors">
+              <h3 className="font-heading text-sm font-bold text-midnight dark:text-white group-hover:text-ocean dark:group-hover:text-softblue transition-colors">
                 {exercise.title}
-              </h4>
+              </h3>
               <p className="text-xs text-stone dark:text-[#BDCBD2] line-clamp-2 leading-relaxed">
                 {exercise.description}
               </p>

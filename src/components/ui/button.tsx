@@ -33,7 +33,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       link:
         "text-ocean dark:text-[#83B5CC] underline-offset-4 hover:underline p-0 h-auto font-normal",
       terracotta:
-        "bg-terracotta text-white hover:bg-[#B36F5C] shadow-subtle dark:bg-terracotta dark:hover:bg-[#D69A84] dark:text-white font-medium",
+        "bg-[#A8533E] text-white hover:bg-[#8F4431] shadow-subtle dark:bg-[#A8533E] dark:hover:bg-[#BD6049] dark:text-white font-medium",
     };
 
     const sizeStyles = {

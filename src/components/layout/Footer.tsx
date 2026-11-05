@@ -42,14 +42,14 @@ export function Footer() {
 
           {/* Speech Pathways */}
           <div>
-            <h4 className="font-heading text-xs font-semibold uppercase tracking-wider text-white mb-4">
+            <h2 className="font-heading text-xs font-semibold uppercase tracking-wider text-white mb-4">
               Speech Pathways
-            </h4>
+            </h2>
             <ul className="space-y-2.5 text-sm">
               <li>
                 <Link
                   href="/stammering"
-                  className="text-mist/80 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-softblue rounded-sm"
+                  className="text-mist/80 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-softblue rounded-sm"
                 >
                   Stammering & Fluency
                 </Link>
@@ -57,7 +57,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/articulation-and-lisping"
-                  className="text-mist/80 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-softblue rounded-sm"
+                  className="text-mist/80 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-softblue rounded-sm"
                 >
                   Articulation & Lisping
                 </Link>
@@ -65,7 +65,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/how-it-works"
-                  className="text-mist/80 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-softblue rounded-sm"
+                  className="text-mist/80 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-softblue rounded-sm"
                 >
                   Practice Methodology
                 </Link>
@@ -73,7 +73,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/dashboard"
-                  className="text-softblue font-medium hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-softblue rounded-sm"
+                  className="text-softblue font-medium hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-softblue rounded-sm"
                 >
                   Interactive Practice Hub →
                 </Link>
@@ -83,14 +83,14 @@ export function Footer() {
 
           {/* Portals & Professionals */}
           <div>
-            <h4 className="font-heading text-xs font-semibold uppercase tracking-wider text-white mb-4">
+            <h2 className="font-heading text-xs font-semibold uppercase tracking-wider text-white mb-4">
               Professionals
-            </h4>
+            </h2>
             <ul className="space-y-2.5 text-sm">
               <li>
                 <Link
                   href="/therapist"
-                  className="text-softblue font-medium hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-softblue rounded-sm"
+                  className="text-softblue font-medium hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-softblue rounded-sm"
                 >
                   Therapist Portal Demo →
                 </Link>
@@ -98,7 +98,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/pricing"
-                  className="text-mist/80 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-softblue rounded-sm"
+                  className="text-mist/80 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-softblue rounded-sm"
                 >
                   Plans & Caseload Tiers
                 </Link>
@@ -106,7 +106,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/resources"
-                  className="text-mist/80 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-softblue rounded-sm"
+                  className="text-mist/80 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-softblue rounded-sm"
                 >
                   Practice Guides & Articles
                 </Link>
@@ -114,7 +114,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/about"
-                  className="text-mist/80 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-softblue rounded-sm"
+                  className="text-mist/80 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-softblue rounded-sm"
                 >
                   Our Mission & Principles
                 </Link>
@@ -124,14 +124,14 @@ export function Footer() {
 
           {/* Account & Access */}
           <div>
-            <h4 className="font-heading text-xs font-semibold uppercase tracking-wider text-white mb-4">
+            <h2 className="font-heading text-xs font-semibold uppercase tracking-wider text-white mb-4">
               Account & Access
-            </h4>
+            </h2>
             <ul className="space-y-2.5 text-sm">
               <li>
                 <Link
                   href="/login"
-                  className="text-mist/80 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-softblue rounded-sm"
+                  className="text-mist/80 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-softblue rounded-sm"
                 >
                   Log In
                 </Link>
@@ -139,7 +139,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/signup"
-                  className="text-mist/80 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-softblue rounded-sm"
+                  className="text-mist/80 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-softblue rounded-sm"
                 >
                   Create Free Account
                 </Link>
@@ -147,7 +147,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/resources"
-                  className="text-mist/80 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-softblue rounded-sm"
+                  className="text-mist/80 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-softblue rounded-sm"
                 >
                   Self-Reflection Guides
                 </Link>
@@ -173,21 +173,21 @@ export function Footer() {
             <button
               type="button"
               onClick={() => setActiveModal("privacy")}
-              className="hover:text-white transition-colors underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-softblue rounded-sm"
+              className="hover:text-white transition-colors underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-softblue rounded-sm"
             >
               Privacy Principles
             </button>
             <button
               type="button"
               onClick={() => setActiveModal("terms")}
-              className="hover:text-white transition-colors underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-softblue rounded-sm"
+              className="hover:text-white transition-colors underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-softblue rounded-sm"
             >
               Terms of Service
             </button>
             <button
               type="button"
               onClick={() => setActiveModal("accessibility")}
-              className="hover:text-white transition-colors underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-softblue rounded-sm"
+              className="hover:text-white transition-colors underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-softblue rounded-sm"
             >
               Accessibility Statement
             </button>

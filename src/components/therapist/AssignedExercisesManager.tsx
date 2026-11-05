@@ -72,9 +72,9 @@ export function AssignedExercisesManager({
             >
               <div className="space-y-1 flex-1">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <h4 className="font-heading text-sm font-bold text-midnight dark:text-white">
+                  <h3 className="font-heading text-sm font-bold text-midnight dark:text-white">
                     {exercise.title}
-                  </h4>
+                  </h3>
                   <Badge variant={isAssigned ? "ocean" : "mist"} className="text-[10px]">
                     {exercise.targetFocus}
                   </Badge>

@@ -210,9 +210,9 @@ export default function HomePage() {
               <ShieldCheck className="h-6 w-6" aria-hidden="true" />
             </div>
             <div className="space-y-1">
-              <h4 className="font-heading text-sm font-bold text-midnight dark:text-white">
+              <h3 className="font-heading text-sm font-bold text-midnight dark:text-white">
                 Our Non-Diagnostic Clinical Distinction Pledge
-              </h4>
+              </h3>
               <p className="text-xs sm:text-sm text-stone dark:text-[#BDCBD2] leading-relaxed">
                 We strictly reject conflating developmental stammering with phonetic articulation errors. Each pathway is built on distinct therapeutic literature, protecting speakers from inappropriate or unhelpful drills.
               </p>
@@ -670,9 +670,9 @@ export default function HomePage() {
                   <div className="h-10 w-10 rounded-xl bg-mist dark:bg-midnight-deep text-ocean dark:text-softblue flex items-center justify-center">
                     <Icon className="h-5 w-5" aria-hidden="true" />
                   </div>
-                  <h4 className="font-heading text-base font-bold text-midnight dark:text-white">
+                  <h3 className="font-heading text-base font-bold text-midnight dark:text-white">
                     {item.title}
-                  </h4>
+                  </h3>
                   <p className="text-xs sm:text-sm text-stone dark:text-[#BDCBD2] leading-relaxed">
                     {item.description}
                   </p>

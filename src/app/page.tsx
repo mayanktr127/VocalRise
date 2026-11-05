@@ -24,6 +24,7 @@ import {
   FileCheck2,
   UserCheck,
 } from "lucide-react";
+import { HeroSection } from "@/components/home/HeroSection";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
@@ -38,111 +39,10 @@ export default function HomePage() {
     <div className="flex flex-col min-h-screen bg-[#F7F9F8] dark:bg-[#111D25] text-midnight dark:text-[#F2F6F7] transition-colors">
       {/* =========================================================================
           SECTION 1: HERO SECTION
-          Asymmetric editorial layout with candid lifestyle photography,
-          trust checkmarks, and floating micro-drill preview pill.
+          Redesigned modern health-tech SaaS hero with layered ambient oceanic mesh,
+          realistic practice viewport, waveform visualizer, and floating SLT cards.
          ========================================================================= */}
-      <section className="relative overflow-hidden pt-12 pb-16 sm:pt-20 sm:pb-24 lg:pt-24 lg:pb-28">
-        {/* Subtle background ambient mesh */}
-        <div className="absolute inset-0 pointer-events-none opacity-40 dark:opacity-20 flex justify-center">
-          <div className="w-[1200px] h-[500px] bg-gradient-to-b from-mist via-porcelain to-transparent dark:from-midnight-deep dark:via-midnight dark:to-transparent rounded-full blur-3xl -translate-y-1/2" />
-        </div>
-
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-            {/* Left Column: Narrative & Action */}
-            <div className="lg:col-span-7 space-y-6 text-left">
-              {/* Evidence-Informed Badge */}
-              <div className="inline-flex items-center gap-2 rounded-full border border-[#D5E1E6] bg-white/90 dark:border-[#304653] dark:bg-midnight-surface/90 px-3.5 py-1 text-xs font-medium text-stone dark:text-[#BDCBD2] shadow-subtle backdrop-blur-sm">
-                <span className="h-2 w-2 rounded-full bg-terracotta" aria-hidden="true" />
-                <span>Human-Centred Speech Practice Platform</span>
-              </div>
-
-              {/* Main Headline */}
-              <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-midnight dark:text-white leading-[1.12]">
-                Your voice. Your pace.{" "}
-                <span className="text-ocean dark:text-softblue">Your journey.</span>
-              </h1>
-
-              {/* Supporting Narrative */}
-              <p className="text-base sm:text-lg text-stone dark:text-[#BDCBD2] max-w-2xl leading-relaxed">
-                A supportive, technique-driven practice companion for people who stammer or navigate articulation and lisping challenges. Designed around personal communication goals, self-advocacy, and optional collaboration with qualified Speech-Language Therapists.
-              </p>
-
-              {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
-                <Link href="/signup">
-                  <Button size="lg" className="w-full sm:w-auto gap-2 px-7">
-                    <span>Explore VocalRise</span>
-                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                  </Button>
-                </Link>
-                <Link href="/how-it-works">
-                  <Button size="lg" variant="outline" className="w-full sm:w-auto px-6">
-                    See How It Works
-                  </Button>
-                </Link>
-                <Link
-                  href="/therapist"
-                  className="sm:ml-2 inline-flex items-center justify-center text-xs font-semibold text-ocean dark:text-softblue hover:underline py-2"
-                >
-                  <Stethoscope className="h-3.5 w-3.5 mr-1.5" aria-hidden="true" />
-                  <span>Clinician Portal Demo &rarr;</span>
-                </Link>
-              </div>
-
-              {/* Reassurance Micro-Text */}
-              <div className="flex flex-wrap items-center gap-y-2 gap-x-5 pt-3 text-xs text-stone dark:text-[#BDCBD2]">
-                <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="h-4 w-4 text-ocean dark:text-softblue shrink-0" aria-hidden="true" />
-                  <span>No diagnostic pressure</span>
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="h-4 w-4 text-ocean dark:text-softblue shrink-0" aria-hidden="true" />
-                  <span>Private by default</span>
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="h-4 w-4 text-ocean dark:text-softblue shrink-0" aria-hidden="true" />
-                  <span>Built around your personal goals</span>
-                </span>
-              </div>
-            </div>
-
-            {/* Right Column: Lifestyle Visual & Micro-Drill Card */}
-            <div className="lg:col-span-5 relative">
-              <div className="relative mx-auto max-w-md lg:max-w-none rounded-[32px] overflow-hidden border border-[#D5E1E6] dark:border-[#304653] bg-gradient-to-br from-mist/80 via-porcelain to-white dark:from-midnight-surface dark:via-midnight dark:to-midnight-deep p-3 sm:p-4 shadow-card">
-                <div className="relative w-full h-[320px] sm:h-[380px] rounded-2xl overflow-hidden bg-white dark:bg-midnight-deep flex items-center justify-center">
-                  <Image
-                    src="/images/hero/candid-speaker.svg"
-                    alt="Adult speaking comfortably and naturally in a calm, supportive setting"
-                    width={480}
-                    height={400}
-                    priority
-                    className="w-full h-full object-contain p-2"
-                  />
-                </div>
-
-                {/* Floating Micro-Drill Preview Pill */}
-                <div className="mt-3 rounded-2xl border border-[#D5E1E6] bg-white/95 dark:border-[#304653] dark:bg-midnight-surface/95 p-3.5 shadow-elevated backdrop-blur-md flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-xl bg-mist dark:bg-midnight-deep text-ocean dark:text-softblue flex items-center justify-center shrink-0">
-                    <Mic className="h-5 w-5" aria-hidden="true" />
-                  </div>
-                  <div className="space-y-0.5 text-left flex-1 min-w-0">
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="text-[11px] font-semibold uppercase tracking-wider text-ocean dark:text-softblue">
-                        Daily Micro-Drill
-                      </span>
-                      <span className="text-[10px] text-stone dark:text-[#BDCBD2]">3 mins</span>
-                    </div>
-                    <p className="text-xs font-semibold text-midnight dark:text-white truncate">
-                      Gentle Vocal Onset & Continuous Voicing
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HeroSection />
 
       {/* =========================================================================
           SECTION 2: TRUST INDICATORS ROW

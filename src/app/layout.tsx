@@ -52,7 +52,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="flex min-h-screen flex-col bg-[#F7F9F8] text-[#243746] dark:bg-[#111D25] dark:text-[#F2F6F7] font-sans antialiased">
+      <body className="flex min-h-screen flex-col bg-[#F7F5F0] text-[#122129] dark:bg-[#0A1820] dark:text-[#F4F7F5] font-sans antialiased transition-colors duration-200">
         <ThemeProvider>
           <Navbar />
           <div className="flex-1 flex flex-col">{children}</div>

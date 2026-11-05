@@ -10,65 +10,107 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Atlantic Calm Master Brand Palette
-        ocean: {
-          DEFAULT: "#315F78",
-          hover: "#264A5E",
-          light: "#417A99",
-          dark: "#1E3B4B",
+        // Deep Fjord Master Brand Palette
+        fjord: {
+          DEFAULT: "#102B3A", // Deep Fjord anchor
+          hover: "#0D222E",
+          surface: "#132630", // Elevated dark surface
+          border: "#203A48",  // Dark surface border
+          canvas: "#0A1820",  // Dark theme background
+          deep: "#050C10",
         },
-        midnight: {
-          DEFAULT: "#243746",
-          surface: "#1A2833",
-          deep: "#111D25",
-        },
-        mist: {
-          DEFAULT: "#E7EFF2",
-          subtle: "#F0F5F7",
-          dark: "#15232C",
+        teal: {
+          DEFAULT: "#176B68", // Ocean Teal primary interactive
+          hover: "#115250",
+          light: "#208A86",
+          dark: "#0E4341",
+          luminous: "#38B2A3", // Dark theme primary accent
+          mint: "#72C4B4",     // Dark theme secondary glow
         },
         porcelain: {
-          DEFAULT: "#F7F9F8",
+          DEFAULT: "#F7F5F0", // Warm Porcelain light canvas
+          warm: "#F4F1EA",
         },
-        softblue: {
-          DEFAULT: "#A9C4D1",
-          hover: "#92B3C3",
-          dark: "#304653",
+        seaglass: {
+          DEFAULT: "#DCEFEA", // Sea Glass luminous badge / panel tint
+          light: "#EBF6F3",
+          border: "#BFDFD6",
+          dark: "#1A3845",
         },
-        terracotta: {
-          DEFAULT: "#C9826D",
-          glow: "#D69A84",
+        coral: {
+          DEFAULT: "#E26D50", // Warm Coral practice accent
+          button: "#D15436",  // Calibrated high-contrast button
+          hover: "#B84328",
+          dark: "#F08C73",
+          glow: "#F4A896",
         },
-        stone: {
-          DEFAULT: "#4B555A",
-          muted: "#6B7C85",
+        sand: {
+          DEFAULT: "#D4A338", // Golden Sand milestone accent (AA calibrated)
+          light: "#FDF4DC",
+          border: "#F3DD9C",
+          dark: "#E9C46A",
+        },
+        ink: {
+          DEFAULT: "#122129", // High-contrast primary body text
+          soft: "#1D323E",
         },
 
-        // Semantic brand tokens mapped to Atlantic Calm for backward compatibility
+        // Legacy Semantic Aliases (Mapped to Deep Fjord for 100% Backward Compatibility)
+        ocean: {
+          DEFAULT: "#176B68", // Maps to Ocean Teal
+          hover: "#115250",   // Maps to Teal Hover
+          light: "#208A86",
+          dark: "#0E4341",
+        },
+        midnight: {
+          DEFAULT: "#102B3A", // Maps to Deep Fjord
+          surface: "#132630", // Maps to Fjord Surface
+          deep: "#0A1820",    // Maps to Dark Canvas
+        },
+        mist: {
+          DEFAULT: "#DCEFEA", // Maps to Sea Glass
+          subtle: "#EBF6F3",
+          dark: "#18303C",
+        },
+        softblue: {
+          DEFAULT: "#38B2A3", // Maps to Luminous Teal
+          hover: "#72C4B4",   // Maps to Mint Glow
+          dark: "#203A48",    // Maps to Fjord Border
+        },
+        terracotta: {
+          DEFAULT: "#E26D50", // Maps to Warm Coral
+          glow: "#F4A896",
+        },
+        stone: {
+          DEFAULT: "#4C5E67", // Maps to Deep Fjord Stone
+          muted: "#667C87",
+        },
+
+        // Brand scale mapped to Deep Fjord
         brand: {
-          50: "#F0F5F7",
-          100: "#E7EFF2", // Mist
-          200: "#A9C4D1", // Soft Blue
-          300: "#83B5CC", // Dark mode brand accent
-          400: "#417A99",
-          500: "#386B86",
-          600: "#315F78", // Ocean Blue (primary action)
-          700: "#264A5E", // Ocean hover
-          800: "#243746", // Midnight Slate
-          900: "#1A2833",
-          950: "#111D25", // Deep Atlantic Night canvas
+          50: "#EBF6F3",
+          100: "#DCEFEA", // Sea Glass
+          200: "#72C4B4", // Mint Glow
+          300: "#38B2A3", // Luminous Teal (Dark accent)
+          400: "#208A86",
+          500: "#176B68", // Ocean Teal
+          600: "#176B68", // Primary action
+          700: "#115250", // Teal hover
+          800: "#102B3A", // Deep Fjord
+          900: "#132630", // Surface
+          950: "#0A1820", // Deep Canvas
         },
         cerulean: {
-          50: "#F0F5F7",
-          100: "#E7EFF2",
-          200: "#A9C4D1",
-          300: "#83B5CC",
-          400: "#417A99",
-          500: "#386B86",
-          600: "#315F78",
-          700: "#243746",
-          800: "#1A2833",
-          900: "#111D25",
+          50: "#EBF6F3",
+          100: "#DCEFEA",
+          200: "#72C4B4",
+          300: "#38B2A3",
+          400: "#208A86",
+          500: "#176B68",
+          600: "#176B68",
+          700: "#102B3A",
+          800: "#132630",
+          900: "#0A1820",
         },
         sage: {
           50: "#ECFDF5",
@@ -89,9 +131,9 @@ const config: Config = {
         container: "32px",
       },
       boxShadow: {
-        subtle: "0 1px 3px 0 rgba(36, 55, 70, 0.04), 0 1px 2px 0 rgba(36, 55, 70, 0.02)",
-        card: "0 4px 16px -2px rgba(36, 55, 70, 0.06), 0 2px 6px -1px rgba(36, 55, 70, 0.03)",
-        elevated: "0 16px 36px -4px rgba(36, 55, 70, 0.08), 0 6px 12px -2px rgba(36, 55, 70, 0.04)",
+        subtle: "0 1px 3px 0 rgba(16, 43, 58, 0.04), 0 1px 2px 0 rgba(16, 43, 58, 0.02)",
+        card: "0 4px 16px -2px rgba(16, 43, 58, 0.06), 0 2px 6px -1px rgba(16, 43, 58, 0.03)",
+        elevated: "0 16px 36px -4px rgba(16, 43, 58, 0.10), 0 6px 12px -2px rgba(16, 43, 58, 0.04)",
       },
     },
   },

@@ -4,33 +4,37 @@
 
 @layer base {
   :root {
-    --background: #F7F9F8;
-    --foreground: #243746;
+    --background: #F7F5F0;
+    --foreground: #102B3A;
     --card: #FFFFFF;
-    --card-foreground: #243746;
+    --card-foreground: #102B3A;
     --border: #D5E1E6;
-    --muted: #E7EFF2;
-    --muted-foreground: #4B555A;
-    --accent: #315F78;
+    --muted: #DCEFEA;
+    --muted-foreground: #4C5E67;
+    --accent: #176B68;
     --accent-foreground: #FFFFFF;
-    --terracotta: #C9826D;
+    --coral: #E26D50;
+    --sand: #D4A338;
+    --terracotta: #E26D50;
   }
 
   .dark {
-    --background: #111D25;
-    --foreground: #F2F6F7;
-    --card: #192A35;
-    --card-foreground: #F2F6F7;
-    --border: #304653;
-    --muted: #15232C;
-    --muted-foreground: #BDCBD2;
-    --accent: #83B5CC;
-    --accent-foreground: #111D25;
-    --terracotta: #D69A84;
+    --background: #0A1820;
+    --foreground: #F4F7F5;
+    --card: #132630;
+    --card-foreground: #F4F7F5;
+    --border: #203A48;
+    --muted: #18303C;
+    --muted-foreground: #A2B7BF;
+    --accent: #38B2A3;
+    --accent-foreground: #0A1820;
+    --coral: #F08C73;
+    --sand: #E9C46A;
+    --terracotta: #F08C73;
   }
 
   body {
-    @apply bg-[#F7F9F8] text-[#243746] dark:bg-[#111D25] dark:text-[#F2F6F7] antialiased font-sans selection:bg-mist selection:text-ocean dark:selection:bg-midnight dark:selection:text-softblue transition-colors duration-200;
+    @apply bg-[#F7F5F0] text-[#122129] dark:bg-[#0A1820] dark:text-[#F4F7F5] antialiased font-sans selection:bg-[#DCEFEA] selection:text-[#102B3A] dark:selection:bg-[#1A3845] dark:selection:text-[#72C4B4] transition-colors duration-200;
     min-height: 100vh;
   }
 
@@ -40,7 +44,7 @@
 
   /* Smooth focus states for accessibility (WCAG 2.2 AA) */
   *:focus-visible {
-    @apply outline-none ring-2 ring-ocean ring-offset-2 ring-offset-[#F7F9F8] dark:ring-[#83B5CC] dark:ring-offset-[#111D25];
+    @apply outline-none ring-2 ring-[#176B68] ring-offset-2 ring-offset-[#F7F5F0] dark:ring-[#38B2A3] dark:ring-offset-[#0A1820];
   }
 }
 
@@ -56,33 +60,33 @@
   }
 }
 
-/* Subtle Atlantic custom scrollbar */
+/* Subtle Deep Fjord custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #F0F5F7;
+  background: #EAEBE6;
 }
 
 .dark ::-webkit-scrollbar-track {
-  background: #111D25;
+  background: #0A1820;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #A9C4D1;
+  background: #B0C8C3;
   border-radius: 9999px;
 }
 
 .dark ::-webkit-scrollbar-thumb {
-  background: #304653;
+  background: #203A48;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #315F78;
+  background: #176B68;
 }
 
 .dark ::-webkit-scrollbar-thumb:hover {
-  background: #456170;
+  background: #38B2A3;
 }

@@ -24,8 +24,8 @@ export function TherapistMetricsChart() {
   }, []);
 
   const isDark = mounted && resolvedTheme === "dark";
-  const gridStroke = isDark ? "#304653" : "#D5E1E6";
-  const axisColor = isDark ? "#BDCBD2" : "#4B555A";
+  const gridStroke = isDark ? "#203A48" : "#D5E1E6";
+  const axisColor = isDark ? "#A2B7BF" : "#4C5E67";
 
   const data = [
     { name: "Julian M.", adherence: 92, target: 80 },
@@ -36,24 +36,24 @@ export function TherapistMetricsChart() {
   ];
 
   return (
-    <Card className="rounded-[28px] border border-[#D5E1E6] bg-white dark:border-[#304653] dark:bg-midnight-surface p-6 sm:p-7 shadow-card h-full text-left transition-colors">
-      <CardHeader className="pb-4 px-0 pt-0 border-b border-[#E7EFF2] dark:border-[#304653] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+    <Card className="rounded-[28px] border border-[#D5E1E6] bg-white dark:border-[#203A48] dark:bg-[#132630] p-6 sm:p-7 shadow-card h-full text-left transition-colors">
+      <CardHeader className="pb-4 px-0 pt-0 border-b border-[#DCEFEA]/60 dark:border-[#203A48] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
         <div>
-          <CardTitle className="font-heading text-lg font-bold flex items-center gap-2 text-midnight dark:text-white">
-            <BarChart3 className="h-5 w-5 text-ocean dark:text-softblue" aria-hidden="true" />
+          <CardTitle className="font-heading text-lg font-bold flex items-center gap-2 text-[#102B3A] dark:text-[#F4F7F5]">
+            <BarChart3 className="h-5 w-5 text-[#176B68] dark:text-[#38B2A3]" aria-hidden="true" />
             <span>Caseload Practice Adherence (% Target)</span>
           </CardTitle>
-          <p className="text-xs text-stone dark:text-[#BDCBD2] mt-1">
+          <p className="text-xs text-[#4C5E67] dark:text-[#A2B7BF] mt-1">
             Weekly home practice completion relative to prescribed drill target (Demonstration Caseload)
           </p>
         </div>
 
-        <div className="flex items-center gap-3 text-xs text-stone dark:text-[#BDCBD2]">
+        <div className="flex items-center gap-3 text-xs text-[#4C5E67] dark:text-[#A2B7BF]">
           <span className="flex items-center gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-ocean" aria-hidden="true" /> Home Adherence
+            <span className="h-2.5 w-2.5 rounded-full bg-[#176B68] dark:bg-[#38B2A3]" aria-hidden="true" /> Home Adherence
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-softblue/60" aria-hidden="true" /> Target Benchmark (80%)
+            <span className="h-2.5 w-2.5 rounded-full bg-[#DCEFEA] dark:bg-[#203A48]" aria-hidden="true" /> Target Benchmark (80%)
           </span>
         </div>
       </CardHeader>
@@ -68,27 +68,27 @@ export function TherapistMetricsChart() {
                 <YAxis domain={[0, 100]} stroke={axisColor} fontSize={11} tickLine={false} unit="%" />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: "#243746",
-                    borderColor: "#304653",
+                    backgroundColor: isDark ? "#132630" : "#102B3A",
+                    borderColor: isDark ? "#203A48" : "#D5E1E6",
                     color: "#FFFFFF",
                     borderRadius: "0.75rem",
                     fontSize: "12px",
                     boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
                   }}
-                  itemStyle={{ color: "#83B5CC" }}
+                  itemStyle={{ color: isDark ? "#38B2A3" : "#DCEFEA" }}
                   formatter={(val: any) => [`${val}%`, "Adherence"]}
                 />
-                <Bar dataKey="adherence" fill="#315F78" radius={[6, 6, 0, 0]} maxBarSize={36} />
+                <Bar dataKey="adherence" fill={isDark ? "#38B2A3" : "#176B68"} radius={[6, 6, 0, 0]} maxBarSize={36} />
               </BarChart>
             </ResponsiveContainer>
           ) : (
-            <div className="flex h-full items-center justify-center text-xs text-stone/50 dark:text-[#BDCBD2]/50">
+            <div className="flex h-full items-center justify-center text-xs text-[#4C5E67]/50 dark:text-[#A2B7BF]/50">
               Loading caseload metrics...
             </div>
           )}
         </div>
 
-        <div className="pt-2 border-t border-[#E7EFF2] dark:border-[#304653] flex items-center justify-between text-[11px] text-stone/70 dark:text-[#BDCBD2]/70">
+        <div className="pt-2 border-t border-[#DCEFEA]/60 dark:border-[#203A48] flex items-center justify-between text-[11px] text-[#4C5E67]/70 dark:text-[#A2B7BF]/70">
           <span>Benchmark target set at 80% weekly consistency for habit reinforcement</span>
           <span className="italic">Demonstration Data (Prototype Simulation)</span>
         </div>

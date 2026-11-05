@@ -27,18 +27,18 @@ export function ProgressOverviewChart() {
   }, []);
 
   const isDark = mounted && resolvedTheme === "dark";
-  const gridStroke = isDark ? "#304653" : "#D5E1E6";
-  const axisColor = isDark ? "#BDCBD2" : "#4B555A";
+  const gridStroke = isDark ? "#203A48" : "#D5E1E6";
+  const axisColor = isDark ? "#A2B7BF" : "#4C5E67";
 
   return (
-    <Card className="rounded-[28px] border border-[#D5E1E6] bg-white dark:border-[#304653] dark:bg-midnight-surface p-6 sm:p-7 shadow-card h-full text-left transition-colors">
+    <Card className="rounded-[28px] border border-[#D5E1E6] bg-white dark:border-[#203A48] dark:bg-[#132630] p-6 sm:p-7 shadow-card h-full text-left transition-colors">
       <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 gap-3 px-0 pt-0">
         <div>
-          <CardTitle className="font-heading text-lg font-bold flex items-center gap-2 text-midnight dark:text-white">
-            <TrendingUp className="h-5 w-5 text-ocean dark:text-softblue" aria-hidden="true" />
+          <CardTitle className="font-heading text-lg font-bold flex items-center gap-2 text-[#102B3A] dark:text-[#F4F7F5]">
+            <TrendingUp className="h-5 w-5 text-[#176B68] dark:text-[#38B2A3]" aria-hidden="true" />
             <span>Practice & Comfort Trajectory</span>
           </CardTitle>
-          <CardDescription className="text-xs text-stone dark:text-[#BDCBD2] mt-1">
+          <CardDescription className="text-xs text-[#4C5E67] dark:text-[#A2B7BF] mt-1">
             Illustrative self-reflection metrics over the last 7 days
           </CardDescription>
         </div>
@@ -47,7 +47,7 @@ export function ProgressOverviewChart() {
         <div
           role="tablist"
           aria-label="Chart Metric Selection"
-          className="inline-flex rounded-xl bg-porcelain dark:bg-midnight-deep p-1 text-xs border border-[#D5E1E6] dark:border-[#304653]"
+          className="inline-flex rounded-xl bg-[#F7F5F0] dark:bg-[#0A1820] p-1 text-xs border border-[#D5E1E6] dark:border-[#203A48]"
         >
           <button
             type="button"
@@ -56,8 +56,8 @@ export function ProgressOverviewChart() {
             onClick={() => setActiveMetric("minutes")}
             className={`rounded-lg px-3 py-1 font-semibold transition-all ${
               activeMetric === "minutes"
-                ? "bg-ocean text-white shadow-subtle"
-                : "text-stone hover:text-midnight dark:text-[#BDCBD2] dark:hover:text-white"
+                ? "bg-[#176B68] text-white shadow-subtle dark:bg-[#38B2A3] dark:text-[#0A1820]"
+                : "text-[#4C5E67] hover:text-[#102B3A] dark:text-[#A2B7BF] dark:hover:text-white"
             }`}
           >
             Practice Minutes
@@ -69,8 +69,8 @@ export function ProgressOverviewChart() {
             onClick={() => setActiveMetric("confidence")}
             className={`rounded-lg px-3 py-1 font-semibold transition-all ${
               activeMetric === "confidence"
-                ? "bg-ocean text-white shadow-subtle"
-                : "text-stone hover:text-midnight dark:text-[#BDCBD2] dark:hover:text-white"
+                ? "bg-[#176B68] text-white shadow-subtle dark:bg-[#38B2A3] dark:text-[#0A1820]"
+                : "text-[#4C5E67] hover:text-[#102B3A] dark:text-[#A2B7BF] dark:hover:text-white"
             }`}
           >
             Ease & Comfort (1-10)
@@ -89,19 +89,19 @@ export function ProgressOverviewChart() {
                   <YAxis stroke={axisColor} fontSize={12} tickLine={false} />
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: "#243746",
-                      borderColor: "#304653",
+                      backgroundColor: isDark ? "#132630" : "#102B3A",
+                      borderColor: isDark ? "#203A48" : "#D5E1E6",
                       color: "#FFFFFF",
                       borderRadius: "0.75rem",
                       fontSize: "12px",
                       boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
                     }}
-                    itemStyle={{ color: "#83B5CC" }}
+                    itemStyle={{ color: isDark ? "#38B2A3" : "#DCEFEA" }}
                     formatter={(value: any) => [`${value} mins`, "Practice Duration"]}
                   />
                   <Bar
                     dataKey="minutes"
-                    fill="#315F78"
+                    fill={isDark ? "#38B2A3" : "#176B68"}
                     radius={[6, 6, 0, 0]}
                     maxBarSize={40}
                   />
@@ -110,8 +110,8 @@ export function ProgressOverviewChart() {
                 <AreaChart data={MOCK_PROGRESS_METRICS} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                   <defs>
                     <linearGradient id="comfortGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#83B5CC" stopOpacity={0.5} />
-                      <stop offset="95%" stopColor="#83B5CC" stopOpacity={0} />
+                      <stop offset="5%" stopColor={isDark ? "#38B2A3" : "#176B68"} stopOpacity={0.5} />
+                      <stop offset="95%" stopColor={isDark ? "#38B2A3" : "#176B68"} stopOpacity={0} />
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={gridStroke} />
@@ -119,20 +119,20 @@ export function ProgressOverviewChart() {
                   <YAxis domain={[1, 10]} stroke={axisColor} fontSize={12} tickLine={false} />
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: "#243746",
-                      borderColor: "#304653",
+                      backgroundColor: isDark ? "#132630" : "#102B3A",
+                      borderColor: isDark ? "#203A48" : "#D5E1E6",
                       color: "#FFFFFF",
                       borderRadius: "0.75rem",
                       fontSize: "12px",
                       boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
                     }}
-                    itemStyle={{ color: "#83B5CC" }}
+                    itemStyle={{ color: isDark ? "#38B2A3" : "#DCEFEA" }}
                     formatter={(value: any) => [`${value} / 10`, "Self-Reported Ease"]}
                   />
                   <Area
                     type="monotone"
                     dataKey="confidence"
-                    stroke="#83B5CC"
+                    stroke={isDark ? "#38B2A3" : "#176B68"}
                     strokeWidth={2.5}
                     fillOpacity={1}
                     fill="url(#comfortGrad)"

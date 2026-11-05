@@ -95,7 +95,7 @@ export function Modal({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
       {/* Backdrop with soft blur */}
       <div
-        className="fixed inset-0 bg-midnight/70 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-[#102B3A]/70 dark:bg-[#050C10]/80 backdrop-blur-sm transition-opacity"
         onClick={onClose}
         aria-hidden="true"
       />
@@ -109,22 +109,22 @@ export function Modal({
         aria-describedby={description ? "modal-description" : undefined}
         tabIndex={-1}
         className={cn(
-          "relative w-full max-w-lg rounded-[28px] bg-white p-6 sm:p-8 shadow-elevated border border-[#D5E1E6] z-10 animate-in fade-in zoom-in-95 duration-200 outline-none dark:bg-midnight-surface dark:border-[#304653] dark:text-[#F2F6F7]",
+          "relative w-full max-w-lg rounded-[28px] bg-white p-6 sm:p-8 shadow-elevated border border-[#D5E1E6] z-10 animate-in fade-in zoom-in-95 duration-200 outline-none dark:bg-[#132630] dark:border-[#203A48] dark:text-[#F4F7F5]",
           className
         )}
       >
-        <div className="flex items-start justify-between pb-4 border-b border-[#E7EFF2] dark:border-[#304653]">
+        <div className="flex items-start justify-between pb-4 border-b border-[#DCEFEA]/60 dark:border-[#203A48]">
           <div>
             <h3
               id="modal-title"
-              className="font-heading text-xl font-semibold leading-tight text-midnight dark:text-[#F2F6F7]"
+              className="font-heading text-xl font-semibold leading-tight text-[#102B3A] dark:text-[#F4F7F5]"
             >
               {title}
             </h3>
             {description && (
               <p
                 id="modal-description"
-                className="mt-1.5 text-sm text-stone dark:text-[#BDCBD2] leading-relaxed"
+                className="mt-1.5 text-sm text-[#4C5E67] dark:text-[#A2B7BF] leading-relaxed"
               >
                 {description}
               </p>
@@ -133,7 +133,7 @@ export function Modal({
           <button
             onClick={onClose}
             aria-label="Close dialog"
-            className="rounded-xl p-1.5 text-stone hover:bg-mist hover:text-midnight dark:text-[#BDCBD2] dark:hover:bg-[#203542] dark:hover:text-[#F2F6F7] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean dark:focus-visible:ring-[#83B5CC]"
+            className="rounded-xl p-1.5 text-[#4C5E67] hover:bg-[#DCEFEA]/60 hover:text-[#102B3A] dark:text-[#A2B7BF] dark:hover:bg-[#18303C] dark:hover:text-[#F4F7F5] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#176B68] dark:focus-visible:ring-[#38B2A3]"
           >
             <X className="h-5 w-5" />
           </button>

@@ -14,11 +14,10 @@ import {
   Lock,
   Sparkles,
   CheckCircle2,
-  FileCheck2,
   Smile,
-  Volume2,
   ChevronLeft,
   ChevronRight,
+  Target,
 } from "lucide-react";
 import { motion, AnimatePresence, useReducedMotion, type Variants } from "motion/react";
 import { Button } from "@/components/ui/button";
@@ -101,7 +100,7 @@ export function HeroSection() {
   const activeSlide = heroSlides[currentSlide];
   const CurrentSlideIcon = activeSlide.icon;
 
-  // Waveform bars data for the realistic audio visualizer
+  // Waveform bars data for the simulated practice visualizer
   const waveformBars = [
     14, 26, 38, 48, 62, 54, 40, 28, 44, 58, 64, 50, 36, 48, 60, 42, 30, 22, 16, 10
   ];
@@ -121,7 +120,7 @@ export function HeroSection() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: shouldReduceMotion ? 0 : 0.55, delay: shouldReduceMotion ? 0 : 0.18, ease: [0.21, 0.47, 0.32, 0.98] },
+      transition: { duration: shouldReduceMotion ? 0 : 0.55, delay: shouldReduceMotion ? 0 : 0.16, ease: [0.21, 0.47, 0.32, 0.98] },
     },
   };
 
@@ -130,7 +129,7 @@ export function HeroSection() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: shouldReduceMotion ? 0 : 0.5, delay: shouldReduceMotion ? 0 : 0.32, ease: "easeOut" },
+      transition: { duration: shouldReduceMotion ? 0 : 0.5, delay: shouldReduceMotion ? 0 : 0.28, ease: "easeOut" },
     },
   };
 
@@ -139,7 +138,16 @@ export function HeroSection() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: shouldReduceMotion ? 0 : 0.45, delay: shouldReduceMotion ? 0 : 0.44, ease: "easeOut" },
+      transition: { duration: shouldReduceMotion ? 0 : 0.45, delay: shouldReduceMotion ? 0 : 0.4, ease: "easeOut" },
+    },
+  };
+
+  const trustStatementVariants: Variants = {
+    hidden: { opacity: shouldReduceMotion ? 1 : 0, y: shouldReduceMotion ? 0 : 10 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: shouldReduceMotion ? 0 : 0.45, delay: shouldReduceMotion ? 0 : 0.5, ease: "easeOut" },
     },
   };
 
@@ -148,16 +156,7 @@ export function HeroSection() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: shouldReduceMotion ? 0 : 0.45, delay: shouldReduceMotion ? 0 : 0.54, ease: "easeOut" },
-    },
-  };
-
-  const trustMarkersVariants: Variants = {
-    hidden: { opacity: shouldReduceMotion ? 1 : 0, y: shouldReduceMotion ? 0 : 12 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: shouldReduceMotion ? 0 : 0.45, delay: shouldReduceMotion ? 0 : 0.64, ease: "easeOut" },
+      transition: { duration: shouldReduceMotion ? 0 : 0.45, delay: shouldReduceMotion ? 0 : 0.58, ease: "easeOut" },
     },
   };
 
@@ -165,8 +164,8 @@ export function HeroSection() {
   const heroVisualVariants: Variants = {
     hidden: {
       opacity: shouldReduceMotion ? 1 : 0,
-      x: shouldReduceMotion ? 0 : 32,
-      scale: shouldReduceMotion ? 1 : 0.97,
+      x: shouldReduceMotion ? 0 : 28,
+      scale: shouldReduceMotion ? 1 : 0.98,
     },
     visible: {
       opacity: 1,
@@ -174,18 +173,18 @@ export function HeroSection() {
       scale: 1,
       transition: {
         duration: shouldReduceMotion ? 0 : 0.65,
-        delay: shouldReduceMotion ? 0 : 0.28,
+        delay: shouldReduceMotion ? 0 : 0.24,
         ease: [0.21, 0.47, 0.32, 0.98],
       },
     },
   };
 
-  // Staggered floating cards entrance + continuous gentle float loop
+  // Staggered floating cards entrance + gentle float loop
   const floatingCard1Variants: Variants = {
     hidden: {
       opacity: shouldReduceMotion ? 1 : 0,
-      y: shouldReduceMotion ? 0 : -20,
-      scale: shouldReduceMotion ? 1 : 0.92,
+      y: shouldReduceMotion ? 0 : -16,
+      scale: shouldReduceMotion ? 1 : 0.94,
     },
     visible: {
       opacity: 1,
@@ -193,7 +192,7 @@ export function HeroSection() {
       scale: 1,
       transition: {
         duration: shouldReduceMotion ? 0 : 0.5,
-        delay: shouldReduceMotion ? 0 : 0.65,
+        delay: shouldReduceMotion ? 0 : 0.62,
         ease: [0.21, 0.47, 0.32, 0.98],
       },
     },
@@ -202,8 +201,8 @@ export function HeroSection() {
   const floatingCard2Variants: Variants = {
     hidden: {
       opacity: shouldReduceMotion ? 1 : 0,
-      y: shouldReduceMotion ? 0 : 20,
-      scale: shouldReduceMotion ? 1 : 0.92,
+      y: shouldReduceMotion ? 0 : 16,
+      scale: shouldReduceMotion ? 1 : 0.94,
     },
     visible: {
       opacity: 1,
@@ -211,40 +210,55 @@ export function HeroSection() {
       scale: 1,
       transition: {
         duration: shouldReduceMotion ? 0 : 0.5,
-        delay: shouldReduceMotion ? 0 : 0.82,
+        delay: shouldReduceMotion ? 0 : 0.76,
         ease: [0.21, 0.47, 0.32, 0.98],
       },
     },
   };
 
-  const privacyPillVariants: Variants = {
-    hidden: { opacity: shouldReduceMotion ? 1 : 0, y: shouldReduceMotion ? 0 : 10 },
+  const trustStripVariants: Variants = {
+    hidden: { opacity: shouldReduceMotion ? 1 : 0, y: shouldReduceMotion ? 0 : 16 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: shouldReduceMotion ? 0 : 0.4, delay: shouldReduceMotion ? 0 : 0.95 },
+      transition: {
+        duration: shouldReduceMotion ? 0 : 0.5,
+        delay: shouldReduceMotion ? 0 : 0.68,
+        ease: "easeOut",
+      },
     },
   };
 
   return (
-    <section className="relative overflow-hidden pt-12 pb-20 sm:pt-16 sm:pb-28 lg:pt-20 lg:pb-32 bg-gradient-to-b from-[#EEF4F7] via-[#F7F9F8] to-[#F7F9F8] dark:from-[#0E171E] dark:via-[#111D25] dark:to-[#111D25] transition-colors">
+    <section className="relative overflow-hidden pt-10 pb-14 sm:pt-14 sm:pb-20 lg:pt-18 lg:pb-24 bg-[#F7F5F0] dark:bg-[#0A1820] text-[#122129] dark:text-[#F4F7F5] transition-colors">
       {/* =========================================================================
-          BACKGROUND AMBIENT ATMOSPHERE & GRADIENT MESH
+          BACKGROUND ATMOSPHERE: Warm Porcelain, Sea Glass Wash & Targeted Teal Glow
          ========================================================================= */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[550px] bg-gradient-to-b from-ocean/15 via-softblue/10 to-transparent dark:from-ocean/20 dark:via-[#1E3B4B]/20 dark:to-transparent rounded-full blur-3xl opacity-80 -translate-y-1/3" />
-        <div className="absolute top-10 right-0 sm:right-10 w-[420px] h-[380px] bg-gradient-to-bl from-terracotta/10 via-[#E89E88]/5 to-transparent dark:from-terracotta/15 dark:via-transparent blur-3xl rounded-full opacity-70" />
-        <div className="absolute bottom-10 left-0 w-[400px] h-[340px] bg-gradient-to-tr from-[#14B8A6]/10 via-[#2DD4BF]/5 to-transparent dark:from-[#0D9488]/15 dark:via-transparent blur-2xl rounded-full opacity-60" />
+        {/* Broad Sea Glass Wash across lower hero */}
+        <div className="absolute -bottom-24 left-1/2 -translate-x-1/2 w-[1400px] h-[520px] bg-gradient-to-t from-[#DCEFEA]/45 via-[#EBF6F3]/25 to-transparent dark:from-[#132630]/65 dark:via-[#0F1E27]/35 dark:to-transparent rounded-[100%] blur-3xl opacity-80" />
 
+        {/* Targeted Teal & Soft Coral Radial Ambient Glow specifically behind right visual */}
+        <div className="absolute top-1/4 right-0 lg:right-[4%] w-[640px] h-[520px] bg-gradient-to-br from-[#176B68]/12 via-[#38B2A3]/8 to-[#E26D50]/5 dark:from-[#38B2A3]/18 dark:via-[#176B68]/15 dark:to-transparent rounded-full blur-3xl opacity-90" />
+
+        {/* Delicate architectural curved contour */}
         <svg
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] opacity-[0.035] dark:opacity-[0.06] pointer-events-none"
-          viewBox="0 0 1200 1200"
+          className="absolute top-0 right-0 w-[900px] h-[700px] text-[#102B3A] dark:text-[#38B2A3] opacity-[0.03] dark:opacity-[0.045] pointer-events-none"
+          viewBox="0 0 900 700"
           fill="none"
         >
-          <circle cx="600" cy="600" r="280" stroke="currentColor" strokeWidth="1.5" strokeDasharray="6 8" />
-          <circle cx="600" cy="600" r="380" stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 10" />
-          <circle cx="600" cy="600" r="480" stroke="currentColor" strokeWidth="1.5" strokeDasharray="8 12" />
-          <circle cx="600" cy="600" r="580" stroke="currentColor" strokeWidth="1" />
+          <path
+            d="M900 0 C 650 150, 400 400, 300 700"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeDasharray="4 8"
+          />
+          <path
+            d="M900 120 C 700 240, 500 480, 420 700"
+            stroke="currentColor"
+            strokeWidth="1"
+          />
+          <circle cx="680" cy="220" r="180" stroke="currentColor" strokeWidth="1" strokeDasharray="6 10" />
         </svg>
       </div>
 
@@ -252,25 +266,25 @@ export function HeroSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 xl:gap-12 items-center">
           
           {/* =========================================================================
-              LEFT COLUMN: HERO NARRATIVE & IMPACTFUL ACTIONS
+              LEFT COLUMN: EDITORIAL NARRATIVE & IMPACTFUL ACTIONS
              ========================================================================= */}
-          <div className="lg:col-span-6 xl:col-span-7 space-y-6 sm:space-y-7 text-left">
+          <div className="lg:col-span-7 xl:col-span-7 space-y-6 sm:space-y-7 text-left">
             
-            {/* 1. Small Hero Label: Fades in */}
+            {/* 1. Small Eyebrow Label: Fades in */}
             <motion.div
               variants={labelVariants}
               initial="hidden"
               animate="visible"
               className="flex"
             >
-              <div className="inline-flex items-center gap-2.5 rounded-full border border-ocean/20 bg-white/90 dark:border-[#304653] dark:bg-midnight-surface/90 px-4 py-1.5 text-xs font-medium text-midnight dark:text-[#E2E8F0] shadow-subtle backdrop-blur-md">
+              <div className="inline-flex items-center gap-2.5 rounded-full border border-[#BFDFD6] dark:border-[#203A48] bg-[#DCEFEA]/90 dark:bg-[#1A3845]/90 px-4 py-1.5 text-xs font-medium text-[#102B3A] dark:text-[#E2E8F0] shadow-subtle backdrop-blur-md">
                 <span className="relative flex h-2 w-2" aria-hidden="true">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-terracotta opacity-75 motion-reduce:hidden" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#A8533E]" />
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#176B68] dark:bg-[#38B2A3] opacity-75 motion-reduce:hidden" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#176B68] dark:bg-[#38B2A3]" />
                 </span>
-                <span className="font-semibold text-ocean dark:text-[#83B5CC]">VocalRise</span>
-                <span className="text-[#A9C4D1] dark:text-[#456170]" aria-hidden="true">•</span>
-                <span>Human-Centred Speech Practice Platform</span>
+                <span className="font-semibold text-[#102B3A] dark:text-[#F4F7F5]">VocalRise</span>
+                <span className="text-[#89A6B2] dark:text-[#456170]" aria-hidden="true">•</span>
+                <span>Supportive Speech Practice Platform</span>
               </div>
             </motion.div>
 
@@ -279,15 +293,15 @@ export function HeroSection() {
               variants={headingVariants}
               initial="hidden"
               animate="visible"
-              className="font-heading text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-bold tracking-tight text-midnight dark:text-white leading-[1.1] sm:leading-[1.08]"
+              className="font-heading text-4xl sm:text-5xl lg:text-5xl xl:text-[3.5rem] font-bold tracking-tight text-[#102B3A] dark:text-white leading-[1.1] sm:leading-[1.08]"
             >
               Your voice. Your pace.{" "}
               <span className="relative inline-block mt-1 sm:mt-0">
-                <span className="bg-gradient-to-r from-ocean via-[#296887] to-[#147B74] dark:from-[#83B5CC] dark:via-[#A7CEE0] dark:to-[#5EEAD4] bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-[#102B3A] via-[#176B68] to-[#208A86] dark:from-[#F4F7F5] dark:via-[#72C4B4] dark:to-[#38B2A3] bg-clip-text text-transparent">
                   Your journey.
                 </span>
                 <svg
-                  className="absolute -bottom-1 sm:-bottom-1.5 left-0 w-full h-2 text-ocean/30 dark:text-[#83B5CC]/40"
+                  className="absolute -bottom-1 sm:-bottom-1.5 left-0 w-full h-2 text-[#176B68]/35 dark:text-[#38B2A3]/50"
                   viewBox="0 0 100 8"
                   preserveAspectRatio="none"
                   aria-hidden="true"
@@ -297,17 +311,17 @@ export function HeroSection() {
               </span>
             </motion.h1>
 
-            {/* 3. Description: Appears after heading */}
+            {/* 3. Supportive Lead Description */}
             <motion.p
               variants={descriptionVariants}
               initial="hidden"
               animate="visible"
-              className="text-base sm:text-lg lg:text-lg text-stone dark:text-[#BDCBD2] max-w-2xl leading-relaxed"
+              className="text-base sm:text-lg lg:text-[1.125rem] text-[#4C5E67] dark:text-[#BDCBD2] max-w-2xl leading-relaxed"
             >
-              A supportive, technique-driven practice companion for people who stammer or navigate articulation differences. Designed around your personal communication goals, physical ease, and optional collaboration with qualified Speech-Language Therapists.
+              A calm, technique-driven practice companion for adults who stammer or navigate articulation differences. Built around your personal communication goals, physical ease, and optional collaboration with your speech therapist.
             </motion.p>
 
-            {/* 4. Primary & Secondary CTA Buttons: Appear with slight delay */}
+            {/* 4. Primary & Secondary CTA Buttons */}
             <motion.div
               variants={ctaVariants}
               initial="hidden"
@@ -316,15 +330,15 @@ export function HeroSection() {
             >
               <Link href="/signup" className="group">
                 <motion.div
-                  whileHover={shouldReduceMotion ? {} : { y: -2, scale: 1.01 }}
+                  whileHover={shouldReduceMotion ? {} : { y: -2 }}
                   whileTap={shouldReduceMotion ? {} : { scale: 0.98 }}
                   transition={{ duration: 0.15 }}
                 >
                   <Button
                     size="lg"
-                    className="w-full sm:w-auto gap-2.5 px-8 shadow-elevated bg-gradient-to-r from-ocean to-[#264A5E] hover:from-[#264A5E] hover:to-[#1E3B4B] dark:from-[#83B5CC] dark:to-[#6C9DB3] dark:text-[#111D25] text-white font-semibold text-base transition-all duration-200"
+                    className="w-full sm:w-auto gap-2.5 px-8 shadow-elevated bg-[#176B68] hover:bg-[#115250] text-white dark:bg-[#38B2A3] dark:hover:bg-[#2DA294] dark:text-[#0A1820] font-semibold text-base transition-all duration-200"
                   >
-                    <span>Explore VocalRise</span>
+                    <span>Explore Practice Tracks</span>
                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
                   </Button>
                 </motion.div>
@@ -338,152 +352,149 @@ export function HeroSection() {
                   <Button
                     size="lg"
                     variant="outline"
-                    className="w-full sm:w-auto px-6 gap-2 text-midnight dark:text-white border-[#A9C4D1] dark:border-[#304653] hover:bg-mist/60 dark:hover:bg-midnight-surface font-medium"
+                    className="w-full sm:w-auto px-6 gap-2 text-[#102B3A] dark:text-white border-[#B2CDC8] dark:border-[#203A48] hover:bg-[#DCEFEA]/40 dark:hover:bg-[#132630] font-medium"
                   >
-                    <Play className="h-3.5 w-3.5 text-ocean dark:text-[#83B5CC]" aria-hidden="true" />
+                    <Play className="h-3.5 w-3.5 text-[#176B68] dark:text-[#38B2A3]" aria-hidden="true" />
                     <span>See How It Works</span>
                   </Button>
                 </motion.div>
               </Link>
             </motion.div>
 
-            {/* Clinician Portal Anchor Link */}
+            {/* 5. Small Trust Statement beneath CTAs */}
+            <motion.div
+              variants={trustStatementVariants}
+              initial="hidden"
+              animate="visible"
+              className="flex flex-wrap items-center gap-y-2 gap-x-4 sm:gap-x-5 text-xs text-[#4C5E67] dark:text-[#BDCBD2] pt-1"
+            >
+              <span className="flex items-center gap-1.5">
+                <Lock className="h-3.5 w-3.5 text-[#176B68] dark:text-[#38B2A3] shrink-0" aria-hidden="true" />
+                <span className="font-medium">In-browser audio processing</span>
+              </span>
+              <span className="text-[#BFDFD6] dark:text-[#203A48]" aria-hidden="true">•</span>
+              <span className="flex items-center gap-1.5">
+                <ShieldCheck className="h-3.5 w-3.5 text-[#176B68] dark:text-[#38B2A3] shrink-0" aria-hidden="true" />
+                <span className="font-medium">No diagnostic pressure</span>
+              </span>
+              <span className="text-[#BFDFD6] dark:text-[#203A48]" aria-hidden="true">•</span>
+              <span className="flex items-center gap-1.5">
+                <HeartHandshake className="h-3.5 w-3.5 text-[#D15436] dark:text-[#F08C73] shrink-0" aria-hidden="true" />
+                <span className="font-medium">Self-advocacy focused</span>
+              </span>
+            </motion.div>
+
+            {/* 6. Clinician Portal Invitation Link */}
             <motion.div
               variants={clinicianLinkVariants}
               initial="hidden"
               animate="visible"
-              className="pt-0.5"
+              className="pt-0.5 sm:pt-1"
             >
               <Link
                 href="/therapist"
-                className="inline-flex items-center gap-2 text-xs font-semibold text-ocean hover:text-ocean-hover dark:text-[#83B5CC] dark:hover:text-[#A7CEE0] transition-colors py-1 group"
+                className="inline-flex items-center gap-2.5 text-xs font-semibold text-[#176B68] hover:text-[#115250] dark:text-[#72C4B4] dark:hover:text-[#A7CEE0] transition-colors py-1 group"
               >
-                <div className="h-5 w-5 rounded-md bg-ocean/10 dark:bg-[#83B5CC]/15 flex items-center justify-center text-ocean dark:text-[#83B5CC]">
-                  <Stethoscope className="h-3 w-3" aria-hidden="true" />
+                <div className="h-6 w-6 rounded-md bg-[#DCEFEA] dark:bg-[#1A3845] flex items-center justify-center text-[#176B68] dark:text-[#38B2A3] shrink-0 border border-[#BFDFD6] dark:border-[#203A48]">
+                  <Stethoscope className="h-3.5 w-3.5" aria-hidden="true" />
                 </div>
-                <span>Are you a clinician? Explore the Therapist Portal Demo</span>
-                <span className="transition-transform group-hover:translate-x-0.5" aria-hidden="true">&rarr;</span>
+                <span>Are you a speech professional? Explore the Clinician Portal Demo</span>
+                <span className="transition-transform group-hover:translate-x-1" aria-hidden="true">&rarr;</span>
               </Link>
             </motion.div>
 
-            {/* Reassurance Micro-Trust Markers */}
-            <motion.div
-              variants={trustMarkersVariants}
-              initial="hidden"
-              animate="visible"
-              className="flex flex-wrap items-center gap-y-2.5 gap-x-5 sm:gap-x-6 pt-3 text-xs text-stone dark:text-[#BDCBD2] border-t border-[#D5E1E6]/80 dark:border-[#304653]/80"
-            >
-              <span className="flex items-center gap-2">
-                <ShieldCheck className="h-4 w-4 text-[#16766E] dark:text-[#2DD4BF] shrink-0" aria-hidden="true" />
-                <span className="font-medium">No diagnostic pressure</span>
-              </span>
-              <span className="flex items-center gap-2">
-                <Lock className="h-4 w-4 text-[#16766E] dark:text-[#2DD4BF] shrink-0" aria-hidden="true" />
-                <span className="font-medium">Private in-browser audio</span>
-              </span>
-              <span className="flex items-center gap-2">
-                <HeartHandshake className="h-4 w-4 text-[#A8533E] dark:text-[#D69A84] shrink-0" aria-hidden="true" />
-                <span className="font-medium">Self-advocacy centred</span>
-              </span>
-            </motion.div>
           </div>
 
           {/* =========================================================================
-              RIGHT COLUMN: HERO VISUAL (ENTERS FROM RIGHT) WITH FLOATING CARDS
+              RIGHT COLUMN: BESPOKE VOCALRISE STUDIO CONSOLE WITH INTEGRATED CAROUSEL
              ========================================================================= */}
-          <div className="lg:col-span-6 xl:col-span-5 relative mt-6 lg:mt-0">
+          <div className="lg:col-span-5 xl:col-span-5 relative mt-8 lg:mt-0">
             {/* Luminous Glow Backdrop */}
             <div
-              className="absolute -inset-3 sm:-inset-6 bg-gradient-to-tr from-ocean/15 via-[#14B8A6]/10 to-terracotta/10 rounded-[36px] blur-2xl pointer-events-none opacity-90 dark:opacity-40"
+              className="absolute -inset-4 sm:-inset-8 bg-gradient-to-tr from-[#176B68]/12 via-[#38B2A3]/10 to-[#E26D50]/5 dark:from-[#38B2A3]/20 dark:via-[#176B68]/20 dark:to-transparent rounded-[40px] blur-3xl pointer-events-none opacity-90 dark:opacity-50"
               aria-hidden="true"
             />
 
             {/* -----------------------------------------------------------------------
-                FLOATING CARD 1: CLINICIAN SHARING (Staggered Entrance + Gentle Float)
+                FLOATING CARD 1: CLINICIAN BRIDGE (Docked Companion Preview)
                ----------------------------------------------------------------------- */}
             <motion.div
               variants={floatingCard1Variants}
               initial="hidden"
               animate="visible"
-              className="absolute -top-6 -right-2 sm:-right-4 lg:-right-6 z-20 max-w-[230px] sm:max-w-[260px] hidden sm:block"
+              className="absolute -top-5 -right-2 sm:-right-4 lg:-right-5 z-20 max-w-[230px] sm:max-w-[250px] hidden sm:block"
             >
               <motion.div
-                animate={shouldReduceMotion ? { y: 0 } : { y: [0, -5, 0] }}
+                animate={shouldReduceMotion ? { y: 0 } : { y: [0, -4, 0] }}
                 transition={
                   shouldReduceMotion
                     ? {}
-                    : { duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1.15 }
+                    : { duration: 6.5, repeat: Infinity, ease: "easeInOut", delay: 1.1 }
                 }
-                whileHover={shouldReduceMotion ? {} : { y: -8, scale: 1.02 }}
-                className="rounded-2xl border border-white/80 dark:border-[#304653]/90 bg-white/95 dark:bg-[#1A2833]/95 p-3.5 shadow-elevated backdrop-blur-xl space-y-2 cursor-default transition-shadow"
+                whileHover={shouldReduceMotion ? {} : { y: -6, scale: 1.02 }}
+                className="rounded-2xl border border-white/90 dark:border-[#203A48] bg-white/95 dark:bg-[#132630]/95 p-3 shadow-elevated backdrop-blur-xl space-y-1.5 cursor-default transition-shadow"
               >
-                <div className="flex items-center gap-2.5">
-                  <div className="relative h-9 w-9 rounded-full bg-mist dark:bg-midnight flex items-center justify-center text-ocean dark:text-[#83B5CC] border border-[#D5E1E6] dark:border-[#304653] shrink-0">
+                <div className="flex items-center gap-2">
+                  <div className="h-8 w-8 rounded-full bg-[#DCEFEA] dark:bg-[#1A3845] flex items-center justify-center text-[#176B68] dark:text-[#38B2A3] border border-[#BFDFD6] dark:border-[#203A48] shrink-0">
                     <Stethoscope className="h-4 w-4" aria-hidden="true" />
-                    <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-emerald-500 border-2 border-white dark:border-[#1A2833]" aria-hidden="true" />
                   </div>
                   <div className="min-w-0">
-                    <p className="text-xs font-semibold text-midnight dark:text-white truncate">
-                      Clinician Collaboration
+                    <p className="text-xs font-semibold text-[#102B3A] dark:text-white truncate">
+                      Clinician Bridge
                     </p>
-                    <p className="text-[10px] text-stone dark:text-[#BDCBD2] flex items-center gap-1">
-                      <CheckCircle2 className="h-3 w-3 text-[#16766E] dark:text-[#2DD4BF]" aria-hidden="true" />
-                      <span>Optional SLT Bridge</span>
+                    <p className="text-[10px] text-[#4C5E67] dark:text-[#BDCBD2] flex items-center gap-1">
+                      <CheckCircle2 className="h-3 w-3 text-[#176B68] dark:text-[#38B2A3]" aria-hidden="true" />
+                      <span>Optional SLT Notes</span>
                     </p>
                   </div>
                 </div>
-                <div className="bg-mist/50 dark:bg-midnight-deep/60 p-2.5 rounded-lg border border-[#E7EFF2] dark:border-[#243746] space-y-1">
-                  <p className="text-[10px] font-semibold text-ocean dark:text-[#83B5CC]">
-                    Asynchronous Review Feature
-                  </p>
-                  <p className="text-[11px] text-stone dark:text-[#BDCBD2] leading-snug">
-                    Share select practice drills with your qualified speech-language therapist for guidance between sessions.
-                  </p>
-                </div>
-                <div className="flex items-center justify-between text-[10px] text-stone dark:text-[#BDCBD2] pt-0.5">
-                  <span className="inline-flex items-center gap-1 font-semibold text-[#16766E] dark:text-[#2DD4BF]">
-                    <FileCheck2 className="h-3 w-3" aria-hidden="true" />
-                    <span>Client-Controlled Sharing</span>
-                  </span>
-                  <span className="italic">*Preview</span>
+                <p className="text-[10px] text-[#4C5E67] dark:text-[#BDCBD2] leading-tight bg-[#F7F9F8] dark:bg-[#0E1A22] p-2 rounded-lg border border-[#E7EFF2] dark:border-[#203A48]">
+                  Share select practice drills with your qualified clinician for review between sessions.
+                </p>
+                <div className="flex items-center justify-between text-[9px] text-[#4C5E67] dark:text-[#BDCBD2] pt-0.5">
+                  <span className="font-semibold text-[#176B68] dark:text-[#38B2A3]">Client-Controlled</span>
+                  <span className="italic">*Prototype preview</span>
                 </div>
               </motion.div>
             </motion.div>
 
             {/* -----------------------------------------------------------------------
-                5. MAIN PRODUCT VIEWPORT (Enters smoothly from right)
+                MAIN PRODUCT VIEWPORT: Bespoke Studio Console
                ----------------------------------------------------------------------- */}
             <motion.div
               variants={heroVisualVariants}
               initial="hidden"
               animate="visible"
-              className="relative rounded-3xl border border-[#D5E1E6] dark:border-[#304653] bg-white/95 dark:bg-[#15232C]/95 backdrop-blur-xl shadow-elevated overflow-hidden"
+              className="relative rounded-3xl border border-[#D5E1E6] dark:border-[#203A48] bg-white/95 dark:bg-[#132630]/95 backdrop-blur-xl shadow-elevated overflow-hidden"
             >
-              {/* Window Chrome / Browser Tab Bar */}
-              <div className="px-4 py-3 bg-[#F0F5F7] dark:bg-[#1A2833] border-b border-[#D5E1E6] dark:border-[#304653] flex items-center justify-between gap-3">
-                <div className="flex items-center gap-1.5 shrink-0" aria-hidden="true">
-                  <div className="h-2.5 w-2.5 rounded-full bg-[#E2E8F0] dark:bg-[#304653]" />
-                  <div className="h-2.5 w-2.5 rounded-full bg-[#E2E8F0] dark:bg-[#304653]" />
-                  <div className="h-2.5 w-2.5 rounded-full bg-[#E2E8F0] dark:bg-[#304653]" />
+              {/* Studio Console Top Bar */}
+              <div className="px-4 py-3 bg-[#EEF4F6] dark:bg-[#162732] border-b border-[#D5E1E6] dark:border-[#203A48] flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2 shrink-0">
+                  <div className="h-6 w-6 rounded-lg bg-[#176B68] text-white flex items-center justify-center shadow-subtle">
+                    <Waves className="h-3.5 w-3.5" aria-hidden="true" />
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-[11px] font-bold tracking-tight text-[#102B3A] dark:text-white leading-tight">
+                      VocalRise Studio
+                    </span>
+                    <span className="text-[9px] font-medium text-[#4C5E67] dark:text-[#BDCBD2]">
+                      Gentle Onset Warmup Drill
+                    </span>
+                  </div>
                 </div>
 
-                <div className="flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-white dark:bg-midnight border border-[#D5E1E6] dark:border-[#304653] text-[11px] font-medium text-stone dark:text-[#BDCBD2] truncate">
-                  <Waves className="h-3 w-3 text-ocean dark:text-[#83B5CC] shrink-0" aria-hidden="true" />
-                  <span className="truncate">Practice Hub • Gentle Onset Drill</span>
-                </div>
-
-                <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#ECFDF5] dark:bg-[#064E3B]/50 border border-[#A7F3D0] dark:border-[#059669]/50 text-[10px] font-semibold text-[#16766E] dark:text-[#2DD4BF] shrink-0">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#10B981] animate-pulse motion-reduce:animate-none" aria-hidden="true" />
-                  <span>Active</span>
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#DCEFEA] dark:bg-[#1A3845] border border-[#BFDFD6] dark:border-[#203A48] text-[10px] font-semibold text-[#102B3A] dark:text-[#72C4B4] shrink-0">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#176B68] dark:bg-[#38B2A3] animate-pulse motion-reduce:animate-none" aria-hidden="true" />
+                  <span>Interactive Preview</span>
                 </div>
               </div>
 
-              {/* Window Body: Visual Speaker & Real-time Practice Surface */}
-              <div className="p-4 sm:p-5 space-y-4">
+              {/* Console Body: Photographic Carousel & Real-time Practice Surface */}
+              <div className="p-3.5 sm:p-4.5 space-y-3.5">
                 
                 {/* Photographic Hero Carousel Representing Human Connection & Practice */}
                 <div
-                  className="relative w-full h-[250px] sm:h-[285px] rounded-2xl overflow-hidden bg-midnight dark:bg-midnight-deep border border-[#D5E1E6]/80 dark:border-[#304653]/80 group select-none shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean"
+                  className="relative w-full h-[240px] sm:h-[280px] rounded-2xl overflow-hidden bg-[#102B3A] border border-[#D5E1E6]/80 dark:border-[#203A48] group select-none shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#176B68]"
                   role="region"
                   aria-roledescription="carousel"
                   aria-label="VocalRise human connection and practice photography carousel"
@@ -535,16 +546,16 @@ export function HeroSection() {
 
                   {/* Top Overlay Badges */}
                   <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2 pointer-events-none z-10">
-                    <div className="px-2.5 py-1 rounded-lg bg-midnight/85 dark:bg-midnight-deep/90 text-white border border-white/20 backdrop-blur-md shadow-subtle flex items-center gap-1.5 pointer-events-auto">
-                      <CurrentSlideIcon className="h-3.5 w-3.5 text-sea-glass" aria-hidden="true" />
+                    <div className="px-2.5 py-1 rounded-lg bg-[#102B3A]/85 dark:bg-[#0A1820]/90 text-white border border-white/20 backdrop-blur-md shadow-subtle flex items-center gap-1.5 pointer-events-auto">
+                      <CurrentSlideIcon className="h-3.5 w-3.5 text-[#DCEFEA]" aria-hidden="true" />
                       <span className="text-[10px] font-semibold tracking-wide">
                         {activeSlide.badge}
                       </span>
                     </div>
 
-                    <div className="px-2.5 py-1 rounded-lg bg-white/90 dark:bg-midnight/90 text-midnight dark:text-white border border-[#D5E1E6] dark:border-[#304653] backdrop-blur-md shadow-subtle flex items-center gap-1.5 pointer-events-auto">
+                    <div className="px-2.5 py-1 rounded-lg bg-white/90 dark:bg-[#102B3A]/90 text-[#102B3A] dark:text-white border border-[#D5E1E6] dark:border-[#203A48] backdrop-blur-md shadow-subtle flex items-center gap-1.5 pointer-events-auto">
                       <span
-                        className="h-1.5 w-1.5 rounded-full bg-ocean dark:bg-sea-glass animate-pulse motion-reduce:animate-none"
+                        className="h-1.5 w-1.5 rounded-full bg-[#176B68] dark:bg-[#38B2A3] animate-pulse motion-reduce:animate-none"
                         aria-hidden="true"
                       />
                       <span className="text-[10px] font-medium">
@@ -560,7 +571,7 @@ export function HeroSection() {
                     </p>
 
                     <div
-                      className="flex items-center gap-1.5 bg-midnight/85 dark:bg-midnight-deep/90 backdrop-blur-md border border-white/20 rounded-full px-2 py-1 shadow-subtle shrink-0"
+                      className="flex items-center gap-1.5 bg-[#102B3A]/85 dark:bg-[#0A1820]/90 backdrop-blur-md border border-white/20 rounded-full px-2 py-1 shadow-subtle shrink-0"
                       role="tablist"
                       aria-label="Photography carousel slides"
                     >
@@ -571,7 +582,7 @@ export function HeroSection() {
                           setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
                         }}
                         aria-label="Previous photograph"
-                        className="h-5 w-5 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sea-glass transition-colors"
+                        className="h-5 w-5 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DCEFEA] transition-colors"
                       >
                         <ChevronLeft className="h-3.5 w-3.5" aria-hidden="true" />
                       </button>
@@ -592,7 +603,7 @@ export function HeroSection() {
                               setCurrentSlide(idx);
                             }}
                             className={cn(
-                              "h-2 rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sea-glass focus-visible:ring-offset-1 focus-visible:ring-offset-midnight",
+                              "h-2 rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DCEFEA] focus-visible:ring-offset-1 focus-visible:ring-offset-[#102B3A]",
                               isCurrent
                                 ? "w-5 bg-white shadow-sm"
                                 : "w-2 bg-white/40 hover:bg-white/70"
@@ -608,7 +619,7 @@ export function HeroSection() {
                           setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
                         }}
                         aria-label="Next photograph"
-                        className="h-5 w-5 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sea-glass transition-colors"
+                        className="h-5 w-5 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DCEFEA] transition-colors"
                       >
                         <ChevronRight className="h-3.5 w-3.5" aria-hidden="true" />
                       </button>
@@ -616,33 +627,33 @@ export function HeroSection() {
                   </div>
                 </div>
 
-                {/* Real-time Waveform & Audio Practice Console */}
-                <div className="rounded-2xl border border-[#D5E1E6] dark:border-[#304653] bg-[#F7F9F8] dark:bg-midnight-deep p-3.5 sm:p-4 space-y-3">
+                {/* Real-time Waveform & Audio Practice Surface (Prototype Preview) */}
+                <div className="rounded-2xl border border-[#D5E1E6] dark:border-[#203A48] bg-[#F7F9F8] dark:bg-[#0E1A22] p-3 sm:p-3.5 space-y-2.5">
                   
                   {/* Drill Goal Header */}
                   <div className="flex items-center justify-between gap-2">
-                    <div className="flex items-center gap-2">
-                      <div className="h-7 w-7 rounded-lg bg-ocean/10 dark:bg-[#83B5CC]/15 text-ocean dark:text-[#83B5CC] flex items-center justify-center shrink-0">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <div className="h-7 w-7 rounded-lg bg-[#DCEFEA] dark:bg-[#1A3845] text-[#176B68] dark:text-[#38B2A3] flex items-center justify-center shrink-0 border border-[#BFDFD6] dark:border-[#203A48]">
                         <Mic className="h-3.5 w-3.5" aria-hidden="true" />
                       </div>
-                      <div>
-                        <p className="text-xs font-bold text-midnight dark:text-white">
-                          Prolonged Vowel Sound & Soft Contact
+                      <div className="min-w-0 truncate">
+                        <p className="text-xs font-bold text-[#102B3A] dark:text-white truncate">
+                          Continuous Phonation Warmup
                         </p>
-                        <p className="text-[10px] text-stone dark:text-[#BDCBD2]">
-                          Phase 1: Continuous voicing without laryngeal arrest
+                        <p className="text-[10px] text-[#4C5E67] dark:text-[#BDCBD2] truncate">
+                          Drill preview: Vocal tract ease &amp; soft onset
                         </p>
                       </div>
                     </div>
-                    <span className="text-[11px] font-mono font-medium text-stone dark:text-[#BDCBD2] shrink-0">
+                    <span className="text-[11px] font-mono font-medium text-[#4C5E67] dark:text-[#BDCBD2] shrink-0">
                       01:42 / 03:00
                     </span>
                   </div>
 
                   {/* Waveform Bar Visualizer (Animated height on entrance) */}
                   <div
-                    className="h-10 px-2 py-1.5 rounded-xl bg-white dark:bg-midnight border border-[#E7EFF2] dark:border-[#243746] flex items-center justify-between gap-1"
-                    aria-label="Acoustic resonance waveform display"
+                    className="h-9 px-2 py-1 rounded-xl bg-white dark:bg-[#132630] border border-[#E7EFF2] dark:border-[#203A48] flex items-center justify-between gap-1"
+                    aria-label="Simulated acoustic resonance waveform display"
                     role="img"
                   >
                     {waveformBars.map((height, i) => (
@@ -657,8 +668,8 @@ export function HeroSection() {
                         }}
                         className={`w-1 rounded-full ${
                           i < 12
-                            ? "bg-gradient-to-t from-ocean to-[#147B74] dark:from-[#83B5CC] dark:to-[#2DD4BF]"
-                            : "bg-[#D5E1E6] dark:bg-[#304653]"
+                            ? "bg-gradient-to-t from-[#176B68] to-[#38B2A3] dark:from-[#38B2A3] dark:to-[#72C4B4]"
+                            : "bg-[#D5E1E6] dark:bg-[#203A48]"
                         }`}
                       />
                     ))}
@@ -671,19 +682,19 @@ export function HeroSection() {
                         type="button"
                         whileHover={shouldReduceMotion ? {} : { scale: 1.08 }}
                         whileTap={shouldReduceMotion ? {} : { scale: 0.92 }}
-                        aria-label="Practice microphone record trigger"
-                        className="h-8 w-8 rounded-lg bg-[#A8533E] text-white flex items-center justify-center shadow-subtle hover:bg-[#8F4431] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A8533E]"
+                        aria-label="Practice microphone record trigger preview"
+                        className="h-8 w-8 rounded-lg bg-[#D15436] text-white flex items-center justify-center shadow-subtle hover:bg-[#B84328] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D15436]"
                       >
                         <Mic className="h-4 w-4" aria-hidden="true" />
                       </motion.button>
-                      <span className="text-[11px] font-medium text-midnight dark:text-white">
-                        Recording in memory
+                      <span className="text-[11px] font-medium text-[#102B3A] dark:text-white">
+                        In-memory audio preview
                       </span>
                     </div>
 
-                    <div className="flex items-center gap-1 text-[10px] font-medium text-[#16766E] dark:text-[#2DD4BF]">
+                    <div className="flex items-center gap-1 text-[10px] font-medium text-[#176B68] dark:text-[#38B2A3]">
                       <Lock className="h-3 w-3" aria-hidden="true" />
-                      <span>Zero Audio Storage</span>
+                      <span>Local Browser Memory</span>
                     </div>
                   </div>
 
@@ -699,72 +710,142 @@ export function HeroSection() {
               variants={floatingCard2Variants}
               initial="hidden"
               animate="visible"
-              className="absolute -bottom-6 -left-2 sm:-left-4 lg:-left-6 z-20 max-w-[240px] sm:max-w-[270px] hidden sm:block"
+              className="absolute -bottom-5 -left-2 sm:-left-4 lg:-left-5 z-20 max-w-[240px] sm:max-w-[260px] hidden sm:block"
             >
               <motion.div
-                animate={shouldReduceMotion ? { y: 0 } : { y: [0, 5, 0] }}
+                animate={shouldReduceMotion ? { y: 0 } : { y: [0, 4, 0] }}
                 transition={
                   shouldReduceMotion
                     ? {}
-                    : { duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1.35 }
+                    : { duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1.4 }
                 }
-                whileHover={shouldReduceMotion ? {} : { y: -8, scale: 1.02 }}
-                className="rounded-2xl border border-white/80 dark:border-[#304653]/90 bg-white/95 dark:bg-[#1A2833]/95 p-3.5 shadow-elevated backdrop-blur-xl space-y-2 cursor-default transition-shadow"
+                whileHover={shouldReduceMotion ? {} : { y: -6, scale: 1.02 }}
+                className="rounded-2xl border border-white/90 dark:border-[#203A48] bg-white/95 dark:bg-[#132630]/95 p-3 shadow-elevated backdrop-blur-xl space-y-1.5 cursor-default transition-shadow"
               >
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex items-center gap-1.5">
-                    <CheckCircle2 className="h-4 w-4 text-[#16766E] dark:text-[#2DD4BF]" aria-hidden="true" />
-                    <span className="text-xs font-bold text-midnight dark:text-white">
-                      Today&apos;s Practice Routine
+                    <Target className="h-4 w-4 text-[#176B68] dark:text-[#38B2A3]" aria-hidden="true" />
+                    <span className="text-xs font-bold text-[#102B3A] dark:text-white">
+                      Personal Goal
                     </span>
                   </div>
-                  <span className="px-2 py-0.5 rounded-full bg-mist dark:bg-midnight text-stone dark:text-[#BDCBD2] text-[10px] font-semibold border border-[#D5E1E6] dark:border-[#304653]">
+                  <span className="px-2 py-0.5 rounded-full bg-[#DCEFEA] dark:bg-[#1A3845] text-[#102B3A] dark:text-[#72C4B4] text-[9px] font-semibold border border-[#BFDFD6] dark:border-[#203A48]">
                     Self-Paced
                   </span>
                 </div>
 
-                <div className="space-y-1">
+                <div className="space-y-0.5">
                   <div className="flex items-baseline justify-between">
-                    <span className="font-heading text-lg font-bold text-midnight dark:text-white">
-                      2 of 3 Drills Done
+                    <span className="text-sm font-bold text-[#102B3A] dark:text-white">
+                      2 of 3 Drills Complete
                     </span>
-                    <span className="text-[11px] font-semibold text-[#16766E] dark:text-[#2DD4BF]">
+                    <span className="text-[10px] font-semibold text-[#176B68] dark:text-[#38B2A3]">
                       Calm Pace
                     </span>
                   </div>
-                  <p className="text-[11px] text-stone dark:text-[#BDCBD2]">
-                    Next: Prolonged Vowels &amp; Light Contact
+                  <p className="text-[10px] text-[#4C5E67] dark:text-[#BDCBD2]">
+                    Technique: Prolonged vowels &amp; light contact
                   </p>
                 </div>
 
-                {/* Session Step Indicators */}
                 <div className="space-y-1 pt-0.5">
                   <div className="flex items-center gap-1.5" aria-hidden="true">
-                    <div className="h-1.5 flex-1 rounded-full bg-[#16766E] dark:bg-[#2DD4BF]" />
-                    <div className="h-1.5 flex-1 rounded-full bg-[#16766E] dark:bg-[#2DD4BF]" />
-                    <div className="h-1.5 flex-1 rounded-full bg-[#E7EFF2] dark:bg-midnight" />
+                    <div className="h-1.5 flex-1 rounded-full bg-[#176B68] dark:bg-[#38B2A3]" />
+                    <div className="h-1.5 flex-1 rounded-full bg-[#176B68] dark:bg-[#38B2A3]" />
+                    <div className="h-1.5 flex-1 rounded-full bg-[#E7EFF2] dark:bg-[#203A48]" />
                   </div>
-                  <p className="text-[10px] text-stone dark:text-[#BDCBD2]">
+                  <p className="text-[9px] text-[#4C5E67] dark:text-[#BDCBD2]">
                     *Illustrative personal practice goal
                   </p>
                 </div>
               </motion.div>
             </motion.div>
 
-            {/* Privacy Pill Overlay at Bottom Right */}
-            <motion.div
-              variants={privacyPillVariants}
-              initial="hidden"
-              animate="visible"
-              className="absolute -bottom-3 right-6 z-20 hidden md:flex items-center gap-1.5 rounded-full border border-[#D5E1E6] dark:border-[#304653] bg-white/95 dark:bg-[#1A2833]/95 px-3 py-1 shadow-subtle backdrop-blur-md text-[10px] font-semibold text-stone dark:text-[#BDCBD2]"
-            >
-              <Lock className="w-3 h-3 text-[#16766E] dark:text-[#2DD4BF]" aria-hidden="true" />
-              <span>Zero Audio Storage • Private by Design</span>
-            </motion.div>
+            {/* Mobile-Only Status Tray (cleanly stacked below console without overflow or occlusion) */}
+            <div className="grid grid-cols-2 gap-2.5 pt-3 sm:hidden">
+              <div className="p-2.5 rounded-xl border border-[#D5E1E6] dark:border-[#203A48] bg-white dark:bg-[#132630] space-y-1">
+                <div className="flex items-center gap-1.5">
+                  <Stethoscope className="h-3.5 w-3.5 text-[#176B68] dark:text-[#38B2A3]" aria-hidden="true" />
+                  <span className="text-[11px] font-semibold text-[#102B3A] dark:text-white">SLT Bridge</span>
+                </div>
+                <p className="text-[10px] text-[#4C5E67] dark:text-[#BDCBD2]">
+                  Optional clinician collaboration preview
+                </p>
+              </div>
+
+              <div className="p-2.5 rounded-xl border border-[#D5E1E6] dark:border-[#203A48] bg-white dark:bg-[#132630] space-y-1">
+                <div className="flex items-center gap-1.5">
+                  <Target className="h-3.5 w-3.5 text-[#176B68] dark:text-[#38B2A3]" aria-hidden="true" />
+                  <span className="text-[11px] font-semibold text-[#102B3A] dark:text-white">Self-Paced</span>
+                </div>
+                <p className="text-[10px] text-[#4C5E67] dark:text-[#BDCBD2]">
+                  Personal practice drills at your comfort
+                </p>
+              </div>
+            </div>
 
           </div>
 
         </div>
+
+        {/* =========================================================================
+            INTEGRATED ARCHITECTURAL TRUST STRIP (Hero Grounding Pedestal)
+           ========================================================================= */}
+        <motion.div
+          variants={trustStripVariants}
+          initial="hidden"
+          animate="visible"
+          className="mt-12 sm:mt-16 lg:mt-20 pt-8 border-t border-[#D5E1E6]/80 dark:border-[#203A48]"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+            {/* Principle 1: Private in Memory */}
+            <div className="flex items-start gap-3.5">
+              <div className="h-10 w-10 rounded-xl bg-[#DCEFEA] dark:bg-[#1A3845] text-[#176B68] dark:text-[#38B2A3] flex items-center justify-center shrink-0 border border-[#BFDFD6] dark:border-[#203A48]">
+                <Lock className="h-5 w-5" aria-hidden="true" />
+              </div>
+              <div className="space-y-0.5">
+                <h3 className="text-sm font-bold text-[#102B3A] dark:text-white">
+                  Private by Design (Prototype)
+                </h3>
+                <p className="text-xs text-[#4C5E67] dark:text-[#BDCBD2] leading-relaxed">
+                  Practice audio runs in local browser memory. Zero voice recordings are stored on servers in this preview.
+                </p>
+              </div>
+            </div>
+
+            {/* Principle 2: Practice at Your Own Pace */}
+            <div className="flex items-start gap-3.5">
+              <div className="h-10 w-10 rounded-xl bg-[#DCEFEA] dark:bg-[#1A3845] text-[#176B68] dark:text-[#38B2A3] flex items-center justify-center shrink-0 border border-[#BFDFD6] dark:border-[#203A48]">
+                <HeartHandshake className="h-5 w-5 text-[#D15436] dark:text-[#F08C73]" aria-hidden="true" />
+              </div>
+              <div className="space-y-0.5">
+                <h3 className="text-sm font-bold text-[#102B3A] dark:text-white">
+                  Practice at Your Own Pace
+                </h3>
+                <p className="text-xs text-[#4C5E67] dark:text-[#BDCBD2] leading-relaxed">
+                  Technique practice shaped by physical ease and your speaking situations, never rigid mechanical scores.
+                </p>
+              </div>
+            </div>
+
+            {/* Principle 3: Optional Clinician Collaboration */}
+            <div className="flex items-start gap-3.5">
+              <div className="h-10 w-10 rounded-xl bg-[#DCEFEA] dark:bg-[#1A3845] text-[#176B68] dark:text-[#38B2A3] flex items-center justify-center shrink-0 border border-[#BFDFD6] dark:border-[#203A48]">
+                <Stethoscope className="h-5 w-5" aria-hidden="true" />
+              </div>
+              <div className="space-y-0.5">
+                <h3 className="text-sm font-bold text-[#102B3A] dark:text-white">
+                  Optional Clinician Collaboration
+                </h3>
+                <p className="text-xs text-[#4C5E67] dark:text-[#BDCBD2] leading-relaxed">
+                  Share select drill summaries with your qualified speech-language therapist whenever you choose.
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </motion.div>
+
       </div>
     </section>
   );

@@ -25,6 +25,7 @@ import {
   UserCheck,
 } from "lucide-react";
 import { HeroSection } from "@/components/home/HeroSection";
+import { StudioShowcaseSection } from "@/components/home/StudioShowcaseSection";
 import {
   MotionFadeIn,
   MotionStaggerContainer,
@@ -45,10 +46,17 @@ export default function HomePage() {
     <div className="flex flex-col min-h-screen bg-[#F7F9F8] dark:bg-[#111D25] text-midnight dark:text-[#F2F6F7] transition-colors">
       {/* =========================================================================
           SECTION 1: HERO SECTION
-          Redesigned modern health-tech SaaS hero with layered ambient oceanic mesh,
-          realistic practice viewport, waveform visualizer, and floating SLT cards.
+          Deep Fjord — Quiet Editorial centered hero with bilateral ambient halos,
+          sculptural flowing sound-wave artwork, and minimal pill CTAs.
          ========================================================================= */}
       <HeroSection />
+
+      {/* =========================================================================
+          SECTION 1.5: VOCALRISE STUDIO EXPERIENCE & PHOTOGRAPHY CAROUSEL
+          Interactive practice console with 4-photo authentic human connection
+          carousel, live simulated resonance waveform, and companion SLT cards.
+         ========================================================================= */}
+      <StudioShowcaseSection />
 
       {/* =========================================================================
           SECTION 2: TRUST INDICATORS ROW

@@ -52,9 +52,9 @@ export default function HomePage() {
       <HeroSection />
 
       {/* =========================================================================
-          SECTION 1.5: VOCALRISE STUDIO EXPERIENCE & PHOTOGRAPHY CAROUSEL
-          Interactive practice console with 4-photo authentic human connection
-          carousel, live simulated resonance waveform, and companion SLT cards.
+          SECTION 1.5: THE VOCALRISE PRACTICE HUB (Studio Showcase)
+          Interactive technique & practice console with mode selector, simulated
+          resonance waveform preview, and client-controlled clinician bridge.
          ========================================================================= */}
       <StudioShowcaseSection />
 

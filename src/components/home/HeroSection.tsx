@@ -2,20 +2,122 @@
 
 import * as React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   ArrowRight,
   Play,
   Lock,
   Target,
   Stethoscope,
+  Smile,
+  Mic,
+  Sparkles,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
-import { motion, useReducedMotion, type Variants } from "motion/react";
+import { motion, AnimatePresence, useReducedMotion, type Variants } from "motion/react";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+
+// ---------------------------------------------------------------------------
+// 4 Photographic Carousel Slides Representing Authentic Human Connection
+// Sourced with commercial-use licensing; attributions recorded in:
+// docs/superpowers/specs/hero-photography-attributions.md
+// ---------------------------------------------------------------------------
+const heroSlides = [
+  {
+    id: "conversation",
+    src: "/images/hero/carousel-1-conversation.webp",
+    alt: "Two adults engaged in natural, relaxed everyday conversation in a warmly lit setting",
+    badge: "Everyday Connection",
+    theme: "Natural Communication",
+    icon: Smile,
+  },
+  {
+    id: "practice",
+    src: "/images/hero/carousel-2-practice.webp",
+    alt: "Individual practicing speech techniques independently in a calm personal space",
+    badge: "Independent Practice",
+    theme: "Self-Paced Techniques",
+    icon: Mic,
+  },
+  {
+    id: "social",
+    src: "/images/hero/carousel-3-social.webp",
+    alt: "Diverse adults communicating comfortably and connecting in a positive social gathering",
+    badge: "Social Confidence",
+    theme: "Ease Without Avoidance",
+    icon: Sparkles,
+  },
+  {
+    id: "therapist",
+    src: "/images/hero/carousel-4-therapist.webp",
+    alt: "Speech-Language Therapist consulting supportively with a client in a modern clinic setting",
+    badge: "Clinical Collaboration",
+    theme: "Optional SLT Guidance",
+    icon: Stethoscope,
+  },
+];
 
 export function HeroSection() {
   const shouldReduceMotion = useReducedMotion();
 
-  // Coordinated Entrance Animation Variants
+  // Carousel State & Interactivity Controls
+  const [currentSlide, setCurrentSlide] = React.useState(0);
+  const [isHoveredOrFocused, setIsHoveredOrFocused] = React.useState(false);
+  const [isTabVisible, setIsTabVisible] = React.useState(true);
+
+  // Monitor tab visibility to pause autoplay when backgrounded
+  React.useEffect(() => {
+    const handleVisibilityChange = () => {
+      setIsTabVisible(document.visibilityState === "visible");
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
+
+  // Autoplay timer: 5.5-second interval
+  // Pauses on hover, keyboard focus, background tab, or prefers-reduced-motion
+  React.useEffect(() => {
+    if (shouldReduceMotion || isHoveredOrFocused || !isTabVisible) {
+      return;
+    }
+
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 5500);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, [shouldReduceMotion, isHoveredOrFocused, isTabVisible]);
+
+  const activeSlide = heroSlides[currentSlide];
+  const CurrentSlideIcon = activeSlide.icon;
+
+  const handlePrev = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
+  };
+
+  const handleNext = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      handlePrev();
+    } else if (e.key === "ArrowRight") {
+      e.preventDefault();
+      handleNext();
+    }
+  };
+
+  // Coordinated Entrance Animation Variants (Heading, Badges, CTAs)
   const badgeVariants: Variants = {
     hidden: { opacity: shouldReduceMotion ? 1 : 0, y: shouldReduceMotion ? 0 : 8 },
     visible: {
@@ -52,12 +154,13 @@ export function HeroSection() {
     },
   };
 
-  const soundwaveVariants: Variants = {
-    hidden: { opacity: shouldReduceMotion ? 1 : 0, scale: shouldReduceMotion ? 1 : 0.97 },
+  const carouselEntranceVariants: Variants = {
+    hidden: { opacity: shouldReduceMotion ? 1 : 0, y: shouldReduceMotion ? 0 : 20, scale: shouldReduceMotion ? 1 : 0.98 },
     visible: {
       opacity: 1,
+      y: 0,
       scale: 1,
-      transition: { duration: shouldReduceMotion ? 0 : 0.7, delay: shouldReduceMotion ? 0 : 0.5, ease: [0.21, 0.47, 0.32, 0.98] },
+      transition: { duration: shouldReduceMotion ? 0 : 0.65, delay: shouldReduceMotion ? 0 : 0.48, ease: [0.21, 0.47, 0.32, 0.98] },
     },
   };
 
@@ -72,11 +175,11 @@ export function HeroSection() {
 
   return (
     <section
-      className="relative overflow-hidden pt-16 pb-16 sm:pt-24 sm:pb-24 lg:pt-32 lg:pb-32 bg-[#F7F5F0] dark:bg-[#0A1820] text-[#122129] dark:text-[#F4F7F5] transition-colors"
+      className="relative overflow-hidden pt-12 pb-14 sm:pt-16 sm:pb-20 lg:pt-20 lg:pb-24 bg-[#F7F5F0] dark:bg-[#0A1820] text-[#122129] dark:text-[#F4F7F5] transition-colors"
       aria-label="VocalRise Hero Introduction"
     >
       {/* =========================================================================
-          BACKGROUND ATMOSPHERE: Symmetrical Symmetrical Bilateral Ambient Halos
+          BACKGROUND ATMOSPHERE: Symmetrical Bilateral Ambient Halos
          ========================================================================= */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
         {/* Left Flank Ambient Halo: Sea Glass */}
@@ -89,13 +192,13 @@ export function HeroSection() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[500px] bg-gradient-to-b from-transparent via-white/40 to-transparent dark:via-white/[0.02] rounded-full blur-3xl opacity-60" />
       </div>
 
-      <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center space-y-8 sm:space-y-10">
+      <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center space-y-7 sm:space-y-8">
         {/* =========================================================================
-            1. EYEBROW BADGE
+            1. EYEBROW BADGE (Stationary)
            ========================================================================= */}
         <motion.div
           variants={badgeVariants}
-          initial="hidden"
+          initial={false}
           animate="visible"
           className="flex justify-center"
         >
@@ -111,11 +214,11 @@ export function HeroSection() {
         </motion.div>
 
         {/* =========================================================================
-            2. LARGE CENTERED DISPLAY HEADLINE
+            2. LARGE CENTERED DISPLAY HEADLINE (Stationary)
            ========================================================================= */}
         <motion.h1
           variants={headingVariants}
-          initial="hidden"
+          initial={false}
           animate="visible"
           className="font-heading text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-[#102B3A] dark:text-white leading-[1.1] sm:leading-[1.08] max-w-4xl mx-auto"
         >
@@ -128,11 +231,11 @@ export function HeroSection() {
         </motion.h1>
 
         {/* =========================================================================
-            3. SUPPORTING EDITORIAL PARAGRAPH
+            3. SUPPORTING EDITORIAL PARAGRAPH (Stationary)
            ========================================================================= */}
         <motion.p
           variants={descriptionVariants}
-          initial="hidden"
+          initial={false}
           animate="visible"
           className="text-base sm:text-lg lg:text-xl text-[#4C5E67] dark:text-[#BDCBD2] max-w-2xl mx-auto leading-relaxed"
         >
@@ -140,13 +243,13 @@ export function HeroSection() {
         </motion.p>
 
         {/* =========================================================================
-            4. CENTERED CALL-TO-ACTION BUTTONS
+            4. CENTERED CALL-TO-ACTION BUTTONS (Stationary)
            ========================================================================= */}
         <motion.div
           variants={ctaVariants}
-          initial="hidden"
+          initial={false}
           animate="visible"
-          className="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-2"
+          className="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-1"
         >
           <Link href="/signup" className="w-full sm:w-auto">
             <motion.div
@@ -183,147 +286,191 @@ export function HeroSection() {
         </motion.div>
 
         {/* =========================================================================
-            5. ABSTRACT SOUND-WAVE CENTERPIECE (Flowing Harmonic Ribbons)
+            5. EDITORIAL PHOTOGRAPHY CAROUSEL WITH SUBTLE SOUND-WAVE ACCENT
            ========================================================================= */}
         <motion.div
-          variants={soundwaveVariants}
-          initial="hidden"
+          variants={carouselEntranceVariants}
+          initial={false}
           animate="visible"
-          className="pt-4 sm:pt-6 relative max-w-4xl mx-auto"
+          className="pt-2 sm:pt-4 relative max-w-[960px] mx-auto w-full"
         >
-          <motion.div
-            animate={shouldReduceMotion ? {} : { y: [0, -5, 0] }}
-            transition={
-              shouldReduceMotion
-                ? {}
-                : { duration: 8, repeat: Infinity, ease: "easeInOut" }
-            }
-            className="relative"
+          {/* Subtle Decorative Accent: Delicate Flowing Sound-Wave Horizon */}
+          <div
+            className="w-full max-w-3xl mx-auto h-8 sm:h-10 overflow-hidden opacity-60 dark:opacity-40 select-none pointer-events-none -mb-2 sm:-mb-3 relative z-0"
+            aria-hidden="true"
           >
-            {/* Luminous Core Glow behind Sound-Wave */}
-            <div
-              className="absolute inset-0 bg-gradient-to-r from-[#DCEFEA]/40 via-[#176B68]/15 to-[#E26D50]/10 dark:from-[#132630]/60 dark:via-[#38B2A3]/20 dark:to-transparent blur-2xl rounded-full pointer-events-none"
-              aria-hidden="true"
-            />
-
-            {/* Custom Organic Flowing Vector Sculpture */}
             <svg
-              className="w-full h-auto max-h-[180px] sm:max-h-[220px] drop-shadow-sm select-none"
-              viewBox="0 0 960 220"
+              className="w-full h-full"
+              viewBox="0 0 960 90"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              aria-label="Abstract harmonic sound wave representing human vocal resonance, breath ease, and personal pacing"
-              role="img"
+              preserveAspectRatio="none"
             >
               <defs>
-                {/* Sea Glass Diffuse Wash Gradient */}
-                <linearGradient id="seaGlassWash" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#DCEFEA" stopOpacity="0.1" />
-                  <stop offset="30%" stopColor="#DCEFEA" stopOpacity="0.45" />
-                  <stop offset="50%" stopColor="#72C4B4" stopOpacity="0.35" />
-                  <stop offset="70%" stopColor="#DCEFEA" stopOpacity="0.45" />
-                  <stop offset="100%" stopColor="#DCEFEA" stopOpacity="0.1" />
-                </linearGradient>
-
-                {/* Ocean Teal Primary Wave Gradient */}
-                <linearGradient id="tealWaveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#176B68" stopOpacity="0.2" />
-                  <stop offset="25%" stopColor="#176B68" stopOpacity="0.8" />
-                  <stop offset="50%" stopColor="#38B2A3" stopOpacity="1" />
-                  <stop offset="75%" stopColor="#176B68" stopOpacity="0.8" />
-                  <stop offset="100%" stopColor="#176B68" stopOpacity="0.2" />
-                </linearGradient>
-
-                {/* Coral Resonant Accent Gradient */}
-                <linearGradient id="coralAccentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#E26D50" stopOpacity="0" />
-                  <stop offset="35%" stopColor="#E26D50" stopOpacity="0.4" />
-                  <stop offset="50%" stopColor="#E26D50" stopOpacity="0.75" />
-                  <stop offset="65%" stopColor="#E26D50" stopOpacity="0.4" />
+                <linearGradient id="heroWaveAccentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#176B68" stopOpacity="0" />
+                  <stop offset="25%" stopColor="#DCEFEA" stopOpacity="0.5" />
+                  <stop offset="50%" stopColor="#176B68" stopOpacity="0.75" />
+                  <stop offset="75%" stopColor="#38B2A3" stopOpacity="0.5" />
                   <stop offset="100%" stopColor="#E26D50" stopOpacity="0" />
                 </linearGradient>
-
-                {/* Golden Sand Harmonic Filament */}
-                <linearGradient id="sandFilamentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#D4A338" stopOpacity="0" />
-                  <stop offset="40%" stopColor="#D4A338" stopOpacity="0.5" />
-                  <stop offset="60%" stopColor="#D4A338" stopOpacity="0.5" />
-                  <stop offset="100%" stopColor="#D4A338" stopOpacity="0" />
-                </linearGradient>
               </defs>
-
-              {/* Layer 1: Ethereal Sea Glass Base Wash Ribbon */}
               <path
-                d="M 40 110 C 160 70, 260 150, 380 110 C 500 70, 600 150, 720 110 C 820 75, 880 120, 920 110 L 920 130 C 880 140, 820 100, 720 135 C 600 175, 500 95, 380 135 C 260 175, 160 95, 40 130 Z"
-                fill="url(#seaGlassWash)"
-              />
-
-              {/* Layer 2: Deep Sea Glass Soft Contour Wave */}
-              <path
-                d="M 20 115 C 140 85, 240 145, 360 115 C 480 85, 580 145, 700 115 C 800 90, 880 125, 940 115"
-                stroke="#BFDFD6"
-                strokeWidth="1.5"
-                strokeOpacity="0.7"
-                fill="none"
-              />
-
-              {/* Layer 3: Main Ocean Teal Primary Harmonic Ribbon */}
-              <path
-                d="M 30 110 C 150 55, 250 165, 370 110 C 490 55, 590 165, 710 110 C 810 65, 890 140, 930 110"
-                stroke="url(#tealWaveGrad)"
-                strokeWidth="2.75"
-                strokeLinecap="round"
-                fill="none"
-              />
-
-              {/* Layer 4: Intersecting Counter-Wave Ribbon (Luminous Mint) */}
-              <path
-                d="M 50 110 C 170 160, 270 60, 390 110 C 510 160, 610 60, 730 110 C 830 150, 890 80, 910 110"
-                stroke="#38B2A3"
-                strokeWidth="1.75"
-                strokeOpacity="0.65"
-                strokeDasharray="6 8"
-                strokeLinecap="round"
-                fill="none"
-              />
-
-              {/* Layer 5: Warm Coral Resonant Individuality Accent */}
-              <path
-                d="M 80 110 C 200 80, 300 140, 420 110 C 540 80, 640 140, 760 110 C 840 90, 870 120, 880 110"
-                stroke="url(#coralAccentGrad)"
+                d="M 20 45 C 160 15, 260 75, 380 45 C 500 15, 600 75, 720 45 C 820 20, 880 60, 940 45"
+                stroke="url(#heroWaveAccentGrad)"
                 strokeWidth="2"
                 strokeLinecap="round"
                 fill="none"
               />
-
-              {/* Layer 6: Golden Sand Harmonic Milestone Filament */}
               <path
-                d="M 120 110 C 240 130, 340 90, 460 110 C 580 130, 680 90, 800 110 C 830 115, 840 105, 840 110"
-                stroke="url(#sandFilamentGrad)"
+                d="M 50 45 C 170 70, 270 20, 390 45 C 510 70, 610 20, 730 45 C 830 65, 890 30, 910 45"
+                stroke="#38B2A3"
                 strokeWidth="1.25"
-                strokeDasharray="3 7"
+                strokeOpacity="0.4"
+                strokeDasharray="4 6"
                 strokeLinecap="round"
                 fill="none"
               />
-
-              {/* Layer 7: Subtle Micro Resonance Nodes (Breath Points) */}
-              <circle cx="370" cy="110" r="3.5" fill="#176B68" className="dark:fill-[#38B2A3]" opacity="0.8" />
-              <circle cx="480" cy="110" r="4.5" fill="#38B2A3" opacity="0.9" />
-              <circle cx="590" cy="110" r="3.5" fill="#176B68" className="dark:fill-[#38B2A3]" opacity="0.8" />
-              <circle cx="480" cy="85" r="2.5" fill="#E26D50" opacity="0.7" />
-              <circle cx="480" cy="135" r="2.5" fill="#E26D50" opacity="0.7" />
             </svg>
-          </motion.div>
+          </div>
+
+          {/* Luminous Ambient Glow Backdrop */}
+          <div
+            className="absolute -inset-3 sm:-inset-5 bg-gradient-to-tr from-[#176B68]/15 via-[#38B2A3]/10 to-[#E26D50]/8 dark:from-[#38B2A3]/20 dark:via-[#176B68]/15 dark:to-transparent rounded-3xl sm:rounded-[36px] blur-2xl pointer-events-none opacity-80"
+            aria-hidden="true"
+          />
+
+          {/* Photographic Carousel Card Shell */}
+          <div
+            className="relative w-full h-[260px] sm:h-[350px] md:h-[400px] lg:h-[420px] rounded-2xl sm:rounded-3xl overflow-hidden bg-[#102B3A] border border-[#BFDFD6]/80 dark:border-[#203A48] group select-none shadow-elevated focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#176B68] dark:focus-visible:ring-[#38B2A3]"
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="VocalRise human connection and practice photography"
+            aria-live="off"
+            onMouseEnter={() => setIsHoveredOrFocused(true)}
+            onMouseLeave={() => setIsHoveredOrFocused(false)}
+            onFocusCapture={() => setIsHoveredOrFocused(true)}
+            onBlurCapture={() => setIsHoveredOrFocused(false)}
+            onKeyDown={handleKeyDown}
+            tabIndex={0}
+          >
+            {/* Crossfading Slide Photos (800ms Crossfade) */}
+            <AnimatePresence mode="popLayout" initial={false}>
+              <motion.div
+                key={currentSlide}
+                id={`hero-slide-panel-${currentSlide}`}
+                role="group"
+                aria-roledescription="slide"
+                aria-label={`Slide ${currentSlide + 1} of ${heroSlides.length}: ${activeSlide.badge}`}
+                className="absolute inset-0 w-full h-full"
+                initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
+                transition={{ duration: shouldReduceMotion ? 0 : 0.8, ease: "easeInOut" }}
+              >
+                <Image
+                  src={activeSlide.src}
+                  alt={activeSlide.alt}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 960px"
+                  priority={currentSlide === 0}
+                  className="object-cover object-center"
+                />
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Scrim Gradient for Readability and Depth */}
+            <div
+              className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/35 pointer-events-none"
+              aria-hidden="true"
+            />
+
+            {/* Top Overlay Badges */}
+            <div className="absolute top-3 sm:top-4 left-3 sm:left-4 right-3 sm:right-4 flex items-center justify-between gap-2 pointer-events-none z-10">
+              <div className="px-3 py-1 rounded-full bg-[#102B3A]/85 dark:bg-[#0A1820]/90 text-white border border-white/20 backdrop-blur-md shadow-subtle flex items-center gap-1.5 pointer-events-auto">
+                <CurrentSlideIcon className="h-3.5 w-3.5 text-[#DCEFEA]" aria-hidden="true" />
+                <span className="text-[11px] font-semibold tracking-wide">
+                  {activeSlide.badge}
+                </span>
+              </div>
+
+              <div className="px-3 py-1 rounded-full bg-white/90 dark:bg-[#102B3A]/90 text-[#102B3A] dark:text-white border border-[#D5E1E6] dark:border-[#203A48] backdrop-blur-md shadow-subtle flex items-center gap-1.5 pointer-events-auto">
+                <span
+                  className="h-1.5 w-1.5 rounded-full bg-[#176B68] dark:bg-[#38B2A3] animate-pulse motion-reduce:animate-none"
+                  aria-hidden="true"
+                />
+                <span className="text-[11px] font-medium">
+                  {activeSlide.theme}
+                </span>
+              </div>
+            </div>
+
+            {/* Bottom Caption and Accessible Navigation Strip */}
+            <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 right-3 sm:right-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 z-10">
+              <p className="text-xs sm:text-sm font-medium text-white/95 drop-shadow-md truncate max-w-full sm:max-w-[60%] text-left">
+                {activeSlide.alt}
+              </p>
+
+              <div
+                className="flex items-center gap-1.5 bg-[#102B3A]/85 dark:bg-[#0A1820]/90 backdrop-blur-md border border-white/20 rounded-full px-2.5 py-1 shadow-subtle shrink-0 self-end sm:self-auto"
+                role="tablist"
+                aria-label="Hero photography slides"
+              >
+                <button
+                  type="button"
+                  onClick={handlePrev}
+                  aria-label="Previous photograph"
+                  className="h-6 w-6 sm:h-7 sm:w-7 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DCEFEA] transition-colors"
+                >
+                  <ChevronLeft className="h-4 w-4" aria-hidden="true" />
+                </button>
+
+                {heroSlides.map((slide, idx) => {
+                  const isCurrent = currentSlide === idx;
+                  return (
+                    <button
+                      key={slide.id}
+                      type="button"
+                      role="tab"
+                      id={`hero-slide-tab-${idx}`}
+                      aria-selected={isCurrent}
+                      aria-controls={`hero-slide-panel-${idx}`}
+                      aria-label={`Go to slide ${idx + 1}: ${slide.badge}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setCurrentSlide(idx);
+                      }}
+                      className={cn(
+                        "h-2 rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DCEFEA] focus-visible:ring-offset-1 focus-visible:ring-offset-[#102B3A]",
+                        isCurrent
+                          ? "w-6 bg-white shadow-sm"
+                          : "w-2 bg-white/40 hover:bg-white/70"
+                      )}
+                    />
+                  );
+                })}
+
+                <button
+                  type="button"
+                  onClick={handleNext}
+                  aria-label="Next photograph"
+                  className="h-6 w-6 sm:h-7 sm:w-7 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DCEFEA] transition-colors"
+                >
+                  <ChevronRight className="h-4 w-4" aria-hidden="true" />
+                </button>
+              </div>
+            </div>
+          </div>
         </motion.div>
 
         {/* =========================================================================
-            6. SUBTLE RESTRAINED TRUST STRIP
+            6. SUBTLE RESTRAINED TRUST STRIP (Stationary)
            ========================================================================= */}
         <motion.div
           variants={trustStripVariants}
-          initial="hidden"
+          initial={false}
           animate="visible"
-          className="pt-6 sm:pt-10 border-t border-[#D5E1E6]/70 dark:border-[#203A48] max-w-3xl mx-auto"
+          className="pt-6 sm:pt-8 border-t border-[#D5E1E6]/70 dark:border-[#203A48] max-w-3xl mx-auto"
         >
           <div className="flex flex-col sm:flex-row items-center justify-center gap-y-3 gap-x-8 text-xs sm:text-sm text-[#4C5E67] dark:text-[#BDCBD2]">
             <span className="flex items-center gap-2">

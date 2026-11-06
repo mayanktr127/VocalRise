@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import Image from "next/image";
 import {
   Waves,
   Stethoscope,
@@ -9,94 +8,54 @@ import {
   Lock,
   Sparkles,
   CheckCircle2,
-  Smile,
-  ChevronLeft,
-  ChevronRight,
   Target,
+  Volume2,
+  RotateCcw,
+  Info,
 } from "lucide-react";
-import { motion, AnimatePresence, useReducedMotion, type Variants } from "motion/react";
+import { motion, useReducedMotion, type Variants } from "motion/react";
 import { cn } from "@/lib/utils";
 
-// ---------------------------------------------------------------------------
-// 4 Photographic Carousel Slides Representing Authentic Human Connection
-// Sourced with commercial-use licensing; attributions recorded in:
-// docs/superpowers/specs/hero-photography-attributions.md
-// ---------------------------------------------------------------------------
-const studioSlides = [
+// Practice Drill Modes for the VocalRise Studio Preview
+const practiceDrills = [
   {
-    id: "conversation",
-    src: "/images/hero/carousel-1-conversation.webp",
-    alt: "Two adults engaged in natural, relaxed everyday conversation in a warmly lit setting",
-    badge: "Everyday Connection",
-    theme: "Natural Communication",
-    icon: Smile,
+    id: "phonation",
+    title: "Continuous Phonation",
+    technique: "Gentle vocal cord onset & steady airflow",
+    target: "Paced vowel connection without sudden tension",
+    duration: "01:42 / 03:00",
+    pace: "Steady (68 bpm pace)",
   },
   {
-    id: "practice",
-    src: "/images/hero/carousel-2-practice.webp",
-    alt: "Individual practicing speech techniques independently in a calm personal space",
-    badge: "Independent Practice",
-    theme: "Self-Paced Techniques",
-    icon: Mic,
+    id: "reading",
+    title: "Paced Phrase Reading",
+    technique: "Voluntary pauses & breath coordination",
+    target: "Comfortable rhythm across natural phrase boundaries",
+    duration: "00:45 / 02:30",
+    pace: "Relaxed (62 bpm pace)",
   },
   {
-    id: "social",
-    src: "/images/hero/carousel-3-social.webp",
-    alt: "Diverse adults communicating comfortably and connecting in a positive social gathering",
-    badge: "Social Confidence",
-    theme: "Ease Without Avoidance",
-    icon: Sparkles,
-  },
-  {
-    id: "therapist",
-    src: "/images/hero/carousel-4-therapist.webp",
-    alt: "Speech-Language Therapist consulting supportively with a client in a modern clinic setting",
-    badge: "Clinical Collaboration",
-    theme: "Optional SLT Guidance",
-    icon: Stethoscope,
+    id: "resonance",
+    title: "Resonance & Soft Contact",
+    technique: "Easy articulatory contacts & vocal ease",
+    target: "Reducing speech muscle pressure on plosives",
+    duration: "02:10 / 03:00",
+    pace: "Gentle (65 bpm pace)",
   },
 ];
 
 export function StudioShowcaseSection() {
   const shouldReduceMotion = useReducedMotion();
 
-  // Carousel State & Interactivity Controls
-  const [currentSlide, setCurrentSlide] = React.useState(0);
-  const [isHoveredOrFocused, setIsHoveredOrFocused] = React.useState(false);
-  const [isTabVisible, setIsTabVisible] = React.useState(true);
+  // Practice Console State
+  const [activeDrillIndex, setActiveDrillIndex] = React.useState(0);
+  const [isRecordingPreview, setIsRecordingPreview] = React.useState(false);
 
-  // Monitor tab visibility to prevent background timer execution
-  React.useEffect(() => {
-    const handleVisibilityChange = () => {
-      setIsTabVisible(document.visibilityState === "visible");
-    };
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-    return () => {
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-    };
-  }, []);
+  const activeDrill = practiceDrills[activeDrillIndex];
 
-  // Autoplay timer: advances every 5.5s; pauses on hover, keyboard focus, background tab, or reduced motion
-  React.useEffect(() => {
-    if (shouldReduceMotion || isHoveredOrFocused || !isTabVisible) {
-      return;
-    }
-
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % studioSlides.length);
-    }, 5500);
-
-    return () => {
-      clearInterval(timer);
-    };
-  }, [shouldReduceMotion, isHoveredOrFocused, isTabVisible]);
-
-  const activeSlide = studioSlides[currentSlide];
-  const CurrentSlideIcon = activeSlide.icon;
-
-  // Waveform bars data for the simulated practice visualizer
-  const waveformBars = [
-    14, 26, 38, 48, 62, 54, 40, 28, 44, 58, 64, 50, 36, 48, 60, 42, 30, 22, 16, 10
+  // Dynamic waveform bars for the simulated practice visualizer
+  const defaultWaveformHeights = [
+    18, 32, 45, 58, 72, 64, 48, 36, 52, 68, 78, 62, 44, 56, 70, 52, 38, 28, 20, 14, 26, 42, 60, 48, 34, 22, 16, 12
   ];
 
   // Motion Variants
@@ -148,7 +107,7 @@ export function StudioShowcaseSection() {
   return (
     <section
       id="studio-showcase"
-      className="scroll-mt-16 py-20 sm:py-28 bg-[#F7F9F8] dark:bg-[#0E1A22] border-t border-[#D5E1E6]/80 dark:border-[#203A48] relative overflow-hidden transition-colors"
+      className="scroll-mt-16 py-16 sm:py-24 bg-[#F7F9F8] dark:bg-[#0E1A22] border-t border-[#D5E1E6]/80 dark:border-[#203A48] relative overflow-hidden transition-colors"
       aria-label="VocalRise Studio Practice Hub Showcase"
     >
       {/* Symmetrical Ambient Lighting */}
@@ -156,8 +115,7 @@ export function StudioShowcaseSection() {
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-gradient-to-b from-[#DCEFEA]/35 via-[#176B68]/10 to-transparent dark:from-[#132630]/60 dark:via-[#1A3845]/20 dark:to-transparent rounded-full blur-3xl opacity-80" />
       </div>
 
-      <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 space-y-12">
-        
+      <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 space-y-10 sm:space-y-12">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3.5">
           <div className="inline-flex items-center gap-2 rounded-full border border-[#BFDFD6] dark:border-[#203A48] bg-[#DCEFEA]/80 dark:bg-[#1A3845]/80 px-3.5 py-1 text-xs font-semibold text-[#102B3A] dark:text-[#E2E8F0] shadow-subtle">
@@ -177,9 +135,8 @@ export function StudioShowcaseSection() {
         {/* Centerpiece: The Bespoke VocalRise Studio Console */}
         <motion.div
           variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
+          initial={false}
+          animate="visible"
           className="relative max-w-4xl mx-auto"
         >
           {/* Luminous Glow Backdrop */}
@@ -191,10 +148,9 @@ export function StudioShowcaseSection() {
           {/* Floating Card 1: Clinician Bridge (Top-Right) */}
           <motion.div
             variants={floatingCard1Variants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="absolute -top-5 -right-2 sm:-right-4 lg:-right-5 z-20 max-w-[230px] sm:max-w-[250px] hidden sm:block"
+            initial={false}
+            animate="visible"
+            className="absolute -top-6 -right-2 sm:-right-4 lg:-right-6 z-20 max-w-[230px] sm:max-w-[250px] hidden sm:block"
           >
             <motion.div
               animate={shouldReduceMotion ? { y: 0 } : { y: [0, -4, 0] }}
@@ -235,235 +191,176 @@ export function StudioShowcaseSection() {
             
             {/* Console Header Bar */}
             <div className="px-4 py-3 bg-[#EEF4F6] dark:bg-[#162732] border-b border-[#D5E1E6] dark:border-[#203A48] flex items-center justify-between gap-3">
-              <div className="flex items-center gap-2 shrink-0">
-                <div className="h-6 w-6 rounded-lg bg-[#176B68] text-white flex items-center justify-center shadow-subtle">
-                  <Waves className="h-3.5 w-3.5" aria-hidden="true" />
+              <div className="flex items-center gap-2.5 shrink-0">
+                <div className="h-7 w-7 rounded-lg bg-[#176B68] text-white flex items-center justify-center shadow-subtle">
+                  <Waves className="h-4 w-4" aria-hidden="true" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-[11px] font-bold tracking-tight text-[#102B3A] dark:text-white leading-tight">
-                    VocalRise Studio
+                  <span className="text-xs font-bold tracking-tight text-[#102B3A] dark:text-white leading-tight">
+                    VocalRise Studio Console
                   </span>
-                  <span className="text-[9px] font-medium text-[#4C5E67] dark:text-[#BDCBD2]">
-                    Gentle Onset Warmup Drill
+                  <span className="text-[10px] font-medium text-[#4C5E67] dark:text-[#BDCBD2]">
+                    Interactive Technique &amp; Practice Preview
                   </span>
                 </div>
               </div>
 
               <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#DCEFEA] dark:bg-[#1A3845] border border-[#BFDFD6] dark:border-[#203A48] text-[10px] font-semibold text-[#102B3A] dark:text-[#72C4B4] shrink-0">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#176B68] dark:bg-[#38B2A3] animate-pulse motion-reduce:animate-none" aria-hidden="true" />
-                <span>Interactive Preview</span>
+                <span>Simulated Practice Preview</span>
               </div>
             </div>
 
-            {/* Console Body: Carousel + Audio Practice Console */}
-            <div className="p-3.5 sm:p-5 space-y-4">
+            {/* Console Body: Interactive Practice Workspace */}
+            <div className="p-4 sm:p-6 space-y-5">
               
-              {/* Photographic Hero Carousel */}
-              <div
-                className="relative w-full h-[250px] sm:h-[300px] md:h-[340px] rounded-2xl overflow-hidden bg-[#102B3A] border border-[#D5E1E6]/80 dark:border-[#203A48] group select-none shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#176B68]"
-                role="region"
-                aria-roledescription="carousel"
-                aria-label="VocalRise human connection and practice photography carousel"
-                onMouseEnter={() => setIsHoveredOrFocused(true)}
-                onMouseLeave={() => setIsHoveredOrFocused(false)}
-                onFocusCapture={() => setIsHoveredOrFocused(true)}
-                onBlurCapture={() => setIsHoveredOrFocused(false)}
-                onKeyDown={(e) => {
-                  if (e.key === "ArrowLeft") {
-                    e.preventDefault();
-                    setCurrentSlide((prev) => (prev - 1 + studioSlides.length) % studioSlides.length);
-                  } else if (e.key === "ArrowRight") {
-                    e.preventDefault();
-                    setCurrentSlide((prev) => (prev + 1) % studioSlides.length);
-                  }
-                }}
-                tabIndex={0}
-              >
-                {/* Crossfading Slide Photos */}
-                <AnimatePresence mode="popLayout" initial={false}>
-                  <motion.div
-                    key={currentSlide}
-                    id={`studio-slide-panel-${currentSlide}`}
-                    role="group"
-                    aria-roledescription="slide"
-                    aria-label={`Slide ${currentSlide + 1} of ${studioSlides.length}: ${activeSlide.badge}`}
-                    className="absolute inset-0 w-full h-full"
-                    initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
-                    transition={{ duration: shouldReduceMotion ? 0 : 0.6, ease: "easeInOut" }}
-                  >
-                    <Image
-                      src={activeSlide.src}
-                      alt={activeSlide.alt}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 840px"
-                      priority={currentSlide === 0}
-                      className="object-cover object-center"
-                    />
-                  </motion.div>
-                </AnimatePresence>
+              {/* Practice Technique Drill Selector Tabs */}
+              <div className="flex flex-wrap items-center gap-2 border-b border-[#E7EFF2] dark:border-[#203A48] pb-3" role="tablist" aria-label="Technique drill modes">
+                {practiceDrills.map((drill, index) => {
+                  const isActive = activeDrillIndex === index;
+                  return (
+                    <button
+                      key={drill.id}
+                      type="button"
+                      role="tab"
+                      aria-selected={isActive}
+                      onClick={() => setActiveDrillIndex(index)}
+                      className={cn(
+                        "px-3 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#176B68] dark:focus-visible:ring-[#38B2A3]",
+                        isActive
+                          ? "bg-[#176B68] text-white dark:bg-[#38B2A3] dark:text-[#0A1820] shadow-subtle"
+                          : "bg-[#F0F5F4] dark:bg-[#162732] text-[#4C5E67] dark:text-[#BDCBD2] hover:bg-[#DCEFEA]/60 dark:hover:bg-[#1A3845]"
+                      )}
+                    >
+                      <span>{drill.title}</span>
+                    </button>
+                  );
+                })}
+              </div>
 
-                {/* Scrim Gradient */}
-                <div
-                  className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-black/35 pointer-events-none"
-                  aria-hidden="true"
-                />
-
-                {/* Top Overlay Badges */}
-                <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2 pointer-events-none z-10">
-                  <div className="px-2.5 py-1 rounded-lg bg-[#102B3A]/85 dark:bg-[#0A1820]/90 text-white border border-white/20 backdrop-blur-md shadow-subtle flex items-center gap-1.5 pointer-events-auto">
-                    <CurrentSlideIcon className="h-3.5 w-3.5 text-[#DCEFEA]" aria-hidden="true" />
-                    <span className="text-[10px] font-semibold tracking-wide">
-                      {activeSlide.badge}
-                    </span>
+              {/* Active Drill Guidance Card */}
+              <div className="rounded-2xl border border-[#BFDFD6]/70 dark:border-[#203A48] bg-[#F7F9F8] dark:bg-[#0E1A22] p-4 space-y-3">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <div>
+                    <h3 className="text-sm font-bold text-[#102B3A] dark:text-white flex items-center gap-2">
+                      <Sparkles className="h-4 w-4 text-[#176B68] dark:text-[#38B2A3]" aria-hidden="true" />
+                      <span>{activeDrill.title}</span>
+                    </h3>
+                    <p className="text-xs text-[#4C5E67] dark:text-[#BDCBD2] mt-0.5">
+                      {activeDrill.technique}
+                    </p>
                   </div>
-
-                  <div className="px-2.5 py-1 rounded-lg bg-white/90 dark:bg-[#102B3A]/90 text-[#102B3A] dark:text-white border border-[#D5E1E6] dark:border-[#203A48] backdrop-blur-md shadow-subtle flex items-center gap-1.5 pointer-events-auto">
-                    <span
-                      className="h-1.5 w-1.5 rounded-full bg-[#176B68] dark:bg-[#38B2A3] animate-pulse motion-reduce:animate-none"
-                      aria-hidden="true"
-                    />
-                    <span className="text-[10px] font-medium">
-                      {activeSlide.theme}
-                    </span>
+                  <div className="flex items-center gap-2 text-xs font-mono font-medium text-[#4C5E67] dark:text-[#BDCBD2] bg-white dark:bg-[#132630] px-2.5 py-1 rounded-lg border border-[#E7EFF2] dark:border-[#203A48] self-start sm:self-auto">
+                    <span>{activeDrill.duration}</span>
+                    <span className="text-[#BFDFD6] dark:text-[#203A48]">•</span>
+                    <span>{activeDrill.pace}</span>
                   </div>
                 </div>
 
-                {/* Bottom Navigation & Accessible Indicator Controls */}
-                <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-2 z-10">
-                  <p className="text-[11px] font-medium text-white/95 drop-shadow-sm truncate max-w-[50%] sm:max-w-[62%]">
-                    {activeSlide.alt}
-                  </p>
-
-                  <div
-                    className="flex items-center gap-1.5 bg-[#102B3A]/85 dark:bg-[#0A1820]/90 backdrop-blur-md border border-white/20 rounded-full px-2 py-1 shadow-subtle shrink-0"
-                    role="tablist"
-                    aria-label="Photography carousel slides"
-                  >
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setCurrentSlide((prev) => (prev - 1 + studioSlides.length) % studioSlides.length);
-                      }}
-                      aria-label="Previous photograph"
-                      className="h-5 w-5 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DCEFEA] transition-colors"
-                    >
-                      <ChevronLeft className="h-3.5 w-3.5" aria-hidden="true" />
-                    </button>
-
-                    {studioSlides.map((slide, idx) => {
-                      const isCurrent = currentSlide === idx;
-                      return (
-                        <button
-                          key={slide.id}
-                          type="button"
-                          role="tab"
-                          id={`studio-slide-tab-${idx}`}
-                          aria-selected={isCurrent}
-                          aria-controls={`studio-slide-panel-${idx}`}
-                          aria-label={`Slide ${idx + 1} of ${studioSlides.length}: ${slide.badge}`}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setCurrentSlide(idx);
-                          }}
-                          className={cn(
-                            "h-2 rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DCEFEA] focus-visible:ring-offset-1 focus-visible:ring-offset-[#102B3A]",
-                            isCurrent
-                              ? "w-5 bg-white shadow-sm"
-                              : "w-2 bg-white/40 hover:bg-white/70"
-                          )}
-                        />
-                      );
-                    })}
-
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setCurrentSlide((prev) => (prev + 1) % studioSlides.length);
-                      }}
-                      aria-label="Next photograph"
-                      className="h-5 w-5 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DCEFEA] transition-colors"
-                    >
-                      <ChevronRight className="h-3.5 w-3.5" aria-hidden="true" />
-                    </button>
-                  </div>
+                <div className="p-2.5 rounded-xl bg-white dark:bg-[#132630] border border-[#E7EFF2] dark:border-[#203A48] text-xs text-[#4C5E67] dark:text-[#BDCBD2] leading-relaxed">
+                  <span className="font-semibold text-[#102B3A] dark:text-white">Practice Focus: </span>
+                  {activeDrill.target}
                 </div>
               </div>
 
-              {/* Real-time Waveform & Audio Practice Surface (Prototype Preview) */}
-              <div className="rounded-2xl border border-[#D5E1E6] dark:border-[#203A48] bg-[#F7F9F8] dark:bg-[#0E1A22] p-3.5 sm:p-4 space-y-3">
+              {/* Simulated Waveform & Acoustic Resonance Surface */}
+              <div className="rounded-2xl border border-[#D5E1E6] dark:border-[#203A48] bg-[#F7F9F8] dark:bg-[#0E1A22] p-4 space-y-3.5">
                 
-                {/* Drill Goal Header */}
-                <div className="flex items-center justify-between gap-2">
-                  <div className="flex items-center gap-2 min-w-0">
-                    <div className="h-7 w-7 rounded-lg bg-[#DCEFEA] dark:bg-[#1A3845] text-[#176B68] dark:text-[#38B2A3] flex items-center justify-center shrink-0 border border-[#BFDFD6] dark:border-[#203A48]">
-                      <Mic className="h-3.5 w-3.5" aria-hidden="true" />
-                    </div>
-                    <div className="min-w-0 truncate">
-                      <p className="text-xs font-bold text-[#102B3A] dark:text-white truncate">
-                        Continuous Phonation Warmup
-                      </p>
-                      <p className="text-[10px] text-[#4C5E67] dark:text-[#BDCBD2] truncate">
-                        Drill preview: Vocal tract ease &amp; soft onset
-                      </p>
-                    </div>
+                {/* Surface Header with Simulation Disclaimer */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+                  <div className="flex items-center gap-2">
+                    <div className="h-2 w-2 rounded-full bg-[#176B68] dark:bg-[#38B2A3] animate-pulse motion-reduce:animate-none" aria-hidden="true" />
+                    <span className="font-semibold text-[#102B3A] dark:text-white">
+                      {isRecordingPreview ? "Practice Mic: Listening (Interactive Preview)" : "Simulated Acoustic Waveform"}
+                    </span>
                   </div>
-                  <span className="text-[11px] font-mono font-medium text-[#4C5E67] dark:text-[#BDCBD2] shrink-0">
-                    01:42 / 03:00
+                  <span className="text-[10px] text-[#4C5E67] dark:text-[#BDCBD2] flex items-center gap-1">
+                    <Info className="h-3 w-3 text-[#176B68] dark:text-[#38B2A3]" aria-hidden="true" />
+                    <span>*Preview representation, not a clinical diagnostic measure</span>
                   </span>
                 </div>
 
-                {/* Waveform Bar Visualizer */}
+                {/* Animated Waveform Display */}
                 <div
-                  className="h-10 px-2 py-1 rounded-xl bg-white dark:bg-[#132630] border border-[#E7EFF2] dark:border-[#203A48] flex items-center justify-between gap-1"
-                  aria-label="Simulated acoustic resonance waveform display"
+                  className="h-14 sm:h-16 px-3 py-2 rounded-xl bg-white dark:bg-[#132630] border border-[#E7EFF2] dark:border-[#203A48] flex items-center justify-between gap-1 sm:gap-1.5"
+                  aria-label="Simulated acoustic resonance waveform display preview"
                   role="img"
                 >
-                  {waveformBars.map((height, i) => (
-                    <motion.div
-                      key={i}
-                      initial={shouldReduceMotion ? { height: `${height}%` } : { height: "15%" }}
-                      animate={{ height: `${height}%` }}
-                      transition={{
-                        duration: shouldReduceMotion ? 0 : 0.5,
-                        delay: shouldReduceMotion ? 0 : 0.3 + i * 0.02,
-                        ease: "easeOut",
-                      }}
-                      className={`w-1 rounded-full ${
-                        i < 12
-                          ? "bg-gradient-to-t from-[#176B68] to-[#38B2A3] dark:from-[#38B2A3] dark:to-[#72C4B4]"
-                          : "bg-[#D5E1E6] dark:bg-[#203A48]"
-                      }`}
-                    />
-                  ))}
+                  {defaultWaveformHeights.map((height, i) => {
+                    const dynamicHeight = isRecordingPreview
+                      ? Math.min(95, Math.max(15, (height * (i % 2 === 0 ? 1.3 : 0.8)) % 100))
+                      : height;
+
+                    return (
+                      <motion.div
+                        key={i}
+                        initial={shouldReduceMotion ? { height: `${height}%` } : { height: "15%" }}
+                        animate={{ height: `${dynamicHeight}%` }}
+                        transition={{
+                          duration: shouldReduceMotion ? 0 : 0.4,
+                          delay: shouldReduceMotion ? 0 : (i % 8) * 0.04,
+                          ease: "easeInOut",
+                        }}
+                        className={cn(
+                          "w-1 sm:w-1.5 rounded-full transition-colors",
+                          i < 18
+                            ? "bg-gradient-to-t from-[#176B68] to-[#38B2A3] dark:from-[#38B2A3] dark:to-[#72C4B4]"
+                            : "bg-[#D5E1E6] dark:bg-[#203A48]"
+                        )}
+                      />
+                    );
+                  })}
                 </div>
 
-                {/* Interactive Control & Privacy Reassurance */}
-                <div className="flex items-center justify-between pt-0.5">
-                  <div className="flex items-center gap-2">
+                {/* Interactive Controls & Privacy Assurance */}
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-1">
+                  <div className="flex items-center gap-2.5">
                     <motion.button
                       type="button"
-                      whileHover={shouldReduceMotion ? {} : { scale: 1.08 }}
-                      whileTap={shouldReduceMotion ? {} : { scale: 0.92 }}
-                      aria-label="Practice microphone record trigger preview"
-                      className="h-8 w-8 rounded-lg bg-[#D15436] text-white flex items-center justify-center shadow-subtle hover:bg-[#B84328] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D15436]"
+                      whileHover={shouldReduceMotion ? {} : { scale: 1.05 }}
+                      whileTap={shouldReduceMotion ? {} : { scale: 0.95 }}
+                      onClick={() => setIsRecordingPreview((prev) => !prev)}
+                      aria-label={isRecordingPreview ? "Pause simulated mic preview" : "Start simulated mic preview"}
+                      className={cn(
+                        "h-9 px-3.5 rounded-xl font-semibold text-xs flex items-center gap-2 shadow-subtle transition-colors focus-visible:outline-none focus-visible:ring-2",
+                        isRecordingPreview
+                          ? "bg-[#D15436] text-white focus-visible:ring-[#D15436]"
+                          : "bg-[#176B68] text-white dark:bg-[#38B2A3] dark:text-[#0A1820] focus-visible:ring-[#176B68]"
+                      )}
                     >
                       <Mic className="h-4 w-4" aria-hidden="true" />
+                      <span>{isRecordingPreview ? "Stop Preview" : "Test Mic Preview"}</span>
                     </motion.button>
-                    <span className="text-[11px] font-medium text-[#102B3A] dark:text-white">
-                      In-memory audio preview
+
+                    <button
+                      type="button"
+                      onClick={() => setIsRecordingPreview(false)}
+                      aria-label="Reset drill preview"
+                      className="h-9 w-9 rounded-xl border border-[#D5E1E6] dark:border-[#203A48] bg-white dark:bg-[#132630] text-[#4C5E67] dark:text-[#BDCBD2] hover:text-[#102B3A] dark:hover:text-white flex items-center justify-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#176B68]"
+                    >
+                      <RotateCcw className="h-4 w-4" aria-hidden="true" />
+                    </button>
+
+                    <span className="text-[11px] font-medium text-[#4C5E67] dark:text-[#BDCBD2]">
+                      {isRecordingPreview ? "Listening (in-memory simulation)..." : "Click to test in-memory audio"}
                     </span>
                   </div>
 
-                  <div className="flex items-center gap-1 text-[10px] font-medium text-[#176B68] dark:text-[#38B2A3]">
-                    <Lock className="h-3 w-3" aria-hidden="true" />
-                    <span>Local Browser Memory</span>
+                  <div className="flex items-center gap-1.5 text-[11px] font-medium text-[#176B68] dark:text-[#38B2A3] bg-[#DCEFEA]/60 dark:bg-[#1A3845]/60 px-2.5 py-1 rounded-lg border border-[#BFDFD6] dark:border-[#203A48]">
+                    <Lock className="h-3.5 w-3.5" aria-hidden="true" />
+                    <span>In-Memory Only • Client-Controlled</span>
                   </div>
                 </div>
 
+              </div>
+
+              {/* Clarification Notice Banner */}
+              <div className="p-3 rounded-xl bg-[#F0F5F4] dark:bg-[#162732] border border-[#BFDFD6]/60 dark:border-[#203A48] flex items-start gap-2.5">
+                <Info className="h-4 w-4 text-[#176B68] dark:text-[#38B2A3] shrink-0 mt-0.5" aria-hidden="true" />
+                <p className="text-[11px] text-[#4C5E67] dark:text-[#BDCBD2] leading-relaxed">
+                  <span className="font-semibold text-[#102B3A] dark:text-white">Note on technology: </span>
+                  VocalRise audio tools process speech exercises directly inside your browser memory for private practice. The visualizations above are illustrative interactive prototypes and do not constitute clinical acoustic diagnoses or medical treatment outcomes.
+                </p>
               </div>
 
             </div>
@@ -472,10 +369,9 @@ export function StudioShowcaseSection() {
           {/* Floating Card 2: Today's Practice Session (Bottom-Left) */}
           <motion.div
             variants={floatingCard2Variants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="absolute -bottom-5 -left-2 sm:-left-4 lg:-left-5 z-20 max-w-[240px] sm:max-w-[260px] hidden sm:block"
+            initial={false}
+            animate="visible"
+            className="absolute -bottom-6 -left-2 sm:-left-4 lg:-left-6 z-20 max-w-[240px] sm:max-w-[260px] hidden sm:block"
           >
             <motion.div
               animate={shouldReduceMotion ? { y: 0 } : { y: [0, 4, 0] }}
